@@ -1,0 +1,2510 @@
+# ФОРМА УПРАВЛЕНИЯ СОТРУДНИКАМИ С ФОТО
+
+## 1. СКРИПТ БД - ДОБАВЛЯЕМ ТАБЛИЦУ ДЛЯ ФОТО
+
+```sql
+-- Добавляем поле photo в таблицу personal
+ALTER TABLE personal 
+ADD COLUMN photo LONGBLOB NULL AFTER telephone_number,
+ADD COLUMN photo_path VARCHAR(255) NULL AFTER photo,
+ADD COLUMN hire_date DATE NULL AFTER photo_path;
+
+-- Добавляем поле is_active в таблицу users
+ALTER TABLE users 
+ADD COLUMN is_active BOOLEAN DEFAULT TRUE AFTER role_id;
+
+-- Создаем директорию для хранения фото (на сервере)
+-- Это нужно выполнить вручную или через код
+```
+
+---
+
+## 2. StaffList.Designer.cs
+
+```csharp
+namespace kursovoy_proekt
+{
+    partial class StaffList
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        // Основные компоненты
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelHeader;
+        private System.Windows.Forms.Panel panelGreenLine;
+        private System.Windows.Forms.Panel panelContent;
+        private System.Windows.Forms.Panel panelFilter;
+        private System.Windows.Forms.Panel panelSummary;
+
+        // Фильтры
+        private System.Windows.Forms.Label labelSearch;
+        private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.ComboBox comboBoxRole;
+        private System.Windows.Forms.Label labelRole;
+        private System.Windows.Forms.ComboBox comboBoxStatus;
+        private System.Windows.Forms.Label labelStatus;
+
+        // Кнопки
+        private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.Button buttonEdit;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.Button buttonBackToMenu;
+        private System.Windows.Forms.Button buttonRefresh;
+
+        // DataGridView
+        private System.Windows.Forms.DataGridView dataGridViewStaff;
+        private System.Windows.Forms.DataGridViewImageColumn colPhoto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFIO;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colJobTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLogin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPhone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEmail;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHireDate;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colIsActive;
+        private System.Windows.Forms.DataGridViewButtonColumn colResetPassword;
+
+        // Пагинация
+        private System.Windows.Forms.Button buttonPrev;
+        private System.Windows.Forms.Button buttonNext;
+        private System.Windows.Forms.Label labelPageInfo;
+
+        // Status
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StaffList));
+            
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.labelHeader = new System.Windows.Forms.Label();
+            this.panelGreenLine = new System.Windows.Forms.Panel();
+            this.panelContent = new System.Windows.Forms.Panel();
+            this.panelFilter = new System.Windows.Forms.Panel();
+            this.buttonRefresh = new System.Windows.Forms.Button();
+            this.comboBoxStatus = new System.Windows.Forms.ComboBox();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.comboBoxRole = new System.Windows.Forms.ComboBox();
+            this.labelRole = new System.Windows.Forms.Label();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
+            this.labelSearch = new System.Windows.Forms.Label();
+            this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonEdit = new System.Windows.Forms.Button();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonBackToMenu = new System.Windows.Forms.Button();
+            this.dataGridViewStaff = new System.Windows.Forms.DataGridView();
+            this.colPhoto = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colJobTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLogin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHireDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colResetPassword = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.buttonPrev = new System.Windows.Forms.Button();
+            this.buttonNext = new System.Windows.Forms.Button();
+            this.labelPageInfo = new System.Windows.Forms.Label();
+            this.panelSummary = new System.Windows.Forms.Panel();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            
+            this.panelHeader.SuspendLayout();
+            this.panelContent.SuspendLayout();
+            this.panelFilter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStaff)).BeginInit();
+            this.panelSummary.SuspendLayout();
+            this.statusStrip.SuspendLayout();
+            this.SuspendLayout();
+
+            // panelHeader
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+            this.panelHeader.Controls.Add(this.labelHeader);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(1200, 80);
+            this.panelHeader.TabIndex = 0;
+
+            // labelHeader
+            this.labelHeader.AutoSize = true;
+            this.labelHeader.Font = new System.Drawing.Font("Segoe UI Light", 24F);
+            this.labelHeader.ForeColor = System.Drawing.Color.White;
+            this.labelHeader.Location = new System.Drawing.Point(30, 20);
+            this.labelHeader.Name = "labelHeader";
+            this.labelHeader.Size = new System.Drawing.Size(286, 45);
+            this.labelHeader.TabIndex = 0;
+            this.labelHeader.Text = "Управление персоналом";
+
+            // panelGreenLine
+            this.panelGreenLine.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.panelGreenLine.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelGreenLine.Location = new System.Drawing.Point(0, 80);
+            this.panelGreenLine.Name = "panelGreenLine";
+            this.panelGreenLine.Size = new System.Drawing.Size(1200, 3);
+            this.panelGreenLine.TabIndex = 1;
+
+            // panelContent
+            this.panelContent.AutoScroll = true;
+            this.panelContent.BackColor = System.Drawing.Color.FromArgb(240, 245, 235);
+            this.panelContent.Controls.Add(this.panelFilter);
+            this.panelContent.Controls.Add(this.dataGridViewStaff);
+            this.panelContent.Controls.Add(this.buttonPrev);
+            this.panelContent.Controls.Add(this.buttonNext);
+            this.panelContent.Controls.Add(this.labelPageInfo);
+            this.panelContent.Controls.Add(this.panelSummary);
+            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContent.Location = new System.Drawing.Point(0, 83);
+            this.panelContent.Name = "panelContent";
+            this.panelContent.Padding = new System.Windows.Forms.Padding(20);
+            this.panelContent.Size = new System.Drawing.Size(1200, 667);
+            this.panelContent.TabIndex = 2;
+
+            // panelFilter
+            this.panelFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelFilter.BackColor = System.Drawing.Color.White;
+            this.panelFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelFilter.Controls.Add(this.buttonRefresh);
+            this.panelFilter.Controls.Add(this.comboBoxStatus);
+            this.panelFilter.Controls.Add(this.labelStatus);
+            this.panelFilter.Controls.Add(this.comboBoxRole);
+            this.panelFilter.Controls.Add(this.labelRole);
+            this.panelFilter.Controls.Add(this.textBoxSearch);
+            this.panelFilter.Controls.Add(this.labelSearch);
+            this.panelFilter.Controls.Add(this.buttonAdd);
+            this.panelFilter.Controls.Add(this.buttonEdit);
+            this.panelFilter.Controls.Add(this.buttonDelete);
+            this.panelFilter.Controls.Add(this.buttonBackToMenu);
+            this.panelFilter.Location = new System.Drawing.Point(20, 20);
+            this.panelFilter.Name = "panelFilter";
+            this.panelFilter.Size = new System.Drawing.Size(1140, 120);
+            this.panelFilter.TabIndex = 0;
+
+            // labelSearch
+            this.labelSearch.AutoSize = true;
+            this.labelSearch.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.labelSearch.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelSearch.Location = new System.Drawing.Point(20, 20);
+            this.labelSearch.Name = "labelSearch";
+            this.labelSearch.Size = new System.Drawing.Size(55, 19);
+            this.labelSearch.TabIndex = 0;
+            this.labelSearch.Text = "Поиск:";
+
+            // textBoxSearch
+            this.textBoxSearch.BackColor = System.Drawing.Color.White;
+            this.textBoxSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxSearch.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBoxSearch.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.textBoxSearch.Location = new System.Drawing.Point(24, 45);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(250, 25);
+            this.textBoxSearch.TabIndex = 1;
+            this.textBoxSearch.PlaceholderText = "ФИО, должность, email...";
+
+            // labelRole
+            this.labelRole.AutoSize = true;
+            this.labelRole.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.labelRole.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelRole.Location = new System.Drawing.Point(290, 20);
+            this.labelRole.Name = "labelRole";
+            this.labelRole.Size = new System.Drawing.Size(42, 19);
+            this.labelRole.TabIndex = 2;
+            this.labelRole.Text = "Роль:";
+
+            // comboBoxRole
+            this.comboBoxRole.BackColor = System.Drawing.Color.White;
+            this.comboBoxRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRole.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxRole.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBoxRole.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.comboBoxRole.FormattingEnabled = true;
+            this.comboBoxRole.Items.AddRange(new object[] {
+                "Все роли",
+                "Администратор",
+                "Рецепшен",
+                "Менеджер"});
+            this.comboBoxRole.Location = new System.Drawing.Point(294, 45);
+            this.comboBoxRole.Name = "comboBoxRole";
+            this.comboBoxRole.Size = new System.Drawing.Size(150, 25);
+            this.comboBoxRole.TabIndex = 3;
+            this.comboBoxRole.SelectedIndex = 0;
+
+            // labelStatus
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.labelStatus.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelStatus.Location = new System.Drawing.Point(460, 20);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(55, 19);
+            this.labelStatus.TabIndex = 4;
+            this.labelStatus.Text = "Статус:";
+
+            // comboBoxStatus
+            this.comboBoxStatus.BackColor = System.Drawing.Color.White;
+            this.comboBoxStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBoxStatus.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.comboBoxStatus.FormattingEnabled = true;
+            this.comboBoxStatus.Items.AddRange(new object[] {
+                "Все сотрудники",
+                "Активные",
+                "Неактивные"});
+            this.comboBoxStatus.Location = new System.Drawing.Point(464, 45);
+            this.comboBoxStatus.Name = "comboBoxStatus";
+            this.comboBoxStatus.Size = new System.Drawing.Size(150, 25);
+            this.comboBoxStatus.TabIndex = 5;
+            this.comboBoxStatus.SelectedIndex = 1;
+
+            // buttonRefresh
+            this.buttonRefresh.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonRefresh.FlatAppearance.BorderSize = 0;
+            this.buttonRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonRefresh.ForeColor = System.Drawing.Color.White;
+            this.buttonRefresh.Location = new System.Drawing.Point(630, 43);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(100, 30);
+            this.buttonRefresh.TabIndex = 6;
+            this.buttonRefresh.Text = "🔄 Применить";
+            this.buttonRefresh.UseVisualStyleBackColor = false;
+
+            // buttonAdd
+            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAdd.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+            this.buttonAdd.FlatAppearance.BorderSize = 0;
+            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAdd.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonAdd.ForeColor = System.Drawing.Color.White;
+            this.buttonAdd.Location = new System.Drawing.Point(790, 20);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(110, 35);
+            this.buttonAdd.TabIndex = 7;
+            this.buttonAdd.Text = "➕ Добавить";
+            this.buttonAdd.UseVisualStyleBackColor = false;
+
+            // buttonEdit
+            this.buttonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonEdit.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+            this.buttonEdit.FlatAppearance.BorderSize = 0;
+            this.buttonEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonEdit.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonEdit.ForeColor = System.Drawing.Color.White;
+            this.buttonEdit.Location = new System.Drawing.Point(790, 65);
+            this.buttonEdit.Name = "buttonEdit";
+            this.buttonEdit.Size = new System.Drawing.Size(110, 35);
+            this.buttonEdit.TabIndex = 8;
+            this.buttonEdit.Text = "✏️ Редактировать";
+            this.buttonEdit.UseVisualStyleBackColor = false;
+            this.buttonEdit.Enabled = false;
+
+            // buttonDelete
+            this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDelete.BackColor = System.Drawing.Color.FromArgb(220, 53, 69);
+            this.buttonDelete.FlatAppearance.BorderSize = 0;
+            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonDelete.ForeColor = System.Drawing.Color.White;
+            this.buttonDelete.Location = new System.Drawing.Point(910, 20);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(110, 35);
+            this.buttonDelete.TabIndex = 9;
+            this.buttonDelete.Text = "🗑️ Удалить";
+            this.buttonDelete.UseVisualStyleBackColor = false;
+            this.buttonDelete.Enabled = false;
+
+            // buttonBackToMenu
+            this.buttonBackToMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonBackToMenu.BackColor = System.Drawing.Color.Transparent;
+            this.buttonBackToMenu.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonBackToMenu.FlatAppearance.BorderSize = 2;
+            this.buttonBackToMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBackToMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonBackToMenu.ForeColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonBackToMenu.Location = new System.Drawing.Point(910, 65);
+            this.buttonBackToMenu.Name = "buttonBackToMenu";
+            this.buttonBackToMenu.Size = new System.Drawing.Size(110, 35);
+            this.buttonBackToMenu.TabIndex = 10;
+            this.buttonBackToMenu.Text = "🏠 В меню";
+            this.buttonBackToMenu.UseVisualStyleBackColor = false;
+
+            // dataGridViewStaff
+            this.dataGridViewStaff.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewStaff.AllowUserToAddRows = false;
+            this.dataGridViewStaff.AllowUserToDeleteRows = false;
+            this.dataGridViewStaff.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewStaff.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridViewStaff.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dataGridViewStaff.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(5);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewStaff.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewStaff.ColumnHeadersHeight = 50;
+            this.dataGridViewStaff.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+                this.colPhoto,
+                this.colId,
+                this.colFIO,
+                this.colJobTitle,
+                this.colRole,
+                this.colLogin,
+                this.colPhone,
+                this.colEmail,
+                this.colHireDate,
+                this.colIsActive,
+                this.colResetPassword});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(5);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(220, 235, 210);
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewStaff.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewStaff.EnableHeadersVisualStyles = false;
+            this.dataGridViewStaff.GridColor = System.Drawing.Color.FromArgb(220, 235, 210);
+            this.dataGridViewStaff.Location = new System.Drawing.Point(20, 160);
+            this.dataGridViewStaff.Name = "dataGridViewStaff";
+            this.dataGridViewStaff.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(220, 235, 210);
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewStaff.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewStaff.RowHeadersVisible = false;
+            this.dataGridViewStaff.RowTemplate.Height = 60;
+            this.dataGridViewStaff.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewStaff.Size = new System.Drawing.Size(1140, 350);
+            this.dataGridViewStaff.TabIndex = 1;
+
+            // colPhoto
+            this.colPhoto.HeaderText = "Фото";
+            this.colPhoto.Name = "colPhoto";
+            this.colPhoto.ReadOnly = true;
+            this.colPhoto.Width = 70;
+            this.colPhoto.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+
+            // colId
+            this.colId.HeaderText = "ID";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Width = 50;
+
+            // colFIO
+            this.colFIO.HeaderText = "ФИО";
+            this.colFIO.Name = "colFIO";
+            this.colFIO.ReadOnly = true;
+            this.colFIO.Width = 200;
+
+            // colJobTitle
+            this.colJobTitle.HeaderText = "Должность";
+            this.colJobTitle.Name = "colJobTitle";
+            this.colJobTitle.ReadOnly = true;
+            this.colJobTitle.Width = 130;
+
+            // colRole
+            this.colRole.HeaderText = "Роль в системе";
+            this.colRole.Name = "colRole";
+            this.colRole.ReadOnly = true;
+            this.colRole.Width = 120;
+
+            // colLogin
+            this.colLogin.HeaderText = "Логин";
+            this.colLogin.Name = "colLogin";
+            this.colLogin.ReadOnly = true;
+            this.colLogin.Width = 100;
+
+            // colPhone
+            this.colPhone.HeaderText = "Телефон";
+            this.colPhone.Name = "colPhone";
+            this.colPhone.ReadOnly = true;
+            this.colPhone.Width = 130;
+
+            // colEmail
+            this.colEmail.HeaderText = "Email";
+            this.colEmail.Name = "colEmail";
+            this.colEmail.ReadOnly = true;
+            this.colEmail.Width = 150;
+
+            // colHireDate
+            this.colHireDate.HeaderText = "Дата приёма";
+            this.colHireDate.Name = "colHireDate";
+            this.colHireDate.ReadOnly = true;
+            this.colHireDate.Width = 100;
+
+            // colIsActive
+            this.colIsActive.HeaderText = "Активен";
+            this.colIsActive.Name = "colIsActive";
+            this.colIsActive.ReadOnly = true;
+            this.colIsActive.Width = 70;
+
+            // colResetPassword
+            this.colResetPassword.HeaderText = "Сброс пароля";
+            this.colResetPassword.Name = "colResetPassword";
+            this.colResetPassword.ReadOnly = true;
+            this.colResetPassword.Width = 100;
+            this.colResetPassword.Text = "🔄 Сбросить";
+            this.colResetPassword.UseColumnTextForButtonValue = true;
+
+            // buttonPrev
+            this.buttonPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonPrev.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonPrev.FlatAppearance.BorderSize = 0;
+            this.buttonPrev.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPrev.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.buttonPrev.ForeColor = System.Drawing.Color.White;
+            this.buttonPrev.Location = new System.Drawing.Point(400, 520);
+            this.buttonPrev.Name = "buttonPrev";
+            this.buttonPrev.Size = new System.Drawing.Size(50, 40);
+            this.buttonPrev.TabIndex = 2;
+            this.buttonPrev.Text = "◀";
+            this.buttonPrev.UseVisualStyleBackColor = false;
+
+            // buttonNext
+            this.buttonNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonNext.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonNext.FlatAppearance.BorderSize = 0;
+            this.buttonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonNext.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.buttonNext.ForeColor = System.Drawing.Color.White;
+            this.buttonNext.Location = new System.Drawing.Point(470, 520);
+            this.buttonNext.Name = "buttonNext";
+            this.buttonNext.Size = new System.Drawing.Size(50, 40);
+            this.buttonNext.TabIndex = 3;
+            this.buttonNext.Text = "▶";
+            this.buttonNext.UseVisualStyleBackColor = false;
+
+            // labelPageInfo
+            this.labelPageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelPageInfo.AutoSize = true;
+            this.labelPageInfo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelPageInfo.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelPageInfo.Location = new System.Drawing.Point(25, 530);
+            this.labelPageInfo.Name = "labelPageInfo";
+            this.labelPageInfo.Size = new System.Drawing.Size(126, 19);
+            this.labelPageInfo.TabIndex = 4;
+            this.labelPageInfo.Text = "Страница 1 из 1 | 0";
+
+            // panelSummary
+            this.panelSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelSummary.BackColor = System.Drawing.Color.White;
+            this.panelSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelSummary.Location = new System.Drawing.Point(20, 570);
+            this.panelSummary.Name = "panelSummary";
+            this.panelSummary.Size = new System.Drawing.Size(1140, 50);
+            this.panelSummary.TabIndex = 5;
+
+            // statusStrip
+            this.statusStrip.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 750);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1200, 22);
+            this.statusStrip.TabIndex = 3;
+
+            // toolStripStatusLabel
+            this.toolStripStatusLabel.ForeColor = System.Drawing.Color.White;
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(189, 17);
+            this.toolStripStatusLabel.Text = "Загрузка данных о сотрудниках...";
+
+            // StaffList
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1200, 772);
+            this.Controls.Add(this.panelContent);
+            this.Controls.Add(this.panelGreenLine);
+            this.Controls.Add(this.panelHeader);
+            this.Controls.Add(this.statusStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(1216, 811);
+            this.Name = "StaffList";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Управление персоналом - База отдыха";
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            this.panelContent.ResumeLayout(false);
+            this.panelContent.PerformLayout();
+            this.panelFilter.ResumeLayout(false);
+            this.panelFilter.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStaff)).EndInit();
+            this.panelSummary.ResumeLayout(false);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}
+```
+
+---
+
+## 3. StaffList.cs
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+
+namespace kursovoy_proekt
+{
+    public partial class StaffList : Form
+    {
+        private DataTable allStaffData;
+        private DataTable currentPageData;
+        private int currentPage = 1;
+        private int pageSize = 10;
+        private int totalPages = 1;
+        private int selectedStaffId = -1;
+
+        public StaffList()
+        {
+            InitializeComponent();
+            SetupForm();
+        }
+
+        private void SetupForm()
+        {
+            // Настройка DataGridView
+            SetupDataGridView();
+            
+            // Подписка на события
+            this.Load += StaffList_Load;
+            textBoxSearch.TextChanged += TextBoxSearch_TextChanged;
+            comboBoxRole.SelectedIndexChanged += Filter_Changed;
+            comboBoxStatus.SelectedIndexChanged += Filter_Changed;
+            buttonRefresh.Click += ButtonRefresh_Click;
+            buttonAdd.Click += ButtonAdd_Click;
+            buttonEdit.Click += ButtonEdit_Click;
+            buttonDelete.Click += ButtonDelete_Click;
+            buttonBackToMenu.Click += ButtonBackToMenu_Click;
+            buttonPrev.Click += ButtonPrev_Click;
+            buttonNext.Click += ButtonNext_Click;
+            
+            dataGridViewStaff.SelectionChanged += DataGridViewStaff_SelectionChanged;
+            dataGridViewStaff.CellClick += DataGridViewStaff_CellClick;
+            dataGridViewStaff.CellDoubleClick += DataGridViewStaff_CellDoubleClick;
+        }
+
+        private void SetupDataGridView()
+        {
+            dataGridViewStaff.AutoGenerateColumns = false;
+            dataGridViewStaff.AllowUserToAddRows = false;
+            dataGridViewStaff.AllowUserToDeleteRows = false;
+            dataGridViewStaff.ReadOnly = true;
+            dataGridViewStaff.RowHeadersVisible = false;
+            dataGridViewStaff.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            
+            // Настройка колонок
+            colPhoto.ImageLayout = DataGridViewImageCellLayout.Zoom;
+            
+            // Настройка цветов
+            dataGridViewStaff.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(106, 153, 85);
+            dataGridViewStaff.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridViewStaff.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+            dataGridViewStaff.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewStaff.ColumnHeadersHeight = 50;
+            
+            dataGridViewStaff.DefaultCellStyle.Font = new Font("Segoe UI", 9);
+            dataGridViewStaff.DefaultCellStyle.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewStaff.DefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 235, 210);
+            dataGridViewStaff.DefaultCellStyle.SelectionForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewStaff.DefaultCellStyle.Padding = new Padding(5);
+            
+            dataGridViewStaff.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(249, 249, 249);
+            dataGridViewStaff.GridColor = Color.FromArgb(220, 235, 210);
+            dataGridViewStaff.BorderStyle = BorderStyle.None;
+            dataGridViewStaff.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridViewStaff.EnableHeadersVisualStyles = false;
+            dataGridViewStaff.RowTemplate.Height = 60;
+        }
+
+        private void StaffList_Load(object sender, EventArgs e)
+        {
+            LoadAllStaffData();
+        }
+
+        private void LoadAllStaffData()
+        {
+            try
+            {
+                using (var connection = DatabaseConnection.GetConnection())
+                {
+                    connection.Open();
+
+                    string query = @"
+                        SELECT 
+                            p.id as PersonalId,
+                            p.FIO,
+                            p.job_title,
+                            p.telephone_number,
+                            p.email,
+                            p.photo,
+                            p.hire_date,
+                            u.id as UserId,
+                            u.login,
+                            u.role_id,
+                            u.is_active,
+                            r.role_name
+                        FROM personal p
+                        LEFT JOIN users u ON p.id = u.personal_id
+                        LEFT JOIN role r ON u.role_id = r.id
+                        ORDER BY p.FIO";
+
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                        allStaffData = new DataTable();
+                        adapter.Fill(allStaffData);
+                    }
+                }
+
+                ApplyFilter();
+                UpdateSummary();
+                toolStripStatusLabel.Text = $"Загружено сотрудников: {allStaffData.Rows.Count}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ApplyFilter()
+        {
+            if (allStaffData == null) return;
+
+            var filtered = allStaffData.AsEnumerable();
+
+            // Поиск по тексту
+            string searchText = textBoxSearch.Text.Trim().ToLower();
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                filtered = filtered.Where(row =>
+                    row.Field<string>("FIO")?.ToLower().Contains(searchText) == true ||
+                    row.Field<string>("job_title")?.ToLower().Contains(searchText) == true ||
+                    row.Field<string>("email")?.ToLower().Contains(searchText) == true ||
+                    row.Field<string>("login")?.ToLower().Contains(searchText) == true);
+            }
+
+            // Фильтр по роли
+            if (comboBoxRole.SelectedIndex > 0)
+            {
+                string selectedRole = comboBoxRole.SelectedItem.ToString();
+                filtered = filtered.Where(row => 
+                    row.Field<string>("role_name") == selectedRole);
+            }
+
+            // Фильтр по статусу
+            if (comboBoxStatus.SelectedIndex == 1) // Активные
+            {
+                filtered = filtered.Where(row => 
+                    row.Field<bool?>("is_active") == true);
+            }
+            else if (comboBoxStatus.SelectedIndex == 2) // Неактивные
+            {
+                filtered = filtered.Where(row => 
+                    row.Field<bool?>("is_active") == false || 
+                    row.Field<bool?>("is_active") == null);
+            }
+
+            DataTable filteredTable = filtered.Any() ? filtered.CopyToDataTable() : allStaffData.Clone();
+            
+            totalPages = (int)Math.Ceiling((double)filteredTable.Rows.Count / pageSize);
+            if (totalPages == 0) totalPages = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            LoadCurrentPage(filteredTable);
+            UpdatePageInfo(filteredTable.Rows.Count);
+        }
+
+        private void LoadCurrentPage(DataTable filteredTable)
+        {
+            int startIndex = (currentPage - 1) * pageSize;
+            int endIndex = Math.Min(startIndex + pageSize, filteredTable.Rows.Count);
+
+            currentPageData = filteredTable.Clone();
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                currentPageData.ImportRow(filteredTable.Rows[i]);
+            }
+
+            dataGridViewStaff.Rows.Clear();
+
+            foreach (DataRow row in currentPageData.Rows)
+            {
+                int rowIndex = dataGridViewStaff.Rows.Add();
+                var dgvRow = dataGridViewStaff.Rows[rowIndex];
+
+                // Фото
+                if (row["photo"] != DBNull.Value)
+                {
+                    byte[] photoBytes = (byte[])row["photo"];
+                    using (MemoryStream ms = new MemoryStream(photoBytes))
+                    {
+                        dgvRow.Cells["colPhoto"].Value = Image.FromStream(ms);
+                    }
+                }
+                else
+                {
+                    // Заглушка для фото
+                    dgvRow.Cells["colPhoto"].Value = CreateDefaultAvatar(row.Field<string>("FIO"));
+                }
+
+                dgvRow.Cells["colId"].Value = row["PersonalId"];
+                dgvRow.Cells["colFIO"].Value = row["FIO"];
+                dgvRow.Cells["colJobTitle"].Value = row["job_title"];
+                dgvRow.Cells["colRole"].Value = row["role_name"] ?? "Нет доступа";
+                dgvRow.Cells["colLogin"].Value = row["login"] ?? "-";
+                dgvRow.Cells["colPhone"].Value = FormatPhoneNumber(row.Field<string>("telephone_number"));
+                dgvRow.Cells["colEmail"].Value = row["email"] ?? "-";
+                
+                if (row["hire_date"] != DBNull.Value)
+                {
+                    DateTime hireDate = Convert.ToDateTime(row["hire_date"]);
+                    dgvRow.Cells["colHireDate"].Value = hireDate.ToString("dd.MM.yyyy");
+                }
+                
+                dgvRow.Cells["colIsActive"].Value = row.Field<bool?>("is_active") ?? false;
+                dgvRow.Cells["colResetPassword"].Value = "🔄 Сбросить";
+                
+                dgvRow.Tag = row["UserId"] ?? DBNull.Value;
+            }
+        }
+
+        private Image CreateDefaultAvatar(string fio)
+        {
+            Bitmap bmp = new Bitmap(50, 50);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.FromArgb(76, 145, 195));
+                
+                // Получаем первую букву ФИО
+                string initials = "";
+                if (!string.IsNullOrEmpty(fio))
+                {
+                    string[] parts = fio.Split(' ');
+                    if (parts.Length > 0 && !string.IsNullOrEmpty(parts[0]))
+                        initials += parts[0][0];
+                    if (parts.Length > 1 && !string.IsNullOrEmpty(parts[1]))
+                        initials += parts[1][0];
+                }
+                
+                using (Font font = new Font("Segoe UI", 20, FontStyle.Bold))
+                using (StringFormat sf = new StringFormat())
+                {
+                    sf.Alignment = StringAlignment.Center;
+                    sf.LineAlignment = StringAlignment.Center;
+                    
+                    g.DrawString(initials, font, Brushes.White, 
+                        new RectangleF(0, 0, 50, 50), sf);
+                }
+            }
+            return bmp;
+        }
+
+        private string FormatPhoneNumber(string phone)
+        {
+            if (string.IsNullOrEmpty(phone)) return "-";
+            
+            string digits = new string(phone.Where(char.IsDigit).ToArray());
+            
+            if (digits.Length == 11)
+            {
+                return $"+7 ({digits.Substring(1, 3)}) {digits.Substring(4, 3)}-{digits.Substring(7, 2)}-{digits.Substring(9, 2)}";
+            }
+            
+            return phone;
+        }
+
+        private void UpdatePageInfo(int totalRecords)
+        {
+            labelPageInfo.Text = $"Страница {currentPage} из {totalPages} | Всего: {totalRecords}";
+            buttonPrev.Enabled = currentPage > 1;
+            buttonNext.Enabled = currentPage < totalPages;
+            
+            buttonPrev.BackColor = buttonPrev.Enabled ? 
+                Color.FromArgb(106, 153, 85) : Color.FromArgb(150, 150, 150);
+            buttonNext.BackColor = buttonNext.Enabled ? 
+                Color.FromArgb(106, 153, 85) : Color.FromArgb(150, 150, 150);
+        }
+
+        private void UpdateSummary()
+        {
+            panelSummary.Controls.Clear();
+            
+            int activeCount = allStaffData?.AsEnumerable()
+                .Count(r => r.Field<bool?>("is_active") == true) ?? 0;
+            int inactiveCount = allStaffData?.AsEnumerable()
+                .Count(r => r.Field<bool?>("is_active") == false) ?? 0;
+            int noAccessCount = allStaffData?.AsEnumerable()
+                .Count(r => r.Field<int?>("role_id") == null) ?? 0;
+
+            Label lblSummary = new Label
+            {
+                AutoSize = true,
+                Font = new Font("Segoe UI", 10),
+                ForeColor = Color.FromArgb(64, 64, 64),
+                Location = new Point(20, 15),
+                Text = $"Всего сотрудников: {allStaffData?.Rows.Count ?? 0}  |  " +
+                       $"Активных: {activeCount}  |  " +
+                       $"Неактивных: {inactiveCount}  |  " +
+                       $"Без доступа: {noAccessCount}"
+            };
+            
+            panelSummary.Controls.Add(lblSummary);
+        }
+
+        private void TextBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            currentPage = 1;
+            ApplyFilter();
+        }
+
+        private void Filter_Changed(object sender, EventArgs e)
+        {
+            currentPage = 1;
+            ApplyFilter();
+        }
+
+        private void ButtonRefresh_Click(object sender, EventArgs e)
+        {
+            LoadAllStaffData();
+        }
+
+        private void ButtonPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                ApplyFilter();
+            }
+        }
+
+        private void ButtonNext_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                ApplyFilter();
+            }
+        }
+
+        private void DataGridViewStaff_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewStaff.SelectedRows.Count > 0)
+            {
+                var selectedRow = dataGridViewStaff.SelectedRows[0];
+                selectedStaffId = Convert.ToInt32(selectedRow.Cells["colId"].Value);
+                
+                buttonEdit.Enabled = true;
+                buttonDelete.Enabled = true;
+            }
+            else
+            {
+                selectedStaffId = -1;
+                buttonEdit.Enabled = false;
+                buttonDelete.Enabled = false;
+            }
+        }
+
+        private void DataGridViewStaff_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+            
+            if (dataGridViewStaff.Columns[e.ColumnIndex].Name == "colResetPassword")
+            {
+                int userId = Convert.ToInt32(dataGridViewStaff.Rows[e.RowIndex].Tag);
+                if (userId > 0)
+                {
+                    ResetPassword(userId);
+                }
+                else
+                {
+                    MessageBox.Show("У этого сотрудника нет учетной записи.", "Информация",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void DataGridViewStaff_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && selectedStaffId > 0)
+            {
+                OpenEditForm(selectedStaffId);
+            }
+        }
+
+        private void ButtonAdd_Click(object sender, EventArgs e)
+        {
+            AddStaff addForm = new AddStaff();
+            if (addForm.ShowDialog() == DialogResult.OK)
+            {
+                LoadAllStaffData();
+            }
+        }
+
+        private void ButtonEdit_Click(object sender, EventArgs e)
+        {
+            if (selectedStaffId > 0)
+            {
+                OpenEditForm(selectedStaffId);
+            }
+        }
+
+        private void OpenEditForm(int staffId)
+        {
+            AddStaff editForm = new AddStaff(staffId);
+            if (editForm.ShowDialog() == DialogResult.OK)
+            {
+                LoadAllStaffData();
+            }
+        }
+
+        private void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            if (selectedStaffId <= 0) return;
+
+            if (selectedStaffId == Session.UserId)
+            {
+                MessageBox.Show("Вы не можете удалить свою собственную учетную запись.", 
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var result = MessageBox.Show(
+                "Вы уверены, что хотите удалить этого сотрудника?\n" +
+                "Это действие нельзя отменить.",
+                "Подтверждение удаления",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                DeleteStaff(selectedStaffId);
+            }
+        }
+
+        private void DeleteStaff(int staffId)
+        {
+            try
+            {
+                using (var connection = DatabaseConnection.GetConnection())
+                {
+                    connection.Open();
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            // Удаляем пользователя
+                            string deleteUser = "DELETE FROM users WHERE personal_id = @staffId";
+                            using (var cmd = new MySqlCommand(deleteUser, connection, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@staffId", staffId);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // Удаляем сотрудника
+                            string deleteStaff = "DELETE FROM personal WHERE id = @staffId";
+                            using (var cmd = new MySqlCommand(deleteStaff, connection, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@staffId", staffId);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            transaction.Commit();
+                            MessageBox.Show("Сотрудник успешно удален!", "Успех",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            
+                            LoadAllStaffData();
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (MySqlException ex) when (ex.Number == 1451)
+            {
+                MessageBox.Show("Нельзя удалить сотрудника, который создавал заказы или бронирования.\n" +
+                    "Сначала деактивируйте его учетную запись.",
+                    "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ResetPassword(int userId)
+        {
+            var result = MessageBox.Show(
+                "Сбросить пароль пользователя?\n" +
+                "Новый пароль будет установлен: 123456",
+                "Подтверждение сброса пароля",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    using (var connection = DatabaseConnection.GetConnection())
+                    {
+                        connection.Open();
+                        
+                        string query = "UPDATE users SET password = @password WHERE id = @userId";
+                        using (var cmd = new MySqlCommand(query, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@password", GetPasswordHash("123456"));
+                            cmd.Parameters.AddWithValue("@userId", userId);
+                            
+                            int rows = cmd.ExecuteNonQuery();
+                            if (rows > 0)
+                            {
+                                MessageBox.Show("Пароль успешно сброшен на: 123456", "Успех",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при сбросе пароля: {ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private string GetPasswordHash(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                byte[] hash = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hash).Replace("-", "").ToLower();
+            }
+        }
+
+        private void ButtonBackToMenu_Click(object sender, EventArgs e)
+        {
+            if (Session.RoleId == 1)
+            {
+                AdminForm mainForm = new AdminForm();
+                mainForm.Show();
+                this.Close();
+            }
+            else
+            {
+                this.Close();
+            }
+        }
+    }
+}
+```
+
+---
+
+## 4. AddStaff.Designer.cs
+
+```csharp
+namespace kursovoy_proekt
+{
+    partial class AddStaff
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelHeader;
+        private System.Windows.Forms.Panel panelGreenLine;
+        private System.Windows.Forms.Panel panelContent;
+        
+        // Личные данные
+        private System.Windows.Forms.Label labelFIO;
+        private System.Windows.Forms.TextBox textBoxFIO;
+        private System.Windows.Forms.Label labelJobTitle;
+        private System.Windows.Forms.TextBox textBoxJobTitle;
+        private System.Windows.Forms.Label labelPhone;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxPhone;
+        private System.Windows.Forms.Label labelEmail;
+        private System.Windows.Forms.TextBox textBoxEmail;
+        private System.Windows.Forms.Label labelHireDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerHireDate;
+        
+        // Фото
+        private System.Windows.Forms.Label labelPhoto;
+        private System.Windows.Forms.PictureBox pictureBoxPhoto;
+        private System.Windows.Forms.Button buttonLoadPhoto;
+        private System.Windows.Forms.Button buttonClearPhoto;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        
+        // Учетная запись
+        private System.Windows.Forms.GroupBox groupBoxAccount;
+        private System.Windows.Forms.CheckBox checkBoxCreateAccount;
+        private System.Windows.Forms.Label labelLogin;
+        private System.Windows.Forms.TextBox textBoxLogin;
+        private System.Windows.Forms.Label labelPassword;
+        private System.Windows.Forms.TextBox textBoxPassword;
+        private System.Windows.Forms.Label labelRole;
+        private System.Windows.Forms.ComboBox comboBoxRole;
+        private System.Windows.Forms.CheckBox checkBoxIsActive;
+        private System.Windows.Forms.Button buttonGeneratePassword;
+        
+        // Кнопки
+        private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.Button buttonCancel;
+        
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.ErrorProvider errorProvider;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddStaff));
+            
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.labelHeader = new System.Windows.Forms.Label();
+            this.panelGreenLine = new System.Windows.Forms.Panel();
+            this.panelContent = new System.Windows.Forms.Panel();
+            
+            // Личные данные
+            this.labelFIO = new System.Windows.Forms.Label();
+            this.textBoxFIO = new System.Windows.Forms.TextBox();
+            this.labelJobTitle = new System.Windows.Forms.Label();
+            this.textBoxJobTitle = new System.Windows.Forms.TextBox();
+            this.labelPhone = new System.Windows.Forms.Label();
+            this.maskedTextBoxPhone = new System.Windows.Forms.MaskedTextBox();
+            this.labelEmail = new System.Windows.Forms.Label();
+            this.textBoxEmail = new System.Windows.Forms.TextBox();
+            this.labelHireDate = new System.Windows.Forms.Label();
+            this.dateTimePickerHireDate = new System.Windows.Forms.DateTimePicker();
+            
+            // Фото
+            this.labelPhoto = new System.Windows.Forms.Label();
+            this.pictureBoxPhoto = new System.Windows.Forms.PictureBox();
+            this.buttonLoadPhoto = new System.Windows.Forms.Button();
+            this.buttonClearPhoto = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            
+            // Учетная запись
+            this.groupBoxAccount = new System.Windows.Forms.GroupBox();
+            this.checkBoxCreateAccount = new System.Windows.Forms.CheckBox();
+            this.labelLogin = new System.Windows.Forms.Label();
+            this.textBoxLogin = new System.Windows.Forms.TextBox();
+            this.labelPassword = new System.Windows.Forms.Label();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.labelRole = new System.Windows.Forms.Label();
+            this.comboBoxRole = new System.Windows.Forms.ComboBox();
+            this.checkBoxIsActive = new System.Windows.Forms.CheckBox();
+            this.buttonGeneratePassword = new System.Windows.Forms.Button();
+            
+            // Кнопки
+            this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            
+            this.panelHeader.SuspendLayout();
+            this.panelContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
+            this.groupBoxAccount.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            this.SuspendLayout();
+
+            // panelHeader
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+            this.panelHeader.Controls.Add(this.labelHeader);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(700, 80);
+            this.panelHeader.TabIndex = 0;
+
+            // labelHeader
+            this.labelHeader.AutoSize = true;
+            this.labelHeader.Font = new System.Drawing.Font("Segoe UI Light", 20F);
+            this.labelHeader.ForeColor = System.Drawing.Color.White;
+            this.labelHeader.Location = new System.Drawing.Point(30, 20);
+            this.labelHeader.Name = "labelHeader";
+            this.labelHeader.Size = new System.Drawing.Size(379, 37);
+            this.labelHeader.TabIndex = 0;
+            this.labelHeader.Text = "ДОБАВЛЕНИЕ НОВОГО СОТРУДНИКА";
+
+            // panelGreenLine
+            this.panelGreenLine.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.panelGreenLine.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelGreenLine.Location = new System.Drawing.Point(0, 80);
+            this.panelGreenLine.Name = "panelGreenLine";
+            this.panelGreenLine.Size = new System.Drawing.Size(700, 3);
+            this.panelGreenLine.TabIndex = 1;
+
+            // panelContent
+            this.panelContent.AutoScroll = true;
+            this.panelContent.BackColor = System.Drawing.Color.FromArgb(240, 245, 235);
+            this.panelContent.Controls.Add(this.textBoxFIO);
+            this.panelContent.Controls.Add(this.labelFIO);
+            this.panelContent.Controls.Add(this.textBoxJobTitle);
+            this.panelContent.Controls.Add(this.labelJobTitle);
+            this.panelContent.Controls.Add(this.maskedTextBoxPhone);
+            this.panelContent.Controls.Add(this.labelPhone);
+            this.panelContent.Controls.Add(this.textBoxEmail);
+            this.panelContent.Controls.Add(this.labelEmail);
+            this.panelContent.Controls.Add(this.dateTimePickerHireDate);
+            this.panelContent.Controls.Add(this.labelHireDate);
+            this.panelContent.Controls.Add(this.labelPhoto);
+            this.panelContent.Controls.Add(this.pictureBoxPhoto);
+            this.panelContent.Controls.Add(this.buttonLoadPhoto);
+            this.panelContent.Controls.Add(this.buttonClearPhoto);
+            this.panelContent.Controls.Add(this.groupBoxAccount);
+            this.panelContent.Controls.Add(this.buttonSave);
+            this.panelContent.Controls.Add(this.buttonDelete);
+            this.panelContent.Controls.Add(this.buttonCancel);
+            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContent.Location = new System.Drawing.Point(0, 83);
+            this.panelContent.Name = "panelContent";
+            this.panelContent.Padding = new System.Windows.Forms.Padding(30);
+            this.panelContent.Size = new System.Drawing.Size(700, 667);
+            this.panelContent.TabIndex = 2;
+
+            // labelFIO
+            this.labelFIO.AutoSize = true;
+            this.labelFIO.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.labelFIO.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelFIO.Location = new System.Drawing.Point(30, 20);
+            this.labelFIO.Name = "labelFIO";
+            this.labelFIO.Size = new System.Drawing.Size(43, 19);
+            this.labelFIO.TabIndex = 0;
+            this.labelFIO.Text = "ФИО:";
+
+            // textBoxFIO
+            this.textBoxFIO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxFIO.BackColor = System.Drawing.Color.White;
+            this.textBoxFIO.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxFIO.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.textBoxFIO.Location = new System.Drawing.Point(34, 45);
+            this.textBoxFIO.Name = "textBoxFIO";
+            this.textBoxFIO.Size = new System.Drawing.Size(300, 27);
+            this.textBoxFIO.TabIndex = 1;
+            this.toolTip.SetToolTip(this.textBoxFIO, "Введите ФИО сотрудника");
+
+            // labelJobTitle
+            this.labelJobTitle.AutoSize = true;
+            this.labelJobTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.labelJobTitle.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelJobTitle.Location = new System.Drawing.Point(360, 20);
+            this.labelJobTitle.Name = "labelJobTitle";
+            this.labelJobTitle.Size = new System.Drawing.Size(79, 19);
+            this.labelJobTitle.TabIndex = 2;
+            this.labelJobTitle.Text = "Должность:";
+
+            // textBoxJobTitle
+            this.textBoxJobTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxJobTitle.BackColor = System.Drawing.Color.White;
+            this.textBoxJobTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxJobTitle.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.textBoxJobTitle.Location = new System.Drawing.Point(364, 45);
+            this.textBoxJobTitle.Name = "textBoxJobTitle";
+            this.textBoxJobTitle.Size = new System.Drawing.Size(300, 27);
+            this.textBoxJobTitle.TabIndex = 2;
+            this.toolTip.SetToolTip(this.textBoxJobTitle, "Введите должность сотрудника");
+
+            // labelPhone
+            this.labelPhone.AutoSize = true;
+            this.labelPhone.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.labelPhone.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelPhone.Location = new System.Drawing.Point(30, 85);
+            this.labelPhone.Name = "labelPhone";
+            this.labelPhone.Size = new System.Drawing.Size(73, 19);
+            this.labelPhone.TabIndex = 4;
+            this.labelPhone.Text = "Телефон:";
+
+            // maskedTextBoxPhone
+            this.maskedTextBoxPhone.BackColor = System.Drawing.Color.White;
+            this.maskedTextBoxPhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.maskedTextBoxPhone.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.maskedTextBoxPhone.Location = new System.Drawing.Point(34, 110);
+            this.maskedTextBoxPhone.Mask = "+7 (000) 000-00-00";
+            this.maskedTextBoxPhone.Name = "maskedTextBoxPhone";
+            this.maskedTextBoxPhone.PromptChar = ' ';
+            this.maskedTextBoxPhone.Size = new System.Drawing.Size(300, 27);
+            this.maskedTextBoxPhone.TabIndex = 3;
+            this.toolTip.SetToolTip(this.maskedTextBoxPhone, "Введите номер телефона");
+
+            // labelEmail
+            this.labelEmail.AutoSize = true;
+            this.labelEmail.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.labelEmail.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelEmail.Location = new System.Drawing.Point(360, 85);
+            this.labelEmail.Name = "labelEmail";
+            this.labelEmail.Size = new System.Drawing.Size(48, 19);
+            this.labelEmail.TabIndex = 6;
+            this.labelEmail.Text = "Email:";
+
+            // textBoxEmail
+            this.textBoxEmail.BackColor = System.Drawing.Color.White;
+            this.textBoxEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxEmail.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.textBoxEmail.Location = new System.Drawing.Point(364, 110);
+            this.textBoxEmail.Name = "textBoxEmail";
+            this.textBoxEmail.Size = new System.Drawing.Size(300, 27);
+            this.textBoxEmail.TabIndex = 4;
+            this.toolTip.SetToolTip(this.textBoxEmail, "Введите email сотрудника");
+
+            // labelHireDate
+            this.labelHireDate.AutoSize = true;
+            this.labelHireDate.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.labelHireDate.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelHireDate.Location = new System.Drawing.Point(30, 150);
+            this.labelHireDate.Name = "labelHireDate";
+            this.labelHireDate.Size = new System.Drawing.Size(101, 19);
+            this.labelHireDate.TabIndex = 8;
+            this.labelHireDate.Text = "Дата приёма:";
+
+            // dateTimePickerHireDate
+            this.dateTimePickerHireDate.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.dateTimePickerHireDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerHireDate.Location = new System.Drawing.Point(34, 175);
+            this.dateTimePickerHireDate.Name = "dateTimePickerHireDate";
+            this.dateTimePickerHireDate.Size = new System.Drawing.Size(150, 27);
+            this.dateTimePickerHireDate.TabIndex = 5;
+            this.dateTimePickerHireDate.Value = DateTime.Now;
+
+            // labelPhoto
+            this.labelPhoto.AutoSize = true;
+            this.labelPhoto.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.labelPhoto.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelPhoto.Location = new System.Drawing.Point(30, 220);
+            this.labelPhoto.Name = "labelPhoto";
+            this.labelPhoto.Size = new System.Drawing.Size(49, 19);
+            this.labelPhoto.TabIndex = 10;
+            this.labelPhoto.Text = "Фото:";
+
+            // pictureBoxPhoto
+            this.pictureBoxPhoto.BackColor = System.Drawing.Color.White;
+            this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(34, 245);
+            this.pictureBoxPhoto.Name = "pictureBoxPhoto";
+            this.pictureBoxPhoto.Size = new System.Drawing.Size(120, 120);
+            this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxPhoto.TabIndex = 11;
+            this.pictureBoxPhoto.TabStop = false;
+
+            // buttonLoadPhoto
+            this.buttonLoadPhoto.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+            this.buttonLoadPhoto.FlatAppearance.BorderSize = 0;
+            this.buttonLoadPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonLoadPhoto.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            this.buttonLoadPhoto.ForeColor = System.Drawing.Color.White;
+            this.buttonLoadPhoto.Location = new System.Drawing.Point(170, 245);
+            this.buttonLoadPhoto.Name = "buttonLoadPhoto";
+            this.buttonLoadPhoto.Size = new System.Drawing.Size(100, 30);
+            this.buttonLoadPhoto.TabIndex = 6;
+            this.buttonLoadPhoto.Text = "📷 Загрузить";
+            this.buttonLoadPhoto.UseVisualStyleBackColor = false;
+
+            // buttonClearPhoto
+            this.buttonClearPhoto.BackColor = System.Drawing.Color.FromArgb(220, 53, 69);
+            this.buttonClearPhoto.FlatAppearance.BorderSize = 0;
+            this.buttonClearPhoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonClearPhoto.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            this.buttonClearPhoto.ForeColor = System.Drawing.Color.White;
+            this.buttonClearPhoto.Location = new System.Drawing.Point(170, 285);
+            this.buttonClearPhoto.Name = "buttonClearPhoto";
+            this.buttonClearPhoto.Size = new System.Drawing.Size(100, 30);
+            this.buttonClearPhoto.TabIndex = 7;
+            this.buttonClearPhoto.Text = "🗑️ Очистить";
+            this.buttonClearPhoto.UseVisualStyleBackColor = false;
+
+            // groupBoxAccount
+            this.groupBoxAccount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxAccount.BackColor = System.Drawing.Color.White;
+            this.groupBoxAccount.Controls.Add(this.checkBoxCreateAccount);
+            this.groupBoxAccount.Controls.Add(this.labelLogin);
+            this.groupBoxAccount.Controls.Add(this.textBoxLogin);
+            this.groupBoxAccount.Controls.Add(this.labelPassword);
+            this.groupBoxAccount.Controls.Add(this.textBoxPassword);
+            this.groupBoxAccount.Controls.Add(this.labelRole);
+            this.groupBoxAccount.Controls.Add(this.comboBoxRole);
+            this.groupBoxAccount.Controls.Add(this.checkBoxIsActive);
+            this.groupBoxAccount.Controls.Add(this.buttonGeneratePassword);
+            this.groupBoxAccount.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.groupBoxAccount.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.groupBoxAccount.Location = new System.Drawing.Point(34, 380);
+            this.groupBoxAccount.Name = "groupBoxAccount";
+            this.groupBoxAccount.Size = new System.Drawing.Size(630, 190);
+            this.groupBoxAccount.TabIndex = 8;
+            this.groupBoxAccount.TabStop = false;
+            this.groupBoxAccount.Text = "Учетная запись";
+
+            // checkBoxCreateAccount
+            this.checkBoxCreateAccount.AutoSize = true;
+            this.checkBoxCreateAccount.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.checkBoxCreateAccount.Location = new System.Drawing.Point(20, 30);
+            this.checkBoxCreateAccount.Name = "checkBoxCreateAccount";
+            this.checkBoxCreateAccount.Size = new System.Drawing.Size(212, 23);
+            this.checkBoxCreateAccount.TabIndex = 0;
+            this.checkBoxCreateAccount.Text = "Создать учетную запись для входа";
+            this.checkBoxCreateAccount.UseVisualStyleBackColor = true;
+
+            // labelLogin
+            this.labelLogin.AutoSize = true;
+            this.labelLogin.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelLogin.Location = new System.Drawing.Point(20, 70);
+            this.labelLogin.Name = "labelLogin";
+            this.labelLogin.Size = new System.Drawing.Size(49, 19);
+            this.labelLogin.TabIndex = 1;
+            this.labelLogin.Text = "Логин:";
+
+            // textBoxLogin
+            this.textBoxLogin.BackColor = System.Drawing.Color.White;
+            this.textBoxLogin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxLogin.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBoxLogin.Location = new System.Drawing.Point(24, 95);
+            this.textBoxLogin.Name = "textBoxLogin";
+            this.textBoxLogin.Size = new System.Drawing.Size(200, 25);
+            this.textBoxLogin.TabIndex = 1;
+            this.textBoxLogin.Enabled = false;
+
+            // labelPassword
+            this.labelPassword.AutoSize = true;
+            this.labelPassword.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelPassword.Location = new System.Drawing.Point(240, 70);
+            this.labelPassword.Name = "labelPassword";
+            this.labelPassword.Size = new System.Drawing.Size(57, 19);
+            this.labelPassword.TabIndex = 3;
+            this.labelPassword.Text = "Пароль:";
+
+            // textBoxPassword
+            this.textBoxPassword.BackColor = System.Drawing.Color.White;
+            this.textBoxPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxPassword.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBoxPassword.Location = new System.Drawing.Point(244, 95);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(200, 25);
+            this.textBoxPassword.TabIndex = 2;
+            this.textBoxPassword.Enabled = false;
+
+            // buttonGeneratePassword
+            this.buttonGeneratePassword.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonGeneratePassword.FlatAppearance.BorderSize = 0;
+            this.buttonGeneratePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonGeneratePassword.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.buttonGeneratePassword.ForeColor = System.Drawing.Color.White;
+            this.buttonGeneratePassword.Location = new System.Drawing.Point(460, 94);
+            this.buttonGeneratePassword.Name = "buttonGeneratePassword";
+            this.buttonGeneratePassword.Size = new System.Drawing.Size(150, 25);
+            this.buttonGeneratePassword.TabIndex = 3;
+            this.buttonGeneratePassword.Text = "🔄 Сгенерировать";
+            this.buttonGeneratePassword.UseVisualStyleBackColor = false;
+            this.buttonGeneratePassword.Enabled = false;
+
+            // labelRole
+            this.labelRole.AutoSize = true;
+            this.labelRole.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelRole.Location = new System.Drawing.Point(20, 135);
+            this.labelRole.Name = "labelRole";
+            this.labelRole.Size = new System.Drawing.Size(38, 19);
+            this.labelRole.TabIndex = 5;
+            this.labelRole.Text = "Роль:";
+
+            // comboBoxRole
+            this.comboBoxRole.BackColor = System.Drawing.Color.White;
+            this.comboBoxRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRole.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxRole.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBoxRole.FormattingEnabled = true;
+            this.comboBoxRole.Items.AddRange(new object[] {
+                "Администратор",
+                "Рецепшен",
+                "Менеджер"});
+            this.comboBoxRole.Location = new System.Drawing.Point(24, 160);
+            this.comboBoxRole.Name = "comboBoxRole";
+            this.comboBoxRole.Size = new System.Drawing.Size(200, 25);
+            this.comboBoxRole.TabIndex = 4;
+            this.comboBoxRole.Enabled = false;
+
+            // checkBoxIsActive
+            this.checkBoxIsActive.AutoSize = true;
+            this.checkBoxIsActive.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.checkBoxIsActive.Location = new System.Drawing.Point(244, 162);
+            this.checkBoxIsActive.Name = "checkBoxIsActive";
+            this.checkBoxIsActive.Size = new System.Drawing.Size(134, 23);
+            this.checkBoxIsActive.TabIndex = 5;
+            this.checkBoxIsActive.Text = "Активная запись";
+            this.checkBoxIsActive.UseVisualStyleBackColor = true;
+            this.checkBoxIsActive.Checked = true;
+            this.checkBoxIsActive.Enabled = false;
+
+            // buttonSave
+            this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSave.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonSave.FlatAppearance.BorderSize = 0;
+            this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSave.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.buttonSave.ForeColor = System.Drawing.Color.White;
+            this.buttonSave.Location = new System.Drawing.Point(34, 590);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(200, 50);
+            this.buttonSave.TabIndex = 9;
+            this.buttonSave.Text = "💾 СОХРАНИТЬ";
+            this.buttonSave.UseVisualStyleBackColor = false;
+
+            // buttonDelete
+            this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonDelete.BackColor = System.Drawing.Color.FromArgb(220, 53, 69);
+            this.buttonDelete.FlatAppearance.BorderSize = 0;
+            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.buttonDelete.ForeColor = System.Drawing.Color.White;
+            this.buttonDelete.Location = new System.Drawing.Point(250, 590);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(200, 50);
+            this.buttonDelete.TabIndex = 10;
+            this.buttonDelete.Text = "🗑️ УДАЛИТЬ";
+            this.buttonDelete.UseVisualStyleBackColor = false;
+            this.buttonDelete.Visible = false;
+
+            // buttonCancel
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCancel.BackColor = System.Drawing.Color.Transparent;
+            this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonCancel.FlatAppearance.BorderSize = 2;
+            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.buttonCancel.ForeColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonCancel.Location = new System.Drawing.Point(466, 590);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(200, 50);
+            this.buttonCancel.TabIndex = 11;
+            this.buttonCancel.Text = "❌ ОТМЕНА";
+            this.buttonCancel.UseVisualStyleBackColor = false;
+
+            // openFileDialog
+            this.openFileDialog.Filter = "Изображения|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+            this.openFileDialog.Title = "Выберите фото сотрудника";
+
+            // AddStaff
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(700, 750);
+            this.Controls.Add(this.panelContent);
+            this.Controls.Add(this.panelGreenLine);
+            this.Controls.Add(this.panelHeader);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(716, 789);
+            this.Name = "AddStaff";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Управление сотрудниками - База отдыха";
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            this.panelContent.ResumeLayout(false);
+            this.panelContent.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).EndInit();
+            this.groupBoxAccount.ResumeLayout(false);
+            this.groupBoxAccount.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            this.ResumeLayout(false);
+        }
+    }
+}
+```
+
+---
+
+## 5. AddStaff.cs
+
+```csharp
+using System;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+
+namespace kursovoy_proekt
+{
+    public partial class AddStaff : Form
+    {
+        public enum FormMode { Add, Edit }
+        private FormMode currentMode;
+        private int editingStaffId = -1;
+        private int editingUserId = -1;
+        public bool DataChanged { get; private set; } = false;
+        private byte[] currentPhotoBytes = null;
+
+        public AddStaff()
+        {
+            InitializeComponent();
+            currentMode = FormMode.Add;
+            SetupForm();
+        }
+
+        public AddStaff(int staffId)
+        {
+            InitializeComponent();
+            currentMode = FormMode.Edit;
+            editingStaffId = staffId;
+            SetupForm();
+        }
+
+        private void SetupForm()
+        {
+            // Настройка масок
+            maskedTextBoxPhone.Mask = "+7 (000) 000-00-00";
+            maskedTextBoxPhone.PromptChar = ' ';
+            
+            // Настройка даты
+            dateTimePickerHireDate.MaxDate = DateTime.Now;
+            dateTimePickerHireDate.Value = DateTime.Now;
+
+            // Подписка на события
+            buttonLoadPhoto.Click += ButtonLoadPhoto_Click;
+            buttonClearPhoto.Click += ButtonClearPhoto_Click;
+            checkBoxCreateAccount.CheckedChanged += CheckBoxCreateAccount_CheckedChanged;
+            buttonGeneratePassword.Click += ButtonGeneratePassword_Click;
+            buttonSave.Click += ButtonSave_Click;
+            buttonDelete.Click += ButtonDelete_Click;
+            buttonCancel.Click += ButtonCancel_Click;
+
+            // Настройка для режима редактирования
+            if (currentMode == FormMode.Edit)
+            {
+                labelHeader.Text = "РЕДАКТИРОВАНИЕ СОТРУДНИКА";
+                buttonSave.Text = "💾 СОХРАНИТЬ ИЗМЕНЕНИЯ";
+                buttonDelete.Visible = true;
+                LoadStaffData();
+            }
+            else
+            {
+                labelHeader.Text = "ДОБАВЛЕНИЕ НОВОГО СОТРУДНИКА";
+                buttonSave.Text = "➕ ДОБАВИТЬ СОТРУДНИКА";
+                buttonDelete.Visible = false;
+                
+                // Автогенерация логина из ФИО
+                textBoxFIO.TextChanged += TextBoxFIO_TextChanged;
+            }
+
+            // Добавление обработчиков для валидации
+            textBoxFIO.Leave += Control_Leave;
+            textBoxJobTitle.Leave += Control_Leave;
+            maskedTextBoxPhone.Leave += Control_Leave;
+            textBoxEmail.Leave += Control_Leave;
+            
+            textBoxFIO.Enter += Control_Enter;
+            textBoxJobTitle.Enter += Control_Enter;
+            maskedTextBoxPhone.Enter += Control_Enter;
+            textBoxEmail.Enter += Control_Enter;
+            textBoxLogin.Enter += Control_Enter;
+            textBoxPassword.Enter += Control_Enter;
+        }
+
+        private void LoadStaffData()
+        {
+            try
+            {
+                using (var connection = DatabaseConnection.GetConnection())
+                {
+                    connection.Open();
+
+                    string query = @"
+                        SELECT 
+                            p.*,
+                            u.id as UserId,
+                            u.login,
+                            u.role_id,
+                            u.is_active,
+                            r.role_name
+                        FROM personal p
+                        LEFT JOIN users u ON p.id = u.personal_id
+                        LEFT JOIN role r ON u.role_id = r.id
+                        WHERE p.id = @staffId";
+
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@staffId", editingStaffId);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Основная информация
+                                textBoxFIO.Text = reader["FIO"].ToString();
+                                textBoxJobTitle.Text = reader["job_title"].ToString();
+                                
+                                string phone = reader["telephone_number"].ToString();
+                                maskedTextBoxPhone.Text = FormatPhoneForMask(phone);
+                                
+                                textBoxEmail.Text = reader["email"].ToString();
+                                
+                                if (reader["hire_date"] != DBNull.Value)
+                                    dateTimePickerHireDate.Value = Convert.ToDateTime(reader["hire_date"]);
+                                
+                                // Фото
+                                if (reader["photo"] != DBNull.Value)
+                                {
+                                    currentPhotoBytes = (byte[])reader["photo"];
+                                    using (MemoryStream ms = new MemoryStream(currentPhotoBytes))
+                                    {
+                                        pictureBoxPhoto.Image = Image.FromStream(ms);
+                                    }
+                                }
+
+                                // Учетная запись
+                                if (reader["UserId"] != DBNull.Value)
+                                {
+                                    editingUserId = Convert.ToInt32(reader["UserId"]);
+                                    checkBoxCreateAccount.Checked = true;
+                                    textBoxLogin.Text = reader["login"].ToString();
+                                    textBoxPassword.Text = "●●●●●●";
+                                    textBoxPassword.Enabled = false;
+                                    comboBoxRole.SelectedIndex = GetRoleIndex(reader["role_id"]);
+                                    checkBoxIsActive.Checked = reader.Field<bool?>("is_active") ?? true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+        }
+
+        private int GetRoleIndex(object roleId)
+        {
+            if (roleId == DBNull.Value) return -1;
+            int id = Convert.ToInt32(roleId);
+            switch (id)
+            {
+                case 1: return 0; // Администратор
+                case 2: return 1; // Рецепшен
+                case 3: return 2; // Менеджер
+                default: return -1;
+            }
+        }
+
+        private string FormatPhoneForMask(string phone)
+        {
+            if (string.IsNullOrEmpty(phone)) return "";
+            
+            string digits = new string(phone.Where(char.IsDigit).ToArray());
+            if (digits.Length == 11 && digits.StartsWith("7"))
+                digits = digits.Substring(1);
+            
+            return digits.Length == 10 ? digits : "";
+        }
+
+        private void TextBoxFIO_TextChanged(object sender, EventArgs e)
+        {
+            // Автогенерация логина из ФИО (латиница)
+            if (currentMode == FormMode.Add && !checkBoxCreateAccount.Checked)
+            {
+                string fio = textBoxFIO.Text.Trim();
+                if (!string.IsNullOrEmpty(fio))
+                {
+                    string login = GenerateLoginFromFIO(fio);
+                    textBoxLogin.Text = login;
+                }
+            }
+        }
+
+        private string GenerateLoginFromFIO(string fio)
+        {
+            // Транслитерация ФИО в латиницу
+            string[] parts = fio.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length == 0) return "";
+            
+            string lastName = Transliterate(parts[0].ToLower());
+            string firstName = parts.Length > 1 ? Transliterate(parts[1].ToLower()) : "";
+            
+            if (string.IsNullOrEmpty(firstName))
+                return lastName;
+            
+            return $"{lastName}_{firstName[0]}";
+        }
+
+        private string Transliterate(string text)
+        {
+            Dictionary<char, string> translit = new Dictionary<char, string>
+            {
+                {'а', "a"}, {'б', "b"}, {'в', "v"}, {'г', "g"}, {'д', "d"},
+                {'е', "e"}, {'ё', "e"}, {'ж', "zh"}, {'з', "z"}, {'и', "i"},
+                {'й', "y"}, {'к', "k"}, {'л', "l"}, {'м', "m"}, {'н', "n"},
+                {'о', "o"}, {'п', "p"}, {'р', "r"}, {'с', "s"}, {'т', "t"},
+                {'у', "u"}, {'ф', "f"}, {'х', "h"}, {'ц', "ts"}, {'ч', "ch"},
+                {'ш', "sh"}, {'щ', "sch"}, {'ъ', ""}, {'ы', "y"}, {'ь', ""},
+                {'э', "e"}, {'ю', "yu"}, {'я', "ya"}
+            };
+            
+            string result = "";
+            foreach (char c in text)
+            {
+                if (translit.ContainsKey(c))
+                    result += translit[c];
+                else
+                    result += c;
+            }
+            return result;
+        }
+
+        private void ButtonLoadPhoto_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (Image img = Image.FromFile(openFileDialog.FileName))
+                    {
+                        // Изменяем размер фото до 200x200
+                        Image resized = ResizeImage(img, 200, 200);
+                        pictureBoxPhoto.Image = resized;
+                        
+                        // Конвертируем в байты
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            resized.Save(ms, ImageFormat.Jpeg);
+                            currentPhotoBytes = ms.ToArray();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка загрузки изображения: {ex.Message}", 
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private Image ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+            
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+            
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                
+                using (var wrapMode = new System.Drawing.Imaging.ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(System.Drawing.Drawing2D.WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+            
+            return destImage;
+        }
+
+        private void ButtonClearPhoto_Click(object sender, EventArgs e)
+        {
+            pictureBoxPhoto.Image = null;
+            currentPhotoBytes = null;
+        }
+
+        private void CheckBoxCreateAccount_CheckedChanged(object sender, EventArgs e)
+        {
+            bool enabled = checkBoxCreateAccount.Checked;
+            
+            textBoxLogin.Enabled = enabled;
+            textBoxPassword.Enabled = enabled;
+            comboBoxRole.Enabled = enabled;
+            checkBoxIsActive.Enabled = enabled;
+            buttonGeneratePassword.Enabled = enabled;
+            
+            if (enabled && currentMode == FormMode.Add && string.IsNullOrEmpty(textBoxLogin.Text))
+            {
+                string login = GenerateLoginFromFIO(textBoxFIO.Text);
+                textBoxLogin.Text = login;
+                
+                if (string.IsNullOrEmpty(textBoxPassword.Text))
+                {
+                    textBoxPassword.Text = GenerateRandomPassword();
+                }
+            }
+            
+            if (!enabled)
+            {
+                textBoxPassword.Text = "";
+            }
+        }
+
+        private void ButtonGeneratePassword_Click(object sender, EventArgs e)
+        {
+            textBoxPassword.Text = GenerateRandomPassword();
+        }
+
+        private string GenerateRandomPassword()
+        {
+            Random rand = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, 8)
+                .Select(s => s[rand.Next(s.Length)]).ToArray());
+        }
+
+        private bool ValidateData()
+        {
+            // Проверка ФИО
+            if (string.IsNullOrWhiteSpace(textBoxFIO.Text))
+            {
+                ShowError("Введите ФИО сотрудника", textBoxFIO);
+                return false;
+            }
+
+            // Проверка должности
+            if (string.IsNullOrWhiteSpace(textBoxJobTitle.Text))
+            {
+                ShowError("Введите должность сотрудника", textBoxJobTitle);
+                return false;
+            }
+
+            // Проверка телефона
+            string phone = GetCleanPhone();
+            if (string.IsNullOrWhiteSpace(phone) || phone.Length != 10)
+            {
+                ShowError("Введите корректный номер телефона", maskedTextBoxPhone);
+                return false;
+            }
+
+            // Проверка email
+            if (!string.IsNullOrWhiteSpace(textBoxEmail.Text) && !IsValidEmail(textBoxEmail.Text))
+            {
+                ShowError("Введите корректный email адрес", textBoxEmail);
+                return false;
+            }
+
+            // Проверка учетной записи
+            if (checkBoxCreateAccount.Checked)
+            {
+                if (string.IsNullOrWhiteSpace(textBoxLogin.Text))
+                {
+                    ShowError("Введите логин для учетной записи", textBoxLogin);
+                    return false;
+                }
+
+                if (textBoxLogin.Text.Length < 3)
+                {
+                    ShowError("Логин должен содержать минимум 3 символа", textBoxLogin);
+                    return false;
+                }
+
+                if (currentMode == FormMode.Add && string.IsNullOrWhiteSpace(textBoxPassword.Text))
+                {
+                    ShowError("Введите пароль для учетной записи", textBoxPassword);
+                    return false;
+                }
+
+                if (comboBoxRole.SelectedIndex == -1)
+                {
+                    ShowError("Выберите роль пользователя", comboBoxRole);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private string GetCleanPhone()
+        {
+            string phone = new string(maskedTextBoxPhone.Text.Where(char.IsDigit).ToArray());
+            if (phone.Length == 11 && phone.StartsWith("7"))
+                return phone.Substring(1);
+            return phone.Length == 10 ? phone : "";
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void ShowError(string message, Control control)
+        {
+            MessageBox.Show(message, "Ошибка ввода", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            control.Focus();
+            control.BackColor = Color.FromArgb(255, 230, 230);
+        }
+
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+            if (!ValidateData())
+                return;
+
+            if (currentMode == FormMode.Add)
+                AddStaff();
+            else
+                UpdateStaff();
+        }
+
+        private void AddStaff()
+        {
+            try
+            {
+                using (var connection = DatabaseConnection.GetConnection())
+                {
+                    connection.Open();
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            // 1. Добавляем сотрудника
+                            string insertPersonal = @"
+                                INSERT INTO personal (
+                                    FIO, job_title, telephone_number, email, 
+                                    hire_date, photo
+                                ) VALUES (
+                                    @fio, @jobTitle, @phone, @email, 
+                                    @hireDate, @photo
+                                );
+                                SELECT LAST_INSERT_ID();";
+
+                            int personalId;
+                            using (var cmd = new MySqlCommand(insertPersonal, connection, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@fio", textBoxFIO.Text.Trim());
+                                cmd.Parameters.AddWithValue("@jobTitle", textBoxJobTitle.Text.Trim());
+                                cmd.Parameters.AddWithValue("@phone", FormatPhoneForDB(GetCleanPhone()));
+                                cmd.Parameters.AddWithValue("@email", 
+                                    string.IsNullOrWhiteSpace(textBoxEmail.Text) ? 
+                                    DBNull.Value : (object)textBoxEmail.Text.Trim());
+                                cmd.Parameters.AddWithValue("@hireDate", dateTimePickerHireDate.Value.Date);
+                                cmd.Parameters.AddWithValue("@photo", 
+                                    currentPhotoBytes ?? (object)DBNull.Value);
+                                
+                                personalId = Convert.ToInt32(cmd.ExecuteScalar());
+                            }
+
+                            // 2. Создаем учетную запись если нужно
+                            if (checkBoxCreateAccount.Checked)
+                            {
+                                string insertUser = @"
+                                    INSERT INTO users (
+                                        personal_id, login, password, role_id, is_active
+                                    ) VALUES (
+                                        @personalId, @login, @password, @roleId, @isActive
+                                    )";
+
+                                using (var cmd = new MySqlCommand(insertUser, connection, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@personalId", personalId);
+                                    cmd.Parameters.AddWithValue("@login", textBoxLogin.Text.Trim());
+                                    cmd.Parameters.AddWithValue("@password", GetPasswordHash(textBoxPassword.Text));
+                                    cmd.Parameters.AddWithValue("@roleId", comboBoxRole.SelectedIndex + 1);
+                                    cmd.Parameters.AddWithValue("@isActive", checkBoxIsActive.Checked);
+                                    
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            transaction.Commit();
+                            
+                            DataChanged = true;
+                            MessageBox.Show("Сотрудник успешно добавлен!", "Успех",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            
+                            this.DialogResult = DialogResult.OK;
+                            this.Close();
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (MySqlException ex) when (ex.Number == 1062)
+            {
+                if (ex.Message.Contains("login"))
+                {
+                    MessageBox.Show("Пользователь с таким логином уже существует.", 
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (ex.Message.Contains("email"))
+                {
+                    MessageBox.Show("Сотрудник с таким email уже существует.", 
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Ошибка при добавлении: {ex.Message}", 
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при добавлении: {ex.Message}", 
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdateStaff()
+        {
+            try
+            {
+                using (var connection = DatabaseConnection.GetConnection())
+                {
+                    connection.Open();
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            // 1. Обновляем данные сотрудника
+                            string updatePersonal = @"
+                                UPDATE personal SET
+                                    FIO = @fio,
+                                    job_title = @jobTitle,
+                                    telephone_number = @phone,
+                                    email = @email,
+                                    hire_date = @hireDate,
+                                    photo = @photo
+                                WHERE id = @staffId";
+
+                            using (var cmd = new MySqlCommand(updatePersonal, connection, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@fio", textBoxFIO.Text.Trim());
+                                cmd.Parameters.AddWithValue("@jobTitle", textBoxJobTitle.Text.Trim());
+                                cmd.Parameters.AddWithValue("@phone", FormatPhoneForDB(GetCleanPhone()));
+                                cmd.Parameters.AddWithValue("@email",
+                                    string.IsNullOrWhiteSpace(textBoxEmail.Text) ?
+                                    DBNull.Value : (object)textBoxEmail.Text.Trim());
+                                cmd.Parameters.AddWithValue("@hireDate", dateTimePickerHireDate.Value.Date);
+                                cmd.Parameters.AddWithValue("@photo",
+                                    currentPhotoBytes ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@staffId", editingStaffId);
+                                
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // 2. Обновляем учетную запись
+                            if (checkBoxCreateAccount.Checked)
+                            {
+                                if (editingUserId > 0)
+                                {
+                                    // Обновляем существующую
+                                    string updateUser = @"
+                                        UPDATE users SET
+                                            login = @login,
+                                            role_id = @roleId,
+                                            is_active = @isActive
+                                        WHERE id = @userId";
+
+                                    using (var cmd = new MySqlCommand(updateUser, connection, transaction))
+                                    {
+                                        cmd.Parameters.AddWithValue("@login", textBoxLogin.Text.Trim());
+                                        cmd.Parameters.AddWithValue("@roleId", comboBoxRole.SelectedIndex + 1);
+                                        cmd.Parameters.AddWithValue("@isActive", checkBoxIsActive.Checked);
+                                        cmd.Parameters.AddWithValue("@userId", editingUserId);
+                                        
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                    
+                                    // Обновляем пароль если был изменен
+                                    if (textBoxPassword.Enabled && !string.IsNullOrEmpty(textBoxPassword.Text) 
+                                        && textBoxPassword.Text != "●●●●●●")
+                                    {
+                                        string updatePassword = @"
+                                            UPDATE users SET
+                                                password = @password
+                                            WHERE id = @userId";
+
+                                        using (var cmd = new MySqlCommand(updatePassword, connection, transaction))
+                                        {
+                                            cmd.Parameters.AddWithValue("@password", GetPasswordHash(textBoxPassword.Text));
+                                            cmd.Parameters.AddWithValue("@userId", editingUserId);
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // Создаем новую
+                                    string insertUser = @"
+                                        INSERT INTO users (
+                                            personal_id, login, password, role_id, is_active
+                                        ) VALUES (
+                                            @personalId, @login, @password, @roleId, @isActive
+                                        )";
+
+                                    using (var cmd = new MySqlCommand(insertUser, connection, transaction))
+                                    {
+                                        cmd.Parameters.AddWithValue("@personalId", editingStaffId);
+                                        cmd.Parameters.AddWithValue("@login", textBoxLogin.Text.Trim());
+                                        cmd.Parameters.AddWithValue("@password", GetPasswordHash(textBoxPassword.Text));
+                                        cmd.Parameters.AddWithValue("@roleId", comboBoxRole.SelectedIndex + 1);
+                                        cmd.Parameters.AddWithValue("@isActive", checkBoxIsActive.Checked);
+                                        
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                            else if (editingUserId > 0)
+                            {
+                                // Удаляем учетную запись
+                                string deleteUser = "DELETE FROM users WHERE id = @userId";
+                                using (var cmd = new MySqlCommand(deleteUser, connection, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@userId", editingUserId);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            transaction.Commit();
+                            
+                            DataChanged = true;
+                            MessageBox.Show("Данные сотрудника успешно обновлены!", "Успех",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            
+                            this.DialogResult = DialogResult.OK;
+                            this.Close();
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (MySqlException ex) when (ex.Number == 1062)
+            {
+                if (ex.Message.Contains("login"))
+                {
+                    MessageBox.Show("Пользователь с таким логином уже существует.", 
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (ex.Message.Contains("email"))
+                {
+                    MessageBox.Show("Сотрудник с таким email уже существует.", 
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Ошибка при обновлении: {ex.Message}", 
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при обновлении: {ex.Message}", 
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string FormatPhoneForDB(string cleanPhone)
+        {
+            if (cleanPhone.Length == 10)
+            {
+                return $"+7({cleanPhone.Substring(0, 3)}){cleanPhone.Substring(3, 3)}-{cleanPhone.Substring(6, 2)}-{cleanPhone.Substring(8)}";
+            }
+            return cleanPhone;
+        }
+
+        private string GetPasswordHash(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                byte[] hash = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hash).Replace("-", "").ToLower();
+            }
+        }
+
+        private void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            if (currentMode != FormMode.Edit) return;
+            
+            if (editingUserId == Session.UserId)
+            {
+                MessageBox.Show("Вы не можете удалить свою собственную учетную запись.", 
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var result = MessageBox.Show(
+                "Вы уверены, что хотите удалить этого сотрудника?\n" +
+                "Это действие нельзя отменить.",
+                "Подтверждение удаления",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    using (var connection = DatabaseConnection.GetConnection())
+                    {
+                        connection.Open();
+                        using (var transaction = connection.BeginTransaction())
+                        {
+                            try
+                            {
+                                // Удаляем пользователя
+                                string deleteUser = "DELETE FROM users WHERE personal_id = @staffId";
+                                using (var cmd = new MySqlCommand(deleteUser, connection, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@staffId", editingStaffId);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                // Удаляем сотрудника
+                                string deleteStaff = "DELETE FROM personal WHERE id = @staffId";
+                                using (var cmd = new MySqlCommand(deleteStaff, connection, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@staffId", editingStaffId);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                transaction.Commit();
+                                
+                                MessageBox.Show("Сотрудник успешно удален!", "Успех",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                
+                                this.DialogResult = DialogResult.OK;
+                                this.Close();
+                            }
+                            catch
+                            {
+                                transaction.Rollback();
+                                throw;
+                            }
+                        }
+                    }
+                }
+                catch (MySqlException ex) when (ex.Number == 1451)
+                {
+                    MessageBox.Show("Нельзя удалить сотрудника, который создавал заказы или бронирования.\n" +
+                        "Сначала деактивируйте его учетную запись.",
+                        "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", 
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void ButtonCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void Control_Enter(object sender, EventArgs e)
+        {
+            if (sender is Control control)
+            {
+                control.BackColor = Color.FromArgb(255, 255, 220);
+            }
+        }
+
+        private void Control_Leave(object sender, EventArgs e)
+        {
+            if (sender is Control control && !control.BackColor.Equals(Color.FromArgb(255, 230, 230)))
+            {
+                control.BackColor = Color.White;
+            }
+        }
+    }
+}
+```
+
+---
+
+## ЧТОБЫ ОТКРЫТЬ ФОРМУ (например, в AdminForm):
+
+```csharp
+private void buttonStaffList_Click(object sender, EventArgs e)
+{
+    StaffList staffList = new StaffList();
+    staffList.Show();
+}
+```
+
+---
+
+## ГОТОВО! ФОРМА УМЕЕТ:
+
+✅ **Добавлять сотрудников** с фото  
+✅ **Редактировать** данные и фото  
+✅ **Удалять** сотрудников  
+✅ **Создавать учетные записи** для входа  
+✅ **Сбрасывать пароли**  
+✅ **Фильтровать** по роли и статусу  
+✅ **Поиск** по ФИО, должности, email  
+✅ **Аватары-заглушки** если нет фото  
+✅ **Автогенерация логина** из ФИО  
+✅ **Валидация** всех полей
