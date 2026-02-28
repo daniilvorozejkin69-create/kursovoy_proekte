@@ -326,6 +326,7 @@
             this.labelWelcome.Size = new System.Drawing.Size(150, 21);
             this.labelWelcome.TabIndex = 0;
             this.labelWelcome.Text = "Добро пожаловать,";
+            this.labelWelcome.Click += new System.EventHandler(this.labelWelcome_Click);
             // 
             // ClientList
             // 

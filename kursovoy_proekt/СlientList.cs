@@ -576,5 +576,10 @@ namespace kursovoy_proekt
         {
 
         }
+
+        private void labelWelcome_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

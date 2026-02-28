@@ -37,12 +37,14 @@ namespace kursovoy_proekt
             {
                 buttonLogin.MouseEnter += ButtonLogin_MouseEnter;
                 buttonLogin.MouseLeave += ButtonLogin_MouseLeave;
+                buttonLogin.Click += ButtonLogin_Click;
             }
 
             if (buttonExit != null)
             {
                 buttonExit.MouseEnter += ButtonExit_MouseEnter;
                 buttonExit.MouseLeave += ButtonExit_MouseLeave;
+                buttonExit.Click += ButtonExit_Click;
             }
         }
 
@@ -133,7 +135,7 @@ namespace kursovoy_proekt
                         FROM users u 
                         LEFT JOIN personal p ON u.personal_id = p.id
                         JOIN role r ON u.role_id = r.id
-                        WHERE u.login = @login AND u.password = @password";
+                        WHERE u.login = @login AND u.password = @password AND u.is_active = TRUE";
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
@@ -157,8 +159,10 @@ namespace kursovoy_proekt
                             }
                             else
                             {
-                                MessageBox.Show("Неверный логин или пароль", "Ошибка авторизации",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Неверный логин, пароль или учетная запись неактивна",
+                                    "Ошибка авторизации", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                textBoxPassword.SelectAll();
+                                textBoxPassword.Focus();
                             }
                         }
                     }
@@ -194,13 +198,25 @@ namespace kursovoy_proekt
 
             if (mainForm != null)
             {
+                // Подписываемся на закрытие главной формы
                 mainForm.FormClosed += (s, args) =>
                 {
-                    this.Show();
-                    textBoxLogin.Text = "";
-                    textBoxPassword.Text = "";
-                    textBoxLogin.Focus();
+                    // Проверяем, вышел ли пользователь из системы
+                    if (!Session.IsLoggedIn)
+                    {
+                        // Если вышел - закрываем приложение
+                        Application.Exit();
+                    }
+                    else
+                    {
+                        // Если просто вернулся в меню - показываем форму входа
+                        this.Show();
+                        textBoxLogin.Text = "";
+                        textBoxPassword.Text = "";
+                        textBoxLogin.Focus();
+                    }
                 };
+
                 mainForm.Show();
             }
         }
