@@ -33,9 +33,6 @@
         // Кнопка выхода
         private System.Windows.Forms.Button buttonExit;
 
-        // Версия
-        private System.Windows.Forms.Label labelVersion;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -47,14 +44,11 @@
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagerForm));
-
             this.panelHeader = new System.Windows.Forms.Panel();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelGreenLine = new System.Windows.Forms.Panel();
             this.panelContent = new System.Windows.Forms.Panel();
-            this.labelVersion = new System.Windows.Forms.Label();
             this.buttonExit = new System.Windows.Forms.Button();
             this.buttonReportHouse = new System.Windows.Forms.Button();
             this.buttonManageStaff = new System.Windows.Forms.Button();
@@ -65,56 +59,54 @@
             this.panelSeparator = new System.Windows.Forms.Panel();
             this.labelUserInfo = new System.Windows.Forms.Label();
             this.labelWelcome = new System.Windows.Forms.Label();
-
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panelContent.SuspendLayout();
             this.SuspendLayout();
-
-            // ============================================
-            // HEADER
-            // ============================================
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+            // 
+            // panelHeader
+            // 
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
             this.panelHeader.Controls.Add(this.pictureBoxLogo);
             this.panelHeader.Controls.Add(this.labelHeader);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(900, 90);
+            this.panelHeader.Size = new System.Drawing.Size(902, 90);
             this.panelHeader.TabIndex = 0;
-
-            this.pictureBoxLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLogo.Image")));
+            // 
+            // pictureBoxLogo
+            // 
             this.pictureBoxLogo.Location = new System.Drawing.Point(25, 20);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
             this.pictureBoxLogo.Size = new System.Drawing.Size(50, 50);
             this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxLogo.TabIndex = 1;
             this.pictureBoxLogo.TabStop = false;
-
+            // 
+            // labelHeader
+            // 
             this.labelHeader.AutoSize = true;
             this.labelHeader.Font = new System.Drawing.Font("Segoe UI Light", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelHeader.ForeColor = System.Drawing.Color.White;
             this.labelHeader.Location = new System.Drawing.Point(90, 25);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(261, 45);
+            this.labelHeader.Size = new System.Drawing.Size(336, 45);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "Панель управляющего";
-
-            // ============================================
-            // GREEN LINE
-            // ============================================
-            this.panelGreenLine.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            // 
+            // panelGreenLine
+            // 
+            this.panelGreenLine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.panelGreenLine.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelGreenLine.Location = new System.Drawing.Point(0, 90);
             this.panelGreenLine.Name = "panelGreenLine";
-            this.panelGreenLine.Size = new System.Drawing.Size(900, 3);
+            this.panelGreenLine.Size = new System.Drawing.Size(902, 3);
             this.panelGreenLine.TabIndex = 1;
-
-            // ============================================
-            // CONTENT
-            // ============================================
-            this.panelContent.BackColor = System.Drawing.Color.FromArgb(240, 245, 235);
-            this.panelContent.Controls.Add(this.labelVersion);
+            // 
+            // panelContent
+            // 
+            this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.panelContent.Controls.Add(this.buttonExit);
             this.panelContent.Controls.Add(this.buttonReportHouse);
             this.panelContent.Controls.Add(this.buttonManageStaff);
@@ -129,139 +121,32 @@
             this.panelContent.Location = new System.Drawing.Point(0, 93);
             this.panelContent.Name = "panelContent";
             this.panelContent.Padding = new System.Windows.Forms.Padding(30);
-            this.panelContent.Size = new System.Drawing.Size(900, 507);
+            this.panelContent.Size = new System.Drawing.Size(902, 531);
             this.panelContent.TabIndex = 2;
-
-            // ============================================
-            // WELCOME SECTION
-            // ============================================
-            this.labelWelcome.AutoSize = true;
-            this.labelWelcome.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelWelcome.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
-            this.labelWelcome.Location = new System.Drawing.Point(30, 30);
-            this.labelWelcome.Name = "labelWelcome";
-            this.labelWelcome.Size = new System.Drawing.Size(152, 25);
-            this.labelWelcome.TabIndex = 0;
-            this.labelWelcome.Text = "Добро пожаловать,";
-
-            this.labelUserInfo.AutoSize = true;
-            this.labelUserInfo.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelUserInfo.ForeColor = System.Drawing.Color.FromArgb(76, 145, 195);
-            this.labelUserInfo.Location = new System.Drawing.Point(185, 30);
-            this.labelUserInfo.Name = "labelUserInfo";
-            this.labelUserInfo.Size = new System.Drawing.Size(159, 25);
-            this.labelUserInfo.TabIndex = 1;
-            this.labelUserInfo.Text = "Имя пользователя";
-
-            this.panelSeparator.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
-            this.panelSeparator.Location = new System.Drawing.Point(30, 70);
-            this.panelSeparator.Name = "panelSeparator";
-            this.panelSeparator.Size = new System.Drawing.Size(840, 2);
-            this.panelSeparator.TabIndex = 2;
-
-            // ============================================
-            // ROW 1 - УПРАВЛЕНИЕ ДОМАМИ (СИНИЕ)
-            // ============================================
-            this.buttonAddHouse.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
-            this.buttonAddHouse.FlatAppearance.BorderSize = 0;
-            this.buttonAddHouse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAddHouse.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonAddHouse.ForeColor = System.Drawing.Color.White;
-            this.buttonAddHouse.Image = ((System.Drawing.Image)(resources.GetObject("buttonAddHouse.Image")));
-            this.buttonAddHouse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddHouse.Location = new System.Drawing.Point(30, 100);
-            this.buttonAddHouse.Name = "buttonAddHouse";
-            this.buttonAddHouse.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.buttonAddHouse.Size = new System.Drawing.Size(400, 70);
-            this.buttonAddHouse.TabIndex = 0;
-            this.buttonAddHouse.Text = "    🏠  ДОБАВИТЬ НОВЫЙ ДОМ";
-            this.buttonAddHouse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddHouse.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonAddHouse.UseVisualStyleBackColor = false;
-
-            this.buttonEditHouse.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
-            this.buttonEditHouse.FlatAppearance.BorderSize = 0;
-            this.buttonEditHouse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonEditHouse.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonEditHouse.ForeColor = System.Drawing.Color.White;
-            this.buttonEditHouse.Image = ((System.Drawing.Image)(resources.GetObject("buttonEditHouse.Image")));
-            this.buttonEditHouse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonEditHouse.Location = new System.Drawing.Point(470, 100);
-            this.buttonEditHouse.Name = "buttonEditHouse";
-            this.buttonEditHouse.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.buttonEditHouse.Size = new System.Drawing.Size(400, 70);
-            this.buttonEditHouse.TabIndex = 1;
-            this.buttonEditHouse.Text = "    📋  СПИСОК ДОМОВ";
-            this.buttonEditHouse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonEditHouse.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonEditHouse.UseVisualStyleBackColor = false;
-
-            // ============================================
-            // ROW 2 - УПРАВЛЕНИЕ УСЛУГАМИ (ЗЕЛЕНЫЕ)
-            // ============================================
-            this.buttonAddService.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
-            this.buttonAddService.FlatAppearance.BorderSize = 0;
-            this.buttonAddService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAddService.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonAddService.ForeColor = System.Drawing.Color.White;
-            this.buttonAddService.Image = ((System.Drawing.Image)(resources.GetObject("buttonAddService.Image")));
-            this.buttonAddService.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddService.Location = new System.Drawing.Point(30, 190);
-            this.buttonAddService.Name = "buttonAddService";
-            this.buttonAddService.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.buttonAddService.Size = new System.Drawing.Size(400, 70);
-            this.buttonAddService.TabIndex = 2;
-            this.buttonAddService.Text = "    ✨  ДОБАВИТЬ НОВУЮ УСЛУГУ";
-            this.buttonAddService.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddService.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonAddService.UseVisualStyleBackColor = false;
-
-            this.buttonEditService.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
-            this.buttonEditService.FlatAppearance.BorderSize = 0;
-            this.buttonEditService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonEditService.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonEditService.ForeColor = System.Drawing.Color.White;
-            this.buttonEditService.Image = ((System.Drawing.Image)(resources.GetObject("buttonEditService.Image")));
-            this.buttonEditService.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonEditService.Location = new System.Drawing.Point(470, 190);
-            this.buttonEditService.Name = "buttonEditService";
-            this.buttonEditService.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.buttonEditService.Size = new System.Drawing.Size(400, 70);
-            this.buttonEditService.TabIndex = 3;
-            this.buttonEditService.Text = "    📋  СПИСОК УСЛУГ";
-            this.buttonEditService.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonEditService.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonEditService.UseVisualStyleBackColor = false;
-
-            // ============================================
-            // ROW 3 - УПРАВЛЕНИЕ ПЕРСОНАЛОМ (ФИОЛЕТОВАЯ)
-            // ============================================
-            this.buttonManageStaff.BackColor = System.Drawing.Color.FromArgb(155, 89, 182); // Фиолетовый
-            this.buttonManageStaff.FlatAppearance.BorderSize = 0;
-            this.buttonManageStaff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonManageStaff.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonManageStaff.ForeColor = System.Drawing.Color.White;
-            this.buttonManageStaff.Image = ((System.Drawing.Image)(resources.GetObject("buttonManageStaff.Image")));
-            this.buttonManageStaff.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonManageStaff.Location = new System.Drawing.Point(30, 280);
-            this.buttonManageStaff.Name = "buttonManageStaff";
-            this.buttonManageStaff.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.buttonManageStaff.Size = new System.Drawing.Size(840, 70);
-            this.buttonManageStaff.TabIndex = 4;
-            this.buttonManageStaff.Text = "    👥  УПРАВЛЕНИЕ ПЕРСОНАЛОМ";
-            this.buttonManageStaff.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonManageStaff.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonManageStaff.UseVisualStyleBackColor = false;
-
-            // ============================================
-            // ROW 4 - ОТЧЕТЫ (СИНЯЯ, ШИРОКАЯ)
-            // ============================================
-            this.buttonReportHouse.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+            // 
+            // buttonExit
+            // 
+            this.buttonExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonExit.BackColor = System.Drawing.Color.Transparent;
+            this.buttonExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.buttonExit.FlatAppearance.BorderSize = 2;
+            this.buttonExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExit.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.buttonExit.Location = new System.Drawing.Point(640, 469);
+            this.buttonExit.Name = "buttonExit";
+            this.buttonExit.Size = new System.Drawing.Size(250, 50);
+            this.buttonExit.TabIndex = 6;
+            this.buttonExit.Text = "🚪  ВЫХОД ИЗ СИСТЕМЫ";
+            this.buttonExit.UseVisualStyleBackColor = false;
+            // 
+            // buttonReportHouse
+            // 
+            this.buttonReportHouse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
             this.buttonReportHouse.FlatAppearance.BorderSize = 0;
             this.buttonReportHouse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonReportHouse.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonReportHouse.ForeColor = System.Drawing.Color.White;
-            this.buttonReportHouse.Image = ((System.Drawing.Image)(resources.GetObject("buttonReportHouse.Image")));
             this.buttonReportHouse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonReportHouse.Location = new System.Drawing.Point(30, 370);
             this.buttonReportHouse.Name = "buttonReportHouse";
@@ -272,60 +157,149 @@
             this.buttonReportHouse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonReportHouse.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonReportHouse.UseVisualStyleBackColor = false;
-
-            // ============================================
-            // EXIT BUTTON
-            // ============================================
-            this.buttonExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonExit.BackColor = System.Drawing.Color.Transparent;
-            this.buttonExit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(220, 80, 80);
-            this.buttonExit.FlatAppearance.BorderSize = 2;
-            this.buttonExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExit.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonExit.ForeColor = System.Drawing.Color.FromArgb(220, 80, 80);
-            this.buttonExit.Location = new System.Drawing.Point(620, 460);
-            this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(250, 50);
-            this.buttonExit.TabIndex = 6;
-            this.buttonExit.Text = "🚪  ВЫХОД ИЗ СИСТЕМЫ";
-            this.buttonExit.UseVisualStyleBackColor = false;
-
-            // ============================================
-            // VERSION
-            // ============================================
-            this.labelVersion.AutoSize = true;
-            this.labelVersion.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelVersion.ForeColor = System.Drawing.Color.FromArgb(150, 150, 150);
-            this.labelVersion.Location = new System.Drawing.Point(30, 480);
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(142, 13);
-            this.labelVersion.TabIndex = 7;
-            this.labelVersion.Text = "База отдыха v1.0 | Управляющий";
-
-            // ============================================
-            // FORM
-            // ============================================
+            // 
+            // buttonManageStaff
+            // 
+            this.buttonManageStaff.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
+            this.buttonManageStaff.FlatAppearance.BorderSize = 0;
+            this.buttonManageStaff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonManageStaff.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonManageStaff.ForeColor = System.Drawing.Color.White;
+            this.buttonManageStaff.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonManageStaff.Location = new System.Drawing.Point(30, 280);
+            this.buttonManageStaff.Name = "buttonManageStaff";
+            this.buttonManageStaff.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.buttonManageStaff.Size = new System.Drawing.Size(840, 70);
+            this.buttonManageStaff.TabIndex = 4;
+            this.buttonManageStaff.Text = "    👥  УПРАВЛЕНИЕ ПЕРСОНАЛОМ";
+            this.buttonManageStaff.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonManageStaff.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonManageStaff.UseVisualStyleBackColor = false;
+            // 
+            // buttonEditService
+            // 
+            this.buttonEditService.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonEditService.FlatAppearance.BorderSize = 0;
+            this.buttonEditService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonEditService.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonEditService.ForeColor = System.Drawing.Color.White;
+            this.buttonEditService.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonEditService.Location = new System.Drawing.Point(470, 190);
+            this.buttonEditService.Name = "buttonEditService";
+            this.buttonEditService.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.buttonEditService.Size = new System.Drawing.Size(400, 70);
+            this.buttonEditService.TabIndex = 3;
+            this.buttonEditService.Text = "    📋  СПИСОК УСЛУГ";
+            this.buttonEditService.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonEditService.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonEditService.UseVisualStyleBackColor = false;
+            // 
+            // buttonAddService
+            // 
+            this.buttonAddService.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonAddService.FlatAppearance.BorderSize = 0;
+            this.buttonAddService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddService.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAddService.ForeColor = System.Drawing.Color.White;
+            this.buttonAddService.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAddService.Location = new System.Drawing.Point(30, 190);
+            this.buttonAddService.Name = "buttonAddService";
+            this.buttonAddService.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.buttonAddService.Size = new System.Drawing.Size(400, 70);
+            this.buttonAddService.TabIndex = 2;
+            this.buttonAddService.Text = "    ✨  ДОБАВИТЬ НОВУЮ УСЛУГУ";
+            this.buttonAddService.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAddService.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonAddService.UseVisualStyleBackColor = false;
+            // 
+            // buttonEditHouse
+            // 
+            this.buttonEditHouse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.buttonEditHouse.FlatAppearance.BorderSize = 0;
+            this.buttonEditHouse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonEditHouse.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonEditHouse.ForeColor = System.Drawing.Color.White;
+            this.buttonEditHouse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonEditHouse.Location = new System.Drawing.Point(470, 100);
+            this.buttonEditHouse.Name = "buttonEditHouse";
+            this.buttonEditHouse.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.buttonEditHouse.Size = new System.Drawing.Size(400, 70);
+            this.buttonEditHouse.TabIndex = 1;
+            this.buttonEditHouse.Text = "    📋  СПИСОК ДОМОВ";
+            this.buttonEditHouse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonEditHouse.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonEditHouse.UseVisualStyleBackColor = false;
+            // 
+            // buttonAddHouse
+            // 
+            this.buttonAddHouse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.buttonAddHouse.FlatAppearance.BorderSize = 0;
+            this.buttonAddHouse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddHouse.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAddHouse.ForeColor = System.Drawing.Color.White;
+            this.buttonAddHouse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAddHouse.Location = new System.Drawing.Point(30, 100);
+            this.buttonAddHouse.Name = "buttonAddHouse";
+            this.buttonAddHouse.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.buttonAddHouse.Size = new System.Drawing.Size(400, 70);
+            this.buttonAddHouse.TabIndex = 0;
+            this.buttonAddHouse.Text = "    🏠  ДОБАВИТЬ НОВЫЙ ДОМ";
+            this.buttonAddHouse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAddHouse.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonAddHouse.UseVisualStyleBackColor = false;
+            // 
+            // panelSeparator
+            // 
+            this.panelSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.panelSeparator.Location = new System.Drawing.Point(30, 70);
+            this.panelSeparator.Name = "panelSeparator";
+            this.panelSeparator.Size = new System.Drawing.Size(840, 2);
+            this.panelSeparator.TabIndex = 2;
+            // 
+            // labelUserInfo
+            // 
+            this.labelUserInfo.AutoSize = true;
+            this.labelUserInfo.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelUserInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.labelUserInfo.Location = new System.Drawing.Point(219, 30);
+            this.labelUserInfo.Name = "labelUserInfo";
+            this.labelUserInfo.Size = new System.Drawing.Size(179, 25);
+            this.labelUserInfo.TabIndex = 1;
+            this.labelUserInfo.Text = "Имя пользователя";
+            // 
+            // labelWelcome
+            // 
+            this.labelWelcome.AutoSize = true;
+            this.labelWelcome.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelWelcome.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelWelcome.Location = new System.Drawing.Point(30, 30);
+            this.labelWelcome.Name = "labelWelcome";
+            this.labelWelcome.Size = new System.Drawing.Size(183, 25);
+            this.labelWelcome.TabIndex = 0;
+            this.labelWelcome.Text = "Добро пожаловать,";
+            // 
+            // ManagerForm
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(900, 600);
+            this.ClientSize = new System.Drawing.Size(902, 624);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelGreenLine);
             this.Controls.Add(this.panelHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ManagerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Управляющий - База отдыха";
-
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.panelContent.ResumeLayout(false);
             this.panelContent.PerformLayout();
             this.ResumeLayout(false);
+
         }
     }
 }

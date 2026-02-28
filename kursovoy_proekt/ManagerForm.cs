@@ -231,5 +231,10 @@ namespace kursovoy_proekt
             buttonExit.ForeColor = Color.FromArgb(220, 80, 80);
             buttonExit.Font = new Font(buttonExit.Font, FontStyle.Regular);
         }
+
+        private void labelVersion_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
