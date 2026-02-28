@@ -103,6 +103,12 @@
     <Compile Include="AddService.Designer.cs">
       <DependentUpon>AddService.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddStaff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddStaff.Designer.cs">
+      <DependentUpon>AddStaff.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +193,12 @@
     </Compile>
     <Compile Include="ServiceItem.cs" />
     <Compile Include="Session.cs" />
+    <Compile Include="StaffList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StaffList.Designer.cs">
+      <DependentUpon>StaffList.cs</DependentUpon>
+    </Compile>
     <Compile Include="СlientList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RevenueReport.resx">
       <DependentUpon>RevenueReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaffList.resx">
+      <DependentUpon>StaffList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="СlientList.resx">
       <DependentUpon>СlientList.cs</DependentUpon>

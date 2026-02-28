@@ -250,7 +250,7 @@
             this.labelUserInfo.AutoSize = true;
             this.labelUserInfo.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelUserInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
-            this.labelUserInfo.Location = new System.Drawing.Point(211, 30);
+            this.labelUserInfo.Location = new System.Drawing.Point(219, 30);
             this.labelUserInfo.Name = "labelUserInfo";
             this.labelUserInfo.Size = new System.Drawing.Size(179, 25);
             this.labelUserInfo.TabIndex = 1;
