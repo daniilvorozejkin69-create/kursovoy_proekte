@@ -31,10 +31,6 @@ namespace kursovoy_proekt
             {
                 labelUserInfo.Text = Session.UserName;
             }
-            else
-            {
-                labelUserInfo.Text = "Сотрудник";
-            }
 
             // Настройка DataGridView
             dataGridViewStaff.AutoGenerateColumns = false;
@@ -73,18 +69,29 @@ namespace kursovoy_proekt
             // Альтернативные строки
             dataGridViewStaff.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 250, 245);
 
+            // Создаем колонки
+            CreateColumns();
+
+            // Настройка поиска
+            SetupSearchBox();
+
+            // Настройка кнопок
+            SetupButtons();
+
             // Подписка на события
+            this.Load += StaffList_Load;
+
             textBoxSearch.TextChanged += TextBoxSearch_TextChanged;
             buttonPrev.Click += ButtonPrev_Click;
             buttonNext.Click += ButtonNext_Click;
             buttonAdd.Click += ButtonAdd_Click;
             buttonEdit.Click += ButtonEdit_Click;
-            buttonDelete.Click += ButtonDelete_Click;
-            buttonBackToMenu.Click += ButtonBackToMenu_Click;
             buttonRefresh.Click += ButtonRefresh_Click;
+            buttonBackToMenu.Click += ButtonBackToMenu_Click;
+            buttonApplyFilter.Click += ButtonApplyFilter_Click;
 
-            comboBoxRole.SelectedIndexChanged += Filter_Changed;
-            comboBoxStatus.SelectedIndexChanged += Filter_Changed;
+            comboBoxRoleFilter.SelectedIndexChanged += Filter_Changed;
+            comboBoxStatusFilter.SelectedIndexChanged += Filter_Changed;
 
             dataGridViewStaff.SelectionChanged += DataGridViewStaff_SelectionChanged;
             dataGridViewStaff.CellDoubleClick += DataGridViewStaff_CellDoubleClick;
@@ -97,8 +104,6 @@ namespace kursovoy_proekt
             buttonAdd.MouseLeave += ButtonAdd_MouseLeave;
             buttonEdit.MouseEnter += ButtonEdit_MouseEnter;
             buttonEdit.MouseLeave += ButtonEdit_MouseLeave;
-            buttonDelete.MouseEnter += ButtonDelete_MouseEnter;
-            buttonDelete.MouseLeave += ButtonDelete_MouseLeave;
             buttonRefresh.MouseEnter += ButtonRefresh_MouseEnter;
             buttonRefresh.MouseLeave += ButtonRefresh_MouseLeave;
             buttonPrev.MouseEnter += ButtonPrev_MouseEnter;
@@ -107,6 +112,111 @@ namespace kursovoy_proekt
             buttonNext.MouseLeave += ButtonNext_MouseLeave;
             buttonBackToMenu.MouseEnter += ButtonBackToMenu_MouseEnter;
             buttonBackToMenu.MouseLeave += ButtonBackToMenu_MouseLeave;
+            buttonApplyFilter.MouseEnter += ButtonApplyFilter_MouseEnter;
+            buttonApplyFilter.MouseLeave += ButtonApplyFilter_MouseLeave;
+        }
+
+        private void CreateColumns()
+        {
+            dataGridViewStaff.Columns.Clear();
+
+            // ID - скрытая колонка
+            DataGridViewTextBoxColumn colId = new DataGridViewTextBoxColumn();
+            colId.Name = "ID";
+            colId.DataPropertyName = "ID";
+            colId.Visible = false;
+            dataGridViewStaff.Columns.Add(colId);
+
+            // ФИО
+            DataGridViewTextBoxColumn colFIO = new DataGridViewTextBoxColumn();
+            colFIO.HeaderText = "ФИО";
+            colFIO.Name = "ФИО";
+            colFIO.DataPropertyName = "ФИО";
+            colFIO.Width = 250;
+            colFIO.DefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            colFIO.DefaultCellStyle.ForeColor = Color.FromArgb(44, 62, 80);
+            dataGridViewStaff.Columns.Add(colFIO);
+
+            // Должность
+            DataGridViewTextBoxColumn colPosition = new DataGridViewTextBoxColumn();
+            colPosition.HeaderText = "Должность";
+            colPosition.Name = "Должность";
+            colPosition.DataPropertyName = "Должность";
+            colPosition.Width = 180;
+            dataGridViewStaff.Columns.Add(colPosition);
+
+            // Телефон
+            DataGridViewTextBoxColumn colPhone = new DataGridViewTextBoxColumn();
+            colPhone.HeaderText = "Телефон";
+            colPhone.Name = "Телефон";
+            colPhone.DataPropertyName = "Телефон";
+            colPhone.Width = 150;
+            colPhone.DefaultCellStyle.Font = new Font("Consolas", 10);
+            colPhone.DefaultCellStyle.ForeColor = Color.FromArgb(39, 174, 96);
+            dataGridViewStaff.Columns.Add(colPhone);
+
+            // Email
+            DataGridViewTextBoxColumn colEmail = new DataGridViewTextBoxColumn();
+            colEmail.HeaderText = "Email";
+            colEmail.Name = "Email";
+            colEmail.DataPropertyName = "Email";
+            colEmail.Width = 200;
+            colEmail.DefaultCellStyle.Font = new Font("Consolas", 10);
+            colEmail.DefaultCellStyle.ForeColor = Color.FromArgb(155, 89, 182);
+            dataGridViewStaff.Columns.Add(colEmail);
+
+            // Паспорт
+            DataGridViewTextBoxColumn colPassport = new DataGridViewTextBoxColumn();
+            colPassport.HeaderText = "Паспорт";
+            colPassport.Name = "Паспорт";
+            colPassport.DataPropertyName = "Паспорт";
+            colPassport.Width = 130;
+            colPassport.DefaultCellStyle.Font = new Font("Consolas", 10);
+            colPassport.DefaultCellStyle.ForeColor = Color.FromArgb(41, 128, 185);
+            colPassport.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewStaff.Columns.Add(colPassport);
+
+            // Дата приёма
+            DataGridViewTextBoxColumn colHireDate = new DataGridViewTextBoxColumn();
+            colHireDate.HeaderText = "Дата приёма";
+            colHireDate.Name = "Дата приёма";
+            colHireDate.DataPropertyName = "Дата приёма";
+            colHireDate.Width = 100;
+            colHireDate.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewStaff.Columns.Add(colHireDate);
+
+            // Статус
+            DataGridViewTextBoxColumn colStatus = new DataGridViewTextBoxColumn();
+            colStatus.HeaderText = "Статус";
+            colStatus.Name = "Статус";
+            colStatus.DataPropertyName = "Статус";
+            colStatus.Width = 80;
+            colStatus.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewStaff.Columns.Add(colStatus);
+
+            // Учетка
+            DataGridViewTextBoxColumn colAccount = new DataGridViewTextBoxColumn();
+            colAccount.HeaderText = "Учетная запись";
+            colAccount.Name = "Учетка";
+            colAccount.DataPropertyName = "Учетка";
+            colAccount.Width = 200;
+            colAccount.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewStaff.Columns.Add(colAccount);
+        }
+
+        private void SetupSearchBox()
+        {
+            textBoxSearch.Font = new Font("Segoe UI", 11);
+            textBoxSearch.BorderStyle = BorderStyle.FixedSingle;
+            textBoxSearch.BackColor = Color.White;
+            textBoxSearch.Size = new Size(300, 30);
+            textBoxSearch.Text = "🔍 Поиск по ФИО, должности...";
+            textBoxSearch.ForeColor = Color.Gray;
+        }
+
+        private void SetupButtons()
+        {
+            // Кнопки уже настроены в дизайнере
         }
 
         private void StaffList_Load(object sender, EventArgs e)
@@ -126,19 +236,17 @@ namespace kursovoy_proekt
                         SELECT 
                             p.id,
                             p.FIO,
-                            pos.position_name as Должность,
-                            p.job_title,
-                            p.email,
+                            p.job_title as Должность,
                             p.telephone_number,
-                            p.photo,
+                            p.email,
+                            p.passport_series_number,
                             p.hire_date,
                             p.is_active,
                             u.id as user_id,
                             u.login,
-                            u.role_id,
+                            u.is_active as user_active,
                             r.role_name
                         FROM personal p
-                        LEFT JOIN positions pos ON p.position_id = pos.id
                         LEFT JOIN users u ON p.id = u.personal_id
                         LEFT JOIN role r ON u.role_id = r.id
                         ORDER BY p.FIO";
@@ -149,40 +257,47 @@ namespace kursovoy_proekt
                         originalStaffData = new DataTable();
                         adapter.Fill(originalStaffData);
 
-                        // Создаем таблицу для отображения
                         DataTable displayTable = new DataTable();
                         displayTable.Columns.Add("ID", typeof(int));
                         displayTable.Columns.Add("ФИО", typeof(string));
                         displayTable.Columns.Add("Должность", typeof(string));
-                        displayTable.Columns.Add("Роль", typeof(string));
-                        displayTable.Columns.Add("Логин", typeof(string));
                         displayTable.Columns.Add("Телефон", typeof(string));
                         displayTable.Columns.Add("Email", typeof(string));
+                        displayTable.Columns.Add("Паспорт", typeof(string));
                         displayTable.Columns.Add("Дата приёма", typeof(string));
-                        displayTable.Columns.Add("Активен", typeof(bool));
+                        displayTable.Columns.Add("Статус", typeof(string));
+                        displayTable.Columns.Add("Учетка", typeof(string));
 
                         foreach (DataRow row in originalStaffData.Rows)
                         {
                             DataRow newRow = displayTable.NewRow();
                             newRow["ID"] = row["id"];
                             newRow["ФИО"] = row["FIO"].ToString();
-                            newRow["Должность"] = row["Должность"]?.ToString() ?? row["job_title"].ToString();
-                            newRow["Роль"] = row["role_name"]?.ToString() ?? "Нет доступа";
-                            newRow["Логин"] = row["login"]?.ToString() ?? "-";
-                            newRow["Телефон"] = MaskPhone(row["telephone_number"].ToString());
+                            newRow["Должность"] = row["Должность"].ToString();
+                            newRow["Телефон"] = FormatPhone(row["telephone_number"].ToString());
                             newRow["Email"] = MaskEmail(row["email"].ToString());
+                            newRow["Паспорт"] = MaskPassport(row["passport_series_number"].ToString());
 
                             if (row["hire_date"] != DBNull.Value)
                             {
                                 DateTime hireDate = Convert.ToDateTime(row["hire_date"]);
                                 newRow["Дата приёма"] = hireDate.ToString("dd.MM.yyyy");
                             }
+
+                            bool isActive = row["is_active"] != DBNull.Value && Convert.ToBoolean(row["is_active"]);
+                            newRow["Статус"] = isActive ? "Активен" : "Уволен";
+
+                            bool hasAccount = row["user_id"] != DBNull.Value;
+                            if (hasAccount)
+                            {
+                                bool userActive = row["user_active"] != DBNull.Value && Convert.ToBoolean(row["user_active"]);
+                                string role = row["role_name"]?.ToString() ?? "Нет роли";
+                                newRow["Учетка"] = $"{role} ({(userActive ? "активна" : "неактивна")})";
+                            }
                             else
                             {
-                                newRow["Дата приёма"] = "";
+                                newRow["Учетка"] = "Нет";
                             }
-
-                            newRow["Активен"] = row["is_active"] != DBNull.Value && Convert.ToBoolean(row["is_active"]);
 
                             displayTable.Rows.Add(newRow);
                         }
@@ -203,7 +318,7 @@ namespace kursovoy_proekt
             }
         }
 
-        private string MaskPhone(string phone)
+        private string FormatPhone(string phone)
         {
             if (string.IsNullOrEmpty(phone)) return "";
 
@@ -224,8 +339,64 @@ namespace kursovoy_proekt
                 return $"{parts[0]}***@{parts[1]}";
             if (parts[0].Length <= 3)
                 return $"{parts[0][0]}{new string('*', parts[0].Length - 1)}@{parts[1]}";
-
             return $"{parts[0][0]}{new string('*', parts[0].Length - 2)}{parts[0][parts[0].Length - 1]}@{parts[1]}";
+        }
+
+        private string MaskPassport(string passport)
+        {
+            if (string.IsNullOrEmpty(passport)) return "";
+            if (passport.Length >= 4)
+            {
+                string visible = passport.Substring(0, 4);
+                string masked = new string('•', passport.Length - 4);
+                return visible + masked;
+            }
+            return passport;
+        }
+
+        private void ApplyFilter()
+        {
+            if (allStaffData == null) return;
+
+            string search = textBoxSearch.Text.Trim();
+            if (search == "🔍 Поиск по ФИО, должности..." || string.IsNullOrEmpty(search))
+            {
+                filteredStaffData = allStaffData.Copy();
+            }
+            else
+            {
+                DataView dv = allStaffData.DefaultView;
+                dv.RowFilter = $"ФИО LIKE '%{search.Replace("'", "''")}%' OR " +
+                               $"Должность LIKE '%{search.Replace("'", "''")}%'";
+                filteredStaffData = dv.ToTable();
+            }
+
+            // Фильтр по роли
+            if (comboBoxRoleFilter.SelectedIndex > 0)
+            {
+                string selectedRole = comboBoxRoleFilter.SelectedItem.ToString();
+                DataView dv = filteredStaffData.DefaultView;
+                dv.RowFilter = $"Учетка LIKE '%{selectedRole}%'";
+                filteredStaffData = dv.ToTable();
+            }
+
+            // Фильтр по статусу
+            if (comboBoxStatusFilter.SelectedIndex == 1) // Активные
+            {
+                DataView dv = filteredStaffData.DefaultView;
+                dv.RowFilter = "Статус = 'Активен'";
+                filteredStaffData = dv.ToTable();
+            }
+            else if (comboBoxStatusFilter.SelectedIndex == 2) // Уволенные
+            {
+                DataView dv = filteredStaffData.DefaultView;
+                dv.RowFilter = "Статус = 'Уволен'";
+                filteredStaffData = dv.ToTable();
+            }
+
+            currentPage = 1;
+            UpdatePagination();
+            LoadCurrentPage();
         }
 
         private void UpdatePagination()
@@ -251,7 +422,22 @@ namespace kursovoy_proekt
             }
 
             dataGridViewStaff.DataSource = currentPageData;
+
+            // Включаем сортировку
+            EnableSorting();
+
             UpdatePageInfo();
+        }
+
+        private void EnableSorting()
+        {
+            if (dataGridViewStaff.Columns.Count > 0)
+            {
+                foreach (DataGridViewColumn col in dataGridViewStaff.Columns)
+                {
+                    col.SortMode = DataGridViewColumnSortMode.Automatic;
+                }
+            }
         }
 
         private void UpdatePageInfo()
@@ -265,63 +451,11 @@ namespace kursovoy_proekt
             buttonNext.BackColor = buttonNext.Enabled ? Color.FromArgb(106, 153, 85) : Color.FromArgb(200, 200, 200);
 
             buttonEdit.Enabled = dataGridViewStaff.SelectedRows.Count > 0;
-            buttonDelete.Enabled = dataGridViewStaff.SelectedRows.Count > 0;
-
             buttonEdit.BackColor = buttonEdit.Enabled ? Color.FromArgb(46, 204, 113) : Color.FromArgb(200, 200, 200);
-            buttonDelete.BackColor = buttonDelete.Enabled ? Color.FromArgb(231, 76, 60) : Color.FromArgb(200, 200, 200);
-        }
-
-        private void ApplyFilter()
-        {
-            if (allStaffData == null) return;
-
-            string search = textBoxSearch.Text.Trim();
-            if (search == "Поиск по ФИО, должности..." || string.IsNullOrEmpty(search))
-            {
-                search = "";
-            }
-
-            filteredStaffData = allStaffData.Copy();
-
-            if (!string.IsNullOrEmpty(search))
-            {
-                DataView dv = filteredStaffData.DefaultView;
-                dv.RowFilter = $"ФИО LIKE '%{search.Replace("'", "''")}%' OR " +
-                               $"Должность LIKE '%{search.Replace("'", "''")}%' OR " +
-                               $"Email LIKE '%{search.Replace("'", "''")}%'";
-                filteredStaffData = dv.ToTable();
-            }
-
-            // Фильтр по роли
-            if (comboBoxRole.SelectedIndex > 0)
-            {
-                string selectedRole = comboBoxRole.SelectedItem.ToString();
-                DataView dv = filteredStaffData.DefaultView;
-                dv.RowFilter = $"Роль = '{selectedRole}'";
-                filteredStaffData = dv.ToTable();
-            }
-
-            // Фильтр по статусу
-            if (comboBoxStatus.SelectedIndex == 1) // Активные
-            {
-                DataView dv = filteredStaffData.DefaultView;
-                dv.RowFilter = "Активен = True";
-                filteredStaffData = dv.ToTable();
-            }
-            else if (comboBoxStatus.SelectedIndex == 2) // Неактивные
-            {
-                DataView dv = filteredStaffData.DefaultView;
-                dv.RowFilter = "Активен = False";
-                filteredStaffData = dv.ToTable();
-            }
-
-            currentPage = 1;
-            UpdatePagination();
-            LoadCurrentPage();
         }
 
         // ============================================
-        // ОБРАБОТЧИКИ СОБЫТИЙ
+        // ОБРАБОТЧИКИ
         // ============================================
 
         private void TextBoxSearch_TextChanged(object sender, EventArgs e)
@@ -331,7 +465,7 @@ namespace kursovoy_proekt
 
         private void TextBoxSearch_Enter(object sender, EventArgs e)
         {
-            if (textBoxSearch.Text == "Поиск по ФИО, должности...")
+            if (textBoxSearch.Text == "🔍 Поиск по ФИО, должности...")
             {
                 textBoxSearch.Text = "";
                 textBoxSearch.ForeColor = Color.FromArgb(64, 64, 64);
@@ -343,13 +477,18 @@ namespace kursovoy_proekt
         {
             if (string.IsNullOrWhiteSpace(textBoxSearch.Text))
             {
-                textBoxSearch.Text = "Поиск по ФИО, должности...";
+                textBoxSearch.Text = "🔍 Поиск по ФИО, должности...";
                 textBoxSearch.ForeColor = Color.Gray;
             }
             textBoxSearch.BackColor = Color.White;
         }
 
         private void Filter_Changed(object sender, EventArgs e)
+        {
+            ApplyFilter();
+        }
+
+        private void ButtonApplyFilter_Click(object sender, EventArgs e)
         {
             ApplyFilter();
         }
@@ -380,8 +519,7 @@ namespace kursovoy_proekt
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
             AddStaff addForm = new AddStaff();
-            addForm.ShowDialog();
-            if (addForm.DialogResult == DialogResult.OK)
+            if (addForm.ShowDialog() == DialogResult.OK)
             {
                 LoadAllStaffData();
             }
@@ -389,108 +527,27 @@ namespace kursovoy_proekt
 
         private void ButtonEdit_Click(object sender, EventArgs e)
         {
-            EditSelectedStaff();
-        }
-
-        private void EditSelectedStaff()
-        {
-            if (dataGridViewStaff.SelectedRows.Count == 0) return;
-
-            int id = Convert.ToInt32(dataGridViewStaff.SelectedRows[0].Cells["ID"].Value);
-
-            AddStaff editForm = new AddStaff(id);
-            editForm.ShowDialog();
-            if (editForm.DialogResult == DialogResult.OK)
+            if (dataGridViewStaff.SelectedRows.Count == 0)
             {
-                LoadAllStaffData();
-            }
-        }
-
-        private void ButtonDelete_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewStaff.SelectedRows.Count == 0) return;
-
-            int id = Convert.ToInt32(dataGridViewStaff.SelectedRows[0].Cells["ID"].Value);
-            int userId = 0;
-
-            // Находим userId в originalStaffData
-            DataRow[] rows = originalStaffData.Select($"id = {id}");
-            if (rows.Length > 0 && rows[0]["user_id"] != DBNull.Value)
-            {
-                userId = Convert.ToInt32(rows[0]["user_id"]);
-            }
-
-            if (userId == Session.UserId)
-            {
-                MessageBox.Show("Вы не можете удалить свою собственную учетную запись.",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Выберите сотрудника для редактирования.", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var result = MessageBox.Show("Вы уверены, что хотите удалить этого сотрудника?\n" +
-                                        "⚠️ Это действие нельзя отменить.",
-                                        "Подтверждение удаления",
-                                        MessageBoxButtons.YesNo,
-                                        MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
-            {
-                DeleteStaff(id);
-            }
-        }
-
-        private void DeleteStaff(int staffId)
-        {
             try
             {
-                using (var connection = DatabaseConnection.GetConnection())
+                int id = Convert.ToInt32(dataGridViewStaff.SelectedRows[0].Cells["ID"].Value);
+
+                AddStaff editForm = new AddStaff(id);
+                if (editForm.ShowDialog() == DialogResult.OK)
                 {
-                    connection.Open();
-                    using (var transaction = connection.BeginTransaction())
-                    {
-                        try
-                        {
-                            // Удаляем пользователя
-                            string deleteUser = "DELETE FROM users WHERE personal_id = @staffId";
-                            using (var cmd = new MySqlCommand(deleteUser, connection, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@staffId", staffId);
-                                cmd.ExecuteNonQuery();
-                            }
-
-                            // Удаляем сотрудника
-                            string deleteStaff = "DELETE FROM personal WHERE id = @staffId";
-                            using (var cmd = new MySqlCommand(deleteStaff, connection, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@staffId", staffId);
-                                cmd.ExecuteNonQuery();
-                            }
-
-                            transaction.Commit();
-                            MessageBox.Show("🗑️ Сотрудник успешно удален!", "Успех",
-                                           MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LoadAllStaffData();
-                        }
-                        catch
-                        {
-                            transaction.Rollback();
-                            throw;
-                        }
-                    }
+                    LoadAllStaffData();
                 }
-            }
-            catch (MySqlException ex) when (ex.Number == 1451)
-            {
-                MessageBox.Show("❌ Нельзя удалить сотрудника, который создавал заказы.\n" +
-                              "Сначала деактивируйте его учетную запись.",
-                              "Ошибка удаления",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при удалении: {ex.Message}",
-                              "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка при открытии формы редактирования: {ex.Message}",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -508,7 +565,7 @@ namespace kursovoy_proekt
         {
             if (e.RowIndex >= 0)
             {
-                EditSelectedStaff();
+                ButtonEdit_Click(sender, e);
             }
         }
 
@@ -544,24 +601,6 @@ namespace kursovoy_proekt
                 buttonEdit.BackColor = Color.FromArgb(46, 204, 113);
             }
             buttonEdit.Font = new Font(buttonEdit.Font, FontStyle.Regular);
-        }
-
-        private void ButtonDelete_MouseEnter(object sender, EventArgs e)
-        {
-            if (buttonDelete.Enabled)
-            {
-                buttonDelete.BackColor = Color.FromArgb(192, 57, 43);
-                buttonDelete.Font = new Font(buttonDelete.Font, FontStyle.Bold);
-            }
-        }
-
-        private void ButtonDelete_MouseLeave(object sender, EventArgs e)
-        {
-            if (buttonDelete.Enabled)
-            {
-                buttonDelete.BackColor = Color.FromArgb(231, 76, 60);
-            }
-            buttonDelete.Font = new Font(buttonDelete.Font, FontStyle.Regular);
         }
 
         private void ButtonRefresh_MouseEnter(object sender, EventArgs e)
@@ -618,6 +657,18 @@ namespace kursovoy_proekt
             buttonBackToMenu.BackColor = Color.Transparent;
             buttonBackToMenu.ForeColor = Color.FromArgb(52, 152, 219);
             buttonBackToMenu.Font = new Font(buttonBackToMenu.Font, FontStyle.Regular);
+        }
+
+        private void ButtonApplyFilter_MouseEnter(object sender, EventArgs e)
+        {
+            buttonApplyFilter.BackColor = Color.FromArgb(86, 133, 65);
+            buttonApplyFilter.Font = new Font(buttonApplyFilter.Font, FontStyle.Bold);
+        }
+
+        private void ButtonApplyFilter_MouseLeave(object sender, EventArgs e)
+        {
+            buttonApplyFilter.BackColor = Color.FromArgb(106, 153, 85);
+            buttonApplyFilter.Font = new Font(buttonApplyFilter.Font, FontStyle.Regular);
         }
     }
 }

@@ -34,83 +34,37 @@ namespace kursovoy_proekt
 
         private void SetupForm()
         {
-            // Настройка элементов
-            SetupControls();
-
-            // Загружаем должности в комбобокс
+            // Загружаем должности
             LoadPositions();
 
             // Настройка дат
-            dateTimePickerBirthDate.MaxDate = DateTime.Now.AddYears(-18);
-            dateTimePickerBirthDate.MinDate = DateTime.Now.AddYears(-100);
-            dateTimePickerBirthDate.Value = DateTime.Now.AddYears(-30);
-
             dateTimePickerHireDate.MaxDate = DateTime.Now;
             dateTimePickerHireDate.Value = DateTime.Now;
 
             if (currentMode == FormMode.Edit)
             {
-                labelHeader.Text = "✏️  РЕДАКТИРОВАНИЕ СОТРУДНИКА";
-                buttonSave.Text = "💾  СОХРАНИТЬ";
+                labelHeader.Text = "✏️ РЕДАКТИРОВАНИЕ СОТРУДНИКА";
+                buttonSave.Text = "💾 СОХРАНИТЬ";
+                buttonFire.Visible = true;
                 LoadStaffData();
             }
             else
             {
-                labelHeader.Text = "➕  ДОБАВЛЕНИЕ СОТРУДНИКА";
-                buttonSave.Text = "✅  ДОБАВИТЬ";
+                labelHeader.Text = "➕ ДОБАВЛЕНИЕ СОТРУДНИКА";
+                buttonSave.Text = "✅ ДОБАВИТЬ";
+                buttonFire.Visible = false;
+                comboBoxStatus.SelectedIndex = 0;
             }
 
             // Подписка на события
             buttonLoadPhoto.Click += ButtonLoadPhoto_Click;
             buttonClearPhoto.Click += ButtonClearPhoto_Click;
             buttonSave.Click += ButtonSave_Click;
+            buttonFire.Click += ButtonFire_Click;
             buttonCancel.Click += ButtonCancel_Click;
 
-            // Эффекты наведения
-            buttonSave.MouseEnter += ButtonSave_MouseEnter;
-            buttonSave.MouseLeave += ButtonSave_MouseLeave;
-            buttonCancel.MouseEnter += ButtonCancel_MouseEnter;
-            buttonCancel.MouseLeave += ButtonCancel_MouseLeave;
-            buttonLoadPhoto.MouseEnter += ButtonLoadPhoto_MouseEnter;
-            buttonLoadPhoto.MouseLeave += ButtonLoadPhoto_MouseLeave;
-            buttonClearPhoto.MouseEnter += ButtonClearPhoto_MouseEnter;
-            buttonClearPhoto.MouseLeave += ButtonClearPhoto_MouseLeave;
-
-            // Подсветка полей
-            textBoxFIO.Enter += Control_Enter;
-            textBoxFIO.Leave += Control_Leave;
-            textBoxEmail.Enter += Control_Enter;
-            textBoxEmail.Leave += Control_Leave;
-            textBoxAddress.Enter += Control_Enter;
-            textBoxAddress.Leave += Control_Leave;
-            maskedTextBoxPhone.Enter += Control_Enter;
-            maskedTextBoxPhone.Leave += Control_Leave;
-            maskedTextBoxPassport.Enter += Control_Enter;
-            maskedTextBoxPassport.Leave += Control_Leave;
-            comboBoxPosition.Enter += Control_Enter;
-            comboBoxPosition.Leave += Control_Leave;
-            dateTimePickerBirthDate.Enter += Control_Enter;
-            dateTimePickerBirthDate.Leave += Control_Leave;
-            dateTimePickerHireDate.Enter += Control_Enter;
-            dateTimePickerHireDate.Leave += Control_Leave;
-        }
-
-        private void SetupControls()
-        {
-            // Настройка масок
-            maskedTextBoxPhone.Mask = "+7 (000) 000-00-00";
-            maskedTextBoxPhone.PromptChar = ' ';
-
-            maskedTextBoxPassport.Mask = "00 00 000000";
-            maskedTextBoxPassport.PromptChar = ' ';
-
-            // Настройка шрифтов
-            textBoxFIO.Font = new Font("Segoe UI", 11);
-            textBoxEmail.Font = new Font("Segoe UI", 11);
-            textBoxAddress.Font = new Font("Segoe UI", 11);
-
-            // Настройка выпадающего списка
-            comboBoxPosition.DropDownStyle = ComboBoxStyle.DropDownList;
+            textBoxSalary.KeyPress += TextBoxSalary_KeyPress;
+            textBoxSalary.Leave += TextBoxSalary_Leave;
         }
 
         private void LoadPositions()
@@ -145,7 +99,6 @@ namespace kursovoy_proekt
             }
         }
 
-        // Вспомогательный класс для хранения должностей
         private class PositionItem
         {
             public int Id { get; set; }
@@ -173,7 +126,17 @@ namespace kursovoy_proekt
 
                     string query = @"
                         SELECT 
-                            p.*
+                            p.FIO,
+                            p.position_id,
+                            p.job_title,
+                            p.telephone_number,
+                            p.email,
+                            p.passport_series_number,
+                            p.address,
+                            p.hire_date,
+                            p.salary,
+                            p.is_active,
+                            p.photo
                         FROM personal p
                         WHERE p.id = @staffId";
 
@@ -185,10 +148,8 @@ namespace kursovoy_proekt
                         {
                             if (reader.Read())
                             {
-                                // ФИО
                                 textBoxFIO.Text = reader["FIO"].ToString();
 
-                                // Должность
                                 int positionId = reader.GetInt32("position_id");
                                 foreach (PositionItem item in comboBoxPosition.Items)
                                 {
@@ -199,20 +160,11 @@ namespace kursovoy_proekt
                                     }
                                 }
 
-                                // Дата рождения - проверяем наличие поля
-                                if (reader["birth_date"] != DBNull.Value)
-                                {
-                                    dateTimePickerBirthDate.Value = Convert.ToDateTime(reader["birth_date"]);
-                                }
-
-                                // Телефон
                                 string phone = reader["telephone_number"].ToString();
                                 maskedTextBoxPhone.Text = FormatPhoneForMask(phone);
 
-                                // Email
                                 textBoxEmail.Text = reader["email"].ToString();
 
-                                // Паспорт
                                 string passport = reader["passport_series_number"].ToString();
                                 if (!string.IsNullOrEmpty(passport) && passport.Length == 10)
                                 {
@@ -220,16 +172,30 @@ namespace kursovoy_proekt
                                         $"{passport.Substring(0, 2)} {passport.Substring(2, 2)} {passport.Substring(4)}";
                                 }
 
-                                // Адрес
                                 textBoxAddress.Text = reader["address"].ToString();
 
-                                // Дата приёма
                                 if (reader["hire_date"] != DBNull.Value)
                                 {
                                     dateTimePickerHireDate.Value = Convert.ToDateTime(reader["hire_date"]);
                                 }
 
-                                // Фото
+                                if (reader["salary"] != DBNull.Value)
+                                {
+                                    decimal salary = Convert.ToDecimal(reader["salary"]);
+                                    textBoxSalary.Text = salary.ToString("F2");
+                                }
+
+                                bool isActive = reader["is_active"] != DBNull.Value && Convert.ToBoolean(reader["is_active"]);
+                                comboBoxStatus.SelectedIndex = isActive ? 0 : 1;
+
+                                // ЗАЩИТА: Если это текущий пользователь, блокируем кнопку увольнения
+                                if (editingStaffId == Session.UserId)
+                                {
+                                    buttonFire.Enabled = false;
+                                    buttonFire.Text = "НЕЛЬЗЯ УВОЛИТЬ СЕБЯ";
+                                    buttonFire.BackColor = Color.Gray;
+                                }
+
                                 if (reader["photo"] != DBNull.Value)
                                 {
                                     currentPhotoBytes = (byte[])reader["photo"];
@@ -239,12 +205,6 @@ namespace kursovoy_proekt
                                     }
                                 }
                             }
-                            else
-                            {
-                                MessageBox.Show("Сотрудник не найден.", "Ошибка",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                this.Close();
-                            }
                         }
                     }
                 }
@@ -253,7 +213,6 @@ namespace kursovoy_proekt
             {
                 MessageBox.Show($"Ошибка загрузки: {ex.Message}", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
             }
         }
 
@@ -267,6 +226,31 @@ namespace kursovoy_proekt
                 digits = digits.Substring(1);
             }
             return digits.Length >= 10 ? digits.Substring(0, 10) : digits;
+        }
+
+        private void TextBoxSalary_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TextBoxSalary_Leave(object sender, EventArgs e)
+        {
+            if (decimal.TryParse(textBoxSalary.Text, out decimal salary))
+            {
+                textBoxSalary.Text = salary.ToString("F2");
+            }
+            else
+            {
+                textBoxSalary.Text = "0.00";
+            }
         }
 
         private void ButtonLoadPhoto_Click(object sender, EventArgs e)
@@ -366,6 +350,12 @@ namespace kursovoy_proekt
                 return false;
             }
 
+            if (!decimal.TryParse(textBoxSalary.Text, out decimal salary) || salary < 0)
+            {
+                ShowError("Введите корректную сумму зарплаты", textBoxSalary);
+                return false;
+            }
+
             return true;
         }
 
@@ -433,18 +423,18 @@ namespace kursovoy_proekt
                     string phone = GetCleanPhone();
                     string formattedPhone = FormatPhoneForDB(phone);
                     string passport = GetCleanPassport();
+                    decimal salary = decimal.Parse(textBoxSalary.Text);
+                    bool isActive = comboBoxStatus.SelectedIndex == 0;
 
                     PositionItem selectedPosition = (PositionItem)comboBoxPosition.SelectedItem;
 
                     string insertQuery = @"
                         INSERT INTO personal (
-                            FIO, position_id, job_title, 
-                            telephone_number, email, passport_series_number, 
-                            address, hire_date, photo, is_active
+                            FIO, position_id, job_title, telephone_number, email, 
+                            passport_series_number, address, hire_date, salary, is_active, photo
                         ) VALUES (
-                            @fio, @positionId, @positionName, 
-                            @phone, @email, @passport, 
-                            @address, @hireDate, @photo, TRUE
+                            @fio, @positionId, @positionName, @phone, @email, 
+                            @passport, @address, @hireDate, @salary, @isActive, @photo
                         )";
 
                     using (var cmd = new MySqlCommand(insertQuery, connection))
@@ -460,12 +450,13 @@ namespace kursovoy_proekt
                         cmd.Parameters.AddWithValue("@address",
                             string.IsNullOrWhiteSpace(textBoxAddress.Text) ? DBNull.Value : (object)textBoxAddress.Text.Trim());
                         cmd.Parameters.AddWithValue("@hireDate", dateTimePickerHireDate.Value.Date);
+                        cmd.Parameters.AddWithValue("@salary", salary);
+                        cmd.Parameters.AddWithValue("@isActive", isActive);
                         cmd.Parameters.AddWithValue("@photo", currentPhotoBytes ?? (object)DBNull.Value);
 
                         cmd.ExecuteNonQuery();
                     }
 
-                    DataChanged = true;
                     MessageBox.Show("✅ Сотрудник успешно добавлен!", "Успех",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
@@ -498,6 +489,15 @@ namespace kursovoy_proekt
 
         private void UpdateStaff()
         {
+            // ЗАЩИТА: Не даем изменить свой статус на "Уволен"
+            if (editingStaffId == Session.UserId && comboBoxStatus.SelectedIndex == 1)
+            {
+                MessageBox.Show("❌ Вы не можете уволить самого себя через редактирование!",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                comboBoxStatus.SelectedIndex = 0; // Возвращаем "Активен"
+                return;
+            }
+
             try
             {
                 using (var connection = DatabaseConnection.GetConnection())
@@ -507,6 +507,8 @@ namespace kursovoy_proekt
                     string phone = GetCleanPhone();
                     string formattedPhone = FormatPhoneForDB(phone);
                     string passport = GetCleanPassport();
+                    decimal salary = decimal.Parse(textBoxSalary.Text);
+                    bool isActive = comboBoxStatus.SelectedIndex == 0;
 
                     PositionItem selectedPosition = (PositionItem)comboBoxPosition.SelectedItem;
 
@@ -520,6 +522,8 @@ namespace kursovoy_proekt
                             passport_series_number = @passport,
                             address = @address,
                             hire_date = @hireDate,
+                            salary = @salary,
+                            is_active = @isActive,
                             photo = @photo
                         WHERE id = @staffId";
 
@@ -536,13 +540,14 @@ namespace kursovoy_proekt
                         cmd.Parameters.AddWithValue("@address",
                             string.IsNullOrWhiteSpace(textBoxAddress.Text) ? DBNull.Value : (object)textBoxAddress.Text.Trim());
                         cmd.Parameters.AddWithValue("@hireDate", dateTimePickerHireDate.Value.Date);
+                        cmd.Parameters.AddWithValue("@salary", salary);
+                        cmd.Parameters.AddWithValue("@isActive", isActive);
                         cmd.Parameters.AddWithValue("@photo", currentPhotoBytes ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@staffId", editingStaffId);
 
                         cmd.ExecuteNonQuery();
                     }
 
-                    DataChanged = true;
                     MessageBox.Show("✅ Данные сотрудника обновлены!", "Успех",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
@@ -573,82 +578,65 @@ namespace kursovoy_proekt
             }
         }
 
+        private void ButtonFire_Click(object sender, EventArgs e)
+        {
+            // ЗАЩИТА: Не даем уволить самого себя
+            if (editingStaffId == Session.UserId)
+            {
+                MessageBox.Show("❌ Вы не можете уволить самого себя!",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
+            var result = MessageBox.Show("Вы уверены, что хотите уволить этого сотрудника?\n" +
+                                        "⚠️ Это действие нельзя отменить.",
+                                        "Подтверждение увольнения",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    using (var connection = DatabaseConnection.GetConnection())
+                    {
+                        connection.Open();
+
+                        string query = "UPDATE personal SET is_active = FALSE WHERE id = @staffId";
+
+                        using (var cmd = new MySqlCommand(query, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@staffId", editingStaffId);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show("🔥 Сотрудник уволен!", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    DataChanged = true;
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при увольнении: {ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
-        // ============================================
-        // ЭФФЕКТЫ НАВЕДЕНИЯ
-        // ============================================
-
-        private void ButtonSave_MouseEnter(object sender, EventArgs e)
+        private void panelContent_Paint(object sender, PaintEventArgs e)
         {
-            buttonSave.BackColor = Color.FromArgb(39, 174, 96);
-            buttonSave.Font = new Font(buttonSave.Font, FontStyle.Bold | FontStyle.Underline);
-        }
 
-        private void ButtonSave_MouseLeave(object sender, EventArgs e)
-        {
-            buttonSave.BackColor = Color.FromArgb(46, 204, 113);
-            buttonSave.Font = new Font(buttonSave.Font, FontStyle.Bold);
-        }
-
-        private void ButtonCancel_MouseEnter(object sender, EventArgs e)
-        {
-            buttonCancel.BackColor = Color.FromArgb(52, 152, 219);
-            buttonCancel.ForeColor = Color.White;
-            buttonCancel.Font = new Font(buttonCancel.Font, FontStyle.Bold | FontStyle.Underline);
-        }
-
-        private void ButtonCancel_MouseLeave(object sender, EventArgs e)
-        {
-            buttonCancel.BackColor = Color.Transparent;
-            buttonCancel.ForeColor = Color.FromArgb(52, 152, 219);
-            buttonCancel.Font = new Font(buttonCancel.Font, FontStyle.Bold);
-        }
-
-        private void ButtonLoadPhoto_MouseEnter(object sender, EventArgs e)
-        {
-            buttonLoadPhoto.BackColor = Color.FromArgb(96, 165, 215);
-            buttonLoadPhoto.Font = new Font(buttonLoadPhoto.Font, FontStyle.Bold);
-        }
-
-        private void ButtonLoadPhoto_MouseLeave(object sender, EventArgs e)
-        {
-            buttonLoadPhoto.BackColor = Color.FromArgb(76, 145, 195);
-            buttonLoadPhoto.Font = new Font(buttonLoadPhoto.Font, FontStyle.Regular);
-        }
-
-        private void ButtonClearPhoto_MouseEnter(object sender, EventArgs e)
-        {
-            buttonClearPhoto.BackColor = Color.FromArgb(240, 100, 100);
-            buttonClearPhoto.ForeColor = Color.White;
-            buttonClearPhoto.Font = new Font(buttonClearPhoto.Font, FontStyle.Bold);
-        }
-
-        private void ButtonClearPhoto_MouseLeave(object sender, EventArgs e)
-        {
-            buttonClearPhoto.BackColor = Color.Transparent;
-            buttonClearPhoto.ForeColor = Color.FromArgb(220, 80, 80);
-            buttonClearPhoto.Font = new Font(buttonClearPhoto.Font, FontStyle.Regular);
-        }
-
-        private void Control_Enter(object sender, EventArgs e)
-        {
-            if (sender is Control control)
-            {
-                control.BackColor = Color.FromArgb(255, 255, 220);
-            }
-        }
-
-        private void Control_Leave(object sender, EventArgs e)
-        {
-            if (sender is Control control && !control.BackColor.Equals(Color.FromArgb(255, 230, 230)))
-            {
-                control.BackColor = Color.White;
-            }
         }
     }
 }
