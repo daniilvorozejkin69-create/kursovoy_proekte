@@ -208,6 +208,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="HouseData.cs" />
+    <Compile Include="HouseReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HouseReportForm.Designer.cs">
+      <DependentUpon>HouseReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HousList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -317,6 +323,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HouseReportForm.resx">
+      <DependentUpon>HouseReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HousList.resx">
       <DependentUpon>HousList.cs</DependentUpon>

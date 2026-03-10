@@ -66,7 +66,7 @@ namespace kursovoy_proekt
 
         private void buttonReport_Click(object sender, EventArgs e)
         {
-            OtchetForm reportForm = new OtchetForm();
+            HouseReportForm reportForm = new HouseReportForm();
             reportForm.Show();
             this.Close();
         }
