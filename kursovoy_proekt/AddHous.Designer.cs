@@ -39,7 +39,6 @@ namespace kursovoy_proekt
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddHous));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelGreenLine = new System.Windows.Forms.Panel();
@@ -75,11 +74,11 @@ namespace kursovoy_proekt
             // labelHeader
             // 
             this.labelHeader.AutoSize = true;
-            this.labelHeader.Font = new System.Drawing.Font("Segoe UI Light", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelHeader.Font = new System.Drawing.Font("Segoe UI Light", 20F);
             this.labelHeader.ForeColor = System.Drawing.Color.White;
             this.labelHeader.Location = new System.Drawing.Point(30, 20);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(282, 37);
+            this.labelHeader.Size = new System.Drawing.Size(384, 37);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "ДОБАВЛЕНИЕ НОВОГО ДОМА";
             // 
@@ -125,7 +124,7 @@ namespace kursovoy_proekt
             this.buttonMenu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.buttonMenu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.buttonMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.buttonMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.buttonMenu.Location = new System.Drawing.Point(320, 460);
             this.buttonMenu.Name = "buttonMenu";
@@ -143,7 +142,7 @@ namespace kursovoy_proekt
             this.buttonDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
             this.buttonDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(70)))), ((int)(((byte)(85)))));
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.buttonDelete.ForeColor = System.Drawing.Color.White;
             this.buttonDelete.Location = new System.Drawing.Point(50, 460);
             this.buttonDelete.Name = "buttonDelete";
@@ -156,14 +155,14 @@ namespace kursovoy_proekt
             // 
             // buttonSave
             // 
-            this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.buttonSave.FlatAppearance.BorderSize = 0;
             this.buttonSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(130)))), ((int)(((byte)(65)))));
             this.buttonSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(170)))), ((int)(((byte)(100)))));
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSave.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonSave.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.buttonSave.ForeColor = System.Drawing.Color.White;
             this.buttonSave.Location = new System.Drawing.Point(50, 400);
             this.buttonSave.Name = "buttonSave";
@@ -175,12 +174,12 @@ namespace kursovoy_proekt
             // 
             // comboBoxHouseClass
             // 
-            this.comboBoxHouseClass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.comboBoxHouseClass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxHouseClass.BackColor = System.Drawing.Color.White;
             this.comboBoxHouseClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxHouseClass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxHouseClass.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.comboBoxHouseClass.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.comboBoxHouseClass.FormattingEnabled = true;
             this.comboBoxHouseClass.Location = new System.Drawing.Point(50, 280);
             this.comboBoxHouseClass.Name = "comboBoxHouseClass";
@@ -193,21 +192,21 @@ namespace kursovoy_proekt
             // labelHouseClass
             // 
             this.labelHouseClass.AutoSize = true;
-            this.labelHouseClass.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelHouseClass.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.labelHouseClass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelHouseClass.Location = new System.Drawing.Point(50, 255);
             this.labelHouseClass.Name = "labelHouseClass";
-            this.labelHouseClass.Size = new System.Drawing.Size(89, 19);
+            this.labelHouseClass.Size = new System.Drawing.Size(88, 19);
             this.labelHouseClass.TabIndex = 0;
             this.labelHouseClass.Text = "Класс дома:";
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescription.BackColor = System.Drawing.Color.White;
             this.textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxDescription.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxDescription.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.textBoxDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.textBoxDescription.Location = new System.Drawing.Point(50, 340);
             this.textBoxDescription.Multiline = true;
@@ -216,28 +215,28 @@ namespace kursovoy_proekt
             this.textBoxDescription.Size = new System.Drawing.Size(500, 50);
             this.textBoxDescription.TabIndex = 5;
             this.toolTip.SetToolTip(this.textBoxDescription, "Описание дома (не более 500 символов)");
+            this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
             this.textBoxDescription.Enter += new System.EventHandler(this.Control_Enter);
             this.textBoxDescription.Leave += new System.EventHandler(this.Control_Leave);
-            this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
             // 
             // labelDescription
             // 
             this.labelDescription.AutoSize = true;
-            this.labelDescription.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelDescription.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.labelDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelDescription.Location = new System.Drawing.Point(50, 315);
             this.labelDescription.Name = "labelDescription";
-            this.labelDescription.Size = new System.Drawing.Size(177, 19);
+            this.labelDescription.Size = new System.Drawing.Size(185, 19);
             this.labelDescription.TabIndex = 0;
             this.labelDescription.Text = "Описание (необязательно):";
             // 
             // textBoxCapacity
             // 
-            this.textBoxCapacity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxCapacity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxCapacity.BackColor = System.Drawing.Color.White;
             this.textBoxCapacity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxCapacity.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxCapacity.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.textBoxCapacity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.textBoxCapacity.Location = new System.Drawing.Point(50, 220);
             this.textBoxCapacity.MaxLength = 3;
@@ -245,30 +244,30 @@ namespace kursovoy_proekt
             this.textBoxCapacity.Size = new System.Drawing.Size(200, 27);
             this.textBoxCapacity.TabIndex = 3;
             this.toolTip.SetToolTip(this.textBoxCapacity, "Вместимость в чел. (1-999)");
+            this.textBoxCapacity.TextChanged += new System.EventHandler(this.textBoxCapacity_TextChanged);
             this.textBoxCapacity.Enter += new System.EventHandler(this.Control_Enter);
             this.textBoxCapacity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxCapacity_KeyPress);
             this.textBoxCapacity.Leave += new System.EventHandler(this.Control_Leave);
-            this.textBoxCapacity.TextChanged += new System.EventHandler(this.textBoxCapacity_TextChanged);
             this.textBoxCapacity.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxCapacity_Validating);
             // 
             // labelCapacity
             // 
             this.labelCapacity.AutoSize = true;
-            this.labelCapacity.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelCapacity.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.labelCapacity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCapacity.Location = new System.Drawing.Point(50, 195);
             this.labelCapacity.Name = "labelCapacity";
-            this.labelCapacity.Size = new System.Drawing.Size(88, 19);
+            this.labelCapacity.Size = new System.Drawing.Size(96, 19);
             this.labelCapacity.TabIndex = 0;
             this.labelCapacity.Text = "Вместимость:";
             // 
             // textBoxAddressNumber
             // 
-            this.textBoxAddressNumber.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxAddressNumber.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxAddressNumber.BackColor = System.Drawing.Color.White;
             this.textBoxAddressNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxAddressNumber.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxAddressNumber.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.textBoxAddressNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.textBoxAddressNumber.Location = new System.Drawing.Point(50, 160);
             this.textBoxAddressNumber.MaxLength = 10;
@@ -276,28 +275,28 @@ namespace kursovoy_proekt
             this.textBoxAddressNumber.Size = new System.Drawing.Size(200, 27);
             this.textBoxAddressNumber.TabIndex = 2;
             this.toolTip.SetToolTip(this.textBoxAddressNumber, "Номер дома (не более 10 символов)");
+            this.textBoxAddressNumber.TextChanged += new System.EventHandler(this.textBoxAddressNumber_TextChanged);
             this.textBoxAddressNumber.Enter += new System.EventHandler(this.Control_Enter);
             this.textBoxAddressNumber.Leave += new System.EventHandler(this.Control_Leave);
-            this.textBoxAddressNumber.TextChanged += new System.EventHandler(this.textBoxAddressNumber_TextChanged);
             // 
             // labelAddressNumber
             // 
             this.labelAddressNumber.AutoSize = true;
-            this.labelAddressNumber.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelAddressNumber.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.labelAddressNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelAddressNumber.Location = new System.Drawing.Point(50, 135);
             this.labelAddressNumber.Name = "labelAddressNumber";
-            this.labelAddressNumber.Size = new System.Drawing.Size(86, 19);
+            this.labelAddressNumber.Size = new System.Drawing.Size(92, 19);
             this.labelAddressNumber.TabIndex = 0;
             this.labelAddressNumber.Text = "Номер дома:";
             // 
             // textBoxName
             // 
-            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxName.BackColor = System.Drawing.Color.White;
             this.textBoxName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxName.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.textBoxName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.textBoxName.Location = new System.Drawing.Point(50, 100);
             this.textBoxName.MaxLength = 100;
@@ -305,18 +304,18 @@ namespace kursovoy_proekt
             this.textBoxName.Size = new System.Drawing.Size(500, 27);
             this.textBoxName.TabIndex = 1;
             this.toolTip.SetToolTip(this.textBoxName, "Название дома (не более 100 символов)");
+            this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
             this.textBoxName.Enter += new System.EventHandler(this.Control_Enter);
             this.textBoxName.Leave += new System.EventHandler(this.Control_Leave);
-            this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
             // 
             // labelName
             // 
             this.labelName.AutoSize = true;
-            this.labelName.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelName.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.labelName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelName.Location = new System.Drawing.Point(50, 75);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(108, 19);
+            this.labelName.Size = new System.Drawing.Size(110, 19);
             this.labelName.TabIndex = 0;
             this.labelName.Text = "Название дома:";
             // 
@@ -329,7 +328,6 @@ namespace kursovoy_proekt
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelGreenLine);
             this.Controls.Add(this.panelHeader);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(616, 689);
             this.Name = "AddHous";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -339,6 +337,7 @@ namespace kursovoy_proekt
             this.panelContent.ResumeLayout(false);
             this.panelContent.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion

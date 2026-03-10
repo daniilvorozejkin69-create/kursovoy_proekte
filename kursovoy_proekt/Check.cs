@@ -15,6 +15,9 @@ namespace kursovoy_proekt
         private decimal totalPrice = 0;
         private List<ServiceItem> selectedServices = new List<ServiceItem>();
 
+        // Для выбора бронирования
+        private DataTable activeBookingsTable;
+
         public Check()
         {
             InitializeComponent();
@@ -34,6 +37,35 @@ namespace kursovoy_proekt
                 }
 
                 SetupDataGridViewColumns();
+
+                // ========== ПОДПИСКА НА ВСЕ КНОПКИ ==========
+                // Кнопки услуг
+                buttonAddService.Click += buttonAddService_Click;
+                buttonRemoveService.Click += buttonRemoveService_Click;
+                buttonClearServices.Click += buttonClearServices_Click;
+
+                // Кнопки дат
+                dateTimePickerCheckIn.ValueChanged += dateTimePickerCheckIn_ValueChanged;
+                dateTimePickerCheckOut.ValueChanged += dateTimePickerCheckOut_ValueChanged;
+
+                // Кнопки домов и клиентов
+                comboBoxHouses.SelectedIndexChanged += comboBoxHouses_SelectedIndexChanged;
+
+                // Кнопка загрузки бронирования
+                if (buttonLoadBooking != null)
+                    buttonLoadBooking.Click += buttonLoadBooking_Click;
+
+                // Кнопка создания заказа
+                buttonCreateOrder.Click += buttonCreateOrder_Click;
+
+                // Кнопка возврата в меню
+                buttonBackToMenu.Click += buttonBackToMenu_Click;
+
+                // Двойной клик на список услуг
+                listBoxServices.DoubleClick += listBoxServices_DoubleClick;
+                listBoxServices.SelectedIndexChanged += listBoxServices_SelectedIndexChanged;
+
+                // ========== ЗАГРУЗКА ДАННЫХ ==========
                 LoadFormData();
                 UpdateTotalPrice();
             }
@@ -48,7 +80,9 @@ namespace kursovoy_proekt
         {
             if (dataGridViewServices == null) return;
 
+            // Удаляем все существующие обработчики
             dataGridViewServices.CellClick -= DataGridViewServices_CellClick;
+
             dataGridViewServices.Columns.Clear();
 
             DataGridViewTextBoxColumn colName = new DataGridViewTextBoxColumn
@@ -146,6 +180,7 @@ namespace kursovoy_proekt
                     LoadClients(connection);
                     LoadHouses(connection);
                     LoadServices(connection);
+                    LoadActiveBookings(connection); // Загружаем бронирования
 
                     dateTimePickerCheckIn.Value = DateTime.Today;
                     dateTimePickerCheckOut.Value = DateTime.Today.AddDays(1);
@@ -181,15 +216,18 @@ namespace kursovoy_proekt
 
         private void LoadHouses(MySqlConnection connection)
         {
-            string query = @"SELECT h.id, h.name, hc.class, h.capacity,
-                            CASE 
-                                WHEN hc.class = 'Эконом' THEN 2000
-                                WHEN hc.class = 'Комфорт' THEN 3500
-                                WHEN hc.class = 'Люкс' THEN 6000
-                                WHEN hc.class = 'Премиум' THEN 9000
-                                WHEN hc.class = 'Бизнес' THEN 7000
-                                ELSE 3000
-                            END as price_per_day
+            string query = @"SELECT h.id, 
+                                    h.name,
+                                    hc.class,
+                                    h.capacity,
+                                    CASE 
+                                        WHEN hc.class = 'Эконом' THEN 2000
+                                        WHEN hc.class = 'Комфорт' THEN 3500
+                                        WHEN hc.class = 'Люкс' THEN 6000
+                                        WHEN hc.class = 'Премиум' THEN 9000
+                                        WHEN hc.class = 'Бизнес' THEN 7000
+                                        ELSE 3000
+                                    END as price_per_day
                             FROM house h 
                             JOIN home_class hc ON h.home_class_id = hc.id 
                             ORDER BY h.name";
@@ -238,6 +276,140 @@ namespace kursovoy_proekt
                 textBoxServiceDescription.Text = "Выберите услугу для просмотра описания...";
             if (labelServicePrice != null)
                 labelServicePrice.Text = "Цена: 0₽";
+        }
+
+        // ЗАГРУЗКА АКТИВНЫХ БРОНИРОВАНИЙ
+        private void LoadActiveBookings(MySqlConnection connection)
+        {
+            string query = @"
+                SELECT 
+                    b.id,
+                    c.FIO as client_name,
+                    h.name as house_name,
+                    b.check_in_date,
+                    b.check_out_date
+                FROM booking b
+                JOIN client c ON b.client_id = c.id
+                JOIN house h ON b.house_id = h.id
+                WHERE b.status = 'confirmed'
+                  AND b.check_in_date >= CURDATE()
+                ORDER BY b.check_in_date";
+
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                activeBookingsTable = new DataTable();
+                adapter.Fill(activeBookingsTable);
+            }
+
+            comboBoxBookings.Items.Clear();
+
+            foreach (DataRow row in activeBookingsTable.Rows)
+            {
+                comboBoxBookings.Items.Add(new BookingItem
+                {
+                    Id = Convert.ToInt32(row["id"]),
+                    ClientName = row["client_name"].ToString(),
+                    HouseName = row["house_name"].ToString(),
+                    CheckInDate = Convert.ToDateTime(row["check_in_date"]),
+                    DisplayText = $"№{row["id"]} - {row["client_name"]} - {row["house_name"]} - {Convert.ToDateTime(row["check_in_date"]):dd.MM.yyyy}"
+                });
+            }
+
+            if (comboBoxBookings.Items.Count > 0)
+                comboBoxBookings.SelectedIndex = 0;
+        }
+
+        // ОБРАБОТЧИК КНОПКИ ЗАГРУЗКИ БРОНИРОВАНИЯ
+        private void buttonLoadBooking_Click(object sender, EventArgs e)
+        {
+            if (comboBoxBookings.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите бронирование для загрузки.", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            BookingItem selected = (BookingItem)comboBoxBookings.SelectedItem;
+
+            try
+            {
+                using (var connection = DatabaseConnection.GetConnection())
+                {
+                    connection.Open();
+
+                    string query = @"
+                        SELECT 
+                            b.client_id,
+                            b.house_id,
+                            b.check_in_date,
+                            b.check_out_date,
+                            hc.class,
+                            CASE 
+                                WHEN hc.class = 'Эконом' THEN 2000
+                                WHEN hc.class = 'Комфорт' THEN 3500
+                                WHEN hc.class = 'Люкс' THEN 6000
+                                WHEN hc.class = 'Премиум' THEN 9000
+                                WHEN hc.class = 'Бизнес' THEN 7000
+                                ELSE 3000
+                            END as price_per_day
+                        FROM booking b
+                        JOIN house h ON b.house_id = h.id
+                        JOIN home_class hc ON h.home_class_id = hc.id
+                        WHERE b.id = @bookingId";
+
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@bookingId", selected.Id);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Загружаем клиента
+                                int clientId = reader.GetInt32("client_id");
+                                foreach (ClientData client in comboBoxClients.Items)
+                                {
+                                    if (client.Id == clientId)
+                                    {
+                                        comboBoxClients.SelectedItem = client;
+                                        break;
+                                    }
+                                }
+
+                                // Загружаем дом
+                                int houseId = reader.GetInt32("house_id");
+                                foreach (HouseData house in comboBoxHouses.Items)
+                                {
+                                    if (house.Id == houseId)
+                                    {
+                                        comboBoxHouses.SelectedItem = house;
+                                        break;
+                                    }
+                                }
+
+                                // Загружаем даты
+                                dateTimePickerCheckIn.Value = reader.GetDateTime("check_in_date");
+                                dateTimePickerCheckOut.Value = reader.GetDateTime("check_out_date");
+
+                                // Загружаем цену
+                                houseDailyPrice = reader.GetDecimal("price_per_day");
+
+                                CalculateStayDays();
+                                UpdateTotalPrice();
+
+                                MessageBox.Show("Бронирование успешно загружено!", "Успех",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке бронирования: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void UpdateTotalPrice()
@@ -524,6 +696,12 @@ namespace kursovoy_proekt
 
                             transaction.Commit();
 
+                            // Если заказ создан из бронирования, обновляем статус бронирования
+                            if (comboBoxBookings.SelectedItem != null)
+                            {
+                                UpdateBookingStatus(((BookingItem)comboBoxBookings.SelectedItem).Id);
+                            }
+
                             // Открываем чек
                             ReceiptForm receipt = new ReceiptForm(
                                 orderId,
@@ -558,6 +736,29 @@ namespace kursovoy_proekt
             }
         }
 
+        private void UpdateBookingStatus(int bookingId)
+        {
+            try
+            {
+                using (var connection = DatabaseConnection.GetConnection())
+                {
+                    connection.Open();
+
+                    string query = "UPDATE booking SET status = 'completed' WHERE id = @bookingId";
+
+                    using (var cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@bookingId", bookingId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при обновлении статуса бронирования: {ex.Message}");
+            }
+        }
+
         private int GetCurrentUserId()
         {
             if (Session.IsLoggedIn)
@@ -586,6 +787,13 @@ namespace kursovoy_proekt
 
             CalculateStayDays();
             UpdateTotalPrice();
+
+            // Обновляем список бронирований
+            using (var connection = DatabaseConnection.GetConnection())
+            {
+                connection.Open();
+                LoadActiveBookings(connection);
+            }
         }
 
         public void buttonBackToMenu_Click(object sender, EventArgs e)
@@ -612,6 +820,21 @@ namespace kursovoy_proekt
         public void listBoxServices_DoubleClick(object sender, EventArgs e)
         {
             buttonAddService_Click(sender, e);
+        }
+
+        // Класс для хранения данных бронирования
+        private class BookingItem
+        {
+            public int Id { get; set; }
+            public string ClientName { get; set; }
+            public string HouseName { get; set; }
+            public DateTime CheckInDate { get; set; }
+            public string DisplayText { get; set; }
+
+            public override string ToString()
+            {
+                return DisplayText;
+            }
         }
     }
 }

@@ -15,40 +15,65 @@ namespace kursovoy_proekt
     public partial class ReceiptForm : Form
     {
         private int orderId;
+        private int clientId;
+        private int houseId;
         private decimal houseTotal;
         private decimal servicesTotal;
         private decimal grandTotal;
-        private List<ServiceItem> servicesList; // ИСПРАВЛЕНО: ServiceData -> ServiceItem
+        private List<ServiceItem> servicesList;
         private int userId;
         private DateTime checkInDate;
         private DateTime checkOutDate;
         private int stayDays;
+        private string contractNumber;
 
-        // ИСПРАВЛЕННЫЙ КОНСТРУКТОР
+        // Данные клиента
+        private string clientFIO;
+        private string clientPassport;
+        private string clientPhone;
+        private string clientEmail;
+        private DateTime clientBirthDate;
+
+        // Данные дома
+        private string houseName;
+        private string houseClass;
+        private string houseAddress;
+        private int houseCapacity;
+        private string houseDescription;
+        private decimal pricePerDay;
+
+        // Данные сотрудника
+        private string staffFIO;
+        private string staffLogin;
+
+        // КОНСТРУКТОР
         public ReceiptForm(int orderId, int clientId, int houseId, decimal houseTotal,
-                          List<ServiceItem> services, int userId, // ИСПРАВЛЕНО: ServiceData -> ServiceItem
+                          List<ServiceItem> services, int userId,
                           DateTime checkInDate, DateTime checkOutDate, int stayDays)
         {
             InitializeComponent();
 
             this.orderId = orderId;
+            this.clientId = clientId;
+            this.houseId = houseId;
             this.houseTotal = houseTotal;
-            this.servicesList = services ?? new List<ServiceItem>(); // ИСПРАВЛЕНО
+            this.servicesList = services ?? new List<ServiceItem>();
             this.userId = userId;
             this.checkInDate = checkInDate;
             this.checkOutDate = checkOutDate;
             this.stayDays = stayDays;
 
-            InitializeReceiptDataGridView();
-            LoadReceiptData(clientId, houseId);
+            // Генерация номера договора
+            this.contractNumber = $"Д-{DateTime.Now.Year}-{orderId:00000}";
+
+            InitializeDataGridView();
+            LoadData();
             LoadServicesToGrid();
             CalculateTotals();
-            FormatReceipt();
-            MaskConfidentialData();
-            DisplayStayDates();
+            DisplayData();
         }
 
-        private void InitializeReceiptDataGridView()
+        private void InitializeDataGridView()
         {
             try
             {
@@ -64,8 +89,8 @@ namespace kursovoy_proekt
                 DataGridViewTextBoxColumn colName = new DataGridViewTextBoxColumn
                 {
                     Name = "Name",
-                    HeaderText = "Услуга",
-                    Width = 200,
+                    HeaderText = "Наименование услуги",
+                    Width = 250,
                     ReadOnly = true,
                     DataPropertyName = "Name"
                 };
@@ -83,8 +108,8 @@ namespace kursovoy_proekt
                 DataGridViewTextBoxColumn colUnitPrice = new DataGridViewTextBoxColumn
                 {
                     Name = "UnitPrice",
-                    HeaderText = "Цена за ед.",
-                    Width = 100,
+                    HeaderText = "Цена за ед., ₽",
+                    Width = 120,
                     ReadOnly = true,
                     DefaultCellStyle = {
                         Format = "N2",
@@ -96,7 +121,7 @@ namespace kursovoy_proekt
                 DataGridViewTextBoxColumn colTotalPrice = new DataGridViewTextBoxColumn
                 {
                     Name = "TotalPrice",
-                    HeaderText = "Общая стоимость",
+                    HeaderText = "Сумма, ₽",
                     Width = 120,
                     ReadOnly = true,
                     DefaultCellStyle = {
@@ -106,21 +131,18 @@ namespace kursovoy_proekt
                 };
 
                 dataGridViewServices.Columns.AddRange(colName, colQuantity, colUnitPrice, colTotalPrice);
-
                 dataGridViewServices.RowHeadersVisible = false;
                 dataGridViewServices.AllowUserToAddRows = false;
                 dataGridViewServices.ReadOnly = true;
                 dataGridViewServices.BackgroundColor = Color.White;
-                dataGridViewServices.GridColor = Color.FromArgb(220, 235, 210);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка инициализации таблицы: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка инициализации таблицы: {ex.Message}");
             }
         }
 
-        private void LoadReceiptData(int clientId, int houseId)
+        private void LoadData()
         {
             try
             {
@@ -129,7 +151,7 @@ namespace kursovoy_proekt
                     connection.Open();
 
                     // Загрузка клиента
-                    string queryClient = "SELECT FIO, passport_series_number, telephone_number, email FROM client WHERE id = @clientId";
+                    string queryClient = "SELECT FIO, passport_series_number, telephone_number, email, date_of_birth FROM client WHERE id = @clientId";
                     using (MySqlCommand cmdClient = new MySqlCommand(queryClient, connection))
                     {
                         cmdClient.Parameters.AddWithValue("@clientId", clientId);
@@ -137,10 +159,13 @@ namespace kursovoy_proekt
                         {
                             if (readerClient.Read())
                             {
-                                labelClientName.Text = readerClient["FIO"].ToString();
-                                labelClientPassport.Text = $"Паспорт: {readerClient["passport_series_number"]}";
-                                labelClientPhone.Text = $"Телефон: {readerClient["telephone_number"]}";
-                                labelClientEmail.Text = $"Email: {readerClient["email"]}";
+                                clientFIO = readerClient["FIO"].ToString();
+                                clientPassport = readerClient["passport_series_number"].ToString();
+                                clientPhone = readerClient["telephone_number"].ToString();
+                                clientEmail = readerClient["email"].ToString();
+
+                                if (readerClient["date_of_birth"] != DBNull.Value)
+                                    clientBirthDate = Convert.ToDateTime(readerClient["date_of_birth"]);
                             }
                         }
                     }
@@ -157,11 +182,22 @@ namespace kursovoy_proekt
                         {
                             if (readerHouse.Read())
                             {
-                                labelHouseName.Text = $"Дом: {readerHouse["name"]}";
-                                labelHouseClass.Text = $"Класс: {readerHouse["class"]}";
-                                labelHouseAddress.Text = $"Адрес: {readerHouse["address_number"]}";
-                                labelHouseCapacity.Text = $"Вместимость: {readerHouse["capacity"]} чел.";
-                                labelHouseDescription.Text = $"Описание: {readerHouse["description"]}";
+                                houseName = readerHouse["name"].ToString();
+                                houseClass = readerHouse["class"].ToString();
+                                houseAddress = readerHouse["address_number"].ToString();
+                                houseCapacity = Convert.ToInt32(readerHouse["capacity"]);
+                                houseDescription = readerHouse["description"].ToString();
+
+                                // Расчет цены за сутки по классу
+                                switch (houseClass)
+                                {
+                                    case "Эконом": pricePerDay = 3000; break;
+                                    case "Комфорт": pricePerDay = 5000; break;
+                                    case "Люкс": pricePerDay = 8000; break;
+                                    case "Премиум": pricePerDay = 12000; break;
+                                    case "Бизнес": pricePerDay = 10000; break;
+                                    default: pricePerDay = 5000; break;
+                                }
                             }
                         }
                     }
@@ -172,8 +208,7 @@ namespace kursovoy_proekt
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке данных чека: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}");
             }
         }
 
@@ -183,8 +218,8 @@ namespace kursovoy_proekt
             {
                 if (Session.IsLoggedIn && Session.UserId > 0)
                 {
-                    labelStaffName.Text = $"Сотрудник: {Session.UserName}";
-                    labelStaffLogin.Text = $"Логин: {Session.UserLogin}";
+                    staffFIO = Session.UserName;
+                    staffLogin = Session.UserLogin;
                     return;
                 }
 
@@ -204,23 +239,22 @@ namespace kursovoy_proekt
                         {
                             if (reader.Read())
                             {
-                                labelStaffName.Text = $"Сотрудник: {reader["FIO"]}";
-                                labelStaffLogin.Text = $"Логин: {reader["login"]}";
+                                staffFIO = reader["FIO"].ToString();
+                                staffLogin = reader["login"].ToString();
                             }
                             else
                             {
-                                labelStaffName.Text = "Сотрудник: Не указан";
-                                labelStaffLogin.Text = "Логин: -";
+                                staffFIO = "Не указан";
+                                staffLogin = "-";
                             }
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine($"Ошибка загрузки сотрудника: {ex.Message}");
-                labelStaffName.Text = "Сотрудник: Ошибка загрузки";
-                labelStaffLogin.Text = "Логин: -";
+                staffFIO = "Ошибка загрузки";
+                staffLogin = "-";
             }
         }
 
@@ -261,119 +295,45 @@ namespace kursovoy_proekt
         {
             servicesTotal = servicesList.Sum(s => s.Price * s.Quantity);
             grandTotal = houseTotal + servicesTotal;
+        }
 
+        private void DisplayData()
+        {
+            // Заголовок - меняем на ДОГОВОР
+            labelOrderNumber.Text = $"ДОГОВОР № {contractNumber}";
+            labelOrderDate.Text = $"г. Москва, {DateTime.Now:dd MMMM yyyy} г.";
+
+            // Клиент
+            labelClientName.Text = clientFIO;
+            labelClientPassport.Text = $"Паспорт: {clientPassport}";
+            labelClientPhone.Text = $"Телефон: {clientPhone}";
+            labelClientEmail.Text = $"Email: {clientEmail}";
+
+            // Дом
+            labelHouseName.Text = $"Дом: {houseName}";
+            labelHouseClass.Text = $"Класс: {houseClass}";
+            labelHouseAddress.Text = $"Адрес: участок № {houseAddress}";
+            labelHouseCapacity.Text = $"Вместимость: {houseCapacity} чел.";
+            labelHouseDescription.Text = $"Описание: {houseDescription}";
+
+            // Даты
+            labelCheckInDate.Text = $"Дата заезда: {checkInDate:dd.MM.yyyy} (с 14:00)";
+            labelCheckOutDate.Text = $"Дата выезда: {checkOutDate:dd.MM.yyyy} (до 12:00)";
+            labelStayPeriod.Text = $"Период проживания: {stayDays} суток";
+
+            // Стоимость
             labelHouseCost.Text = $"Стоимость проживания: {houseTotal:N2} ₽";
             labelServicesCost.Text = $"Дополнительные услуги: {servicesTotal:N2} ₽";
-            labelTotalCost.Text = $"ВСЕГО К ОПЛАТЕ: {grandTotal:N2} ₽";
+            labelTotalCost.Text = $"ВСЕГО ПО ДОГОВОРУ: {grandTotal:N2} ₽";
             labelAmountInWords.Text = NumberToWords((int)Math.Round(grandTotal));
-        }
 
-        private void FormatReceipt()
-        {
-            labelOrderNumber.Text = $"КАССОВЫЙ ЧЕК № {orderId:00000}";
-            labelOrderDate.Text = $"Дата: {DateTime.Now:dd.MM.yyyy HH:mm}";
+            // Сотрудник
+            labelStaffName.Text = $"Сотрудник: {staffFIO}";
+            labelStaffLogin.Text = $"Логин: {staffLogin}";
+
+            // Дополнительная информация для договора
+            labelQRInfo.Text = $"Договор действителен\nпри наличии подписей сторон";
             labelReceiptDate.Text = DateTime.Now.ToString("dd.MM.yyyy");
-
-            string qrText = $"Заказ #{orderId}\nот {DateTime.Now:dd.MM.yyyy}\nСумма: {grandTotal:N2} ₽";
-            labelQRInfo.Text = qrText;
-        }
-
-        private void DisplayStayDates()
-        {
-            labelCheckInDate.Text = $"Дата заезда: {checkInDate:dd.MM.yyyy}";
-            labelCheckOutDate.Text = $"Дата выезда: {checkOutDate:dd.MM.yyyy}";
-            labelStayPeriod.Text = $"Период проживания: {stayDays} дней";
-        }
-
-        private void MaskConfidentialData()
-        {
-            try
-            {
-                // Паспорт: 4005******
-                if (labelClientPassport.Text.StartsWith("Паспорт: "))
-                {
-                    string passport = labelClientPassport.Text.Replace("Паспорт: ", "");
-                    if (passport.Length >= 4)
-                    {
-                        string maskedPassport = passport.Substring(0, 4) + new string('*', Math.Max(0, passport.Length - 4));
-                        labelClientPassport.Text = $"Паспорт: {maskedPassport}";
-                    }
-                }
-
-                // Телефон: +7 *** ***-**-**
-                if (labelClientPhone.Text.StartsWith("Телефон: "))
-                {
-                    string phone = labelClientPhone.Text.Replace("Телефон: ", "");
-                    string maskedPhone = MaskPhoneNumber(phone);
-                    labelClientPhone.Text = $"Телефон: {maskedPhone}";
-                }
-
-                // Email: n******@mail.ru
-                if (labelClientEmail.Text.StartsWith("Email: "))
-                {
-                    string email = labelClientEmail.Text.Replace("Email: ", "");
-                    string maskedEmail = MaskEmail(email);
-                    labelClientEmail.Text = $"Email: {maskedEmail}";
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Ошибка маскировки данных: {ex.Message}");
-            }
-        }
-
-        private string MaskPhoneNumber(string phone)
-        {
-            if (string.IsNullOrEmpty(phone)) return "***";
-
-            string result = "";
-
-            if (phone.StartsWith("+7") || phone.StartsWith("8"))
-            {
-                result = "+7 ";
-                if (phone.StartsWith("+7")) phone = phone.Substring(2);
-                else if (phone.StartsWith("8")) phone = phone.Substring(1);
-            }
-
-            string digits = new string(phone.Where(char.IsDigit).ToArray());
-
-            if (digits.Length >= 10)
-            {
-                result += $"*** ***-{digits.Substring(digits.Length - 4, 2)}-{digits.Substring(digits.Length - 2, 2)}";
-            }
-            else
-            {
-                result += "*** ***-**-**";
-            }
-
-            return result;
-        }
-
-        private string MaskEmail(string email)
-        {
-            if (string.IsNullOrEmpty(email) || !email.Contains("@")) return email;
-
-            try
-            {
-                var parts = email.Split('@');
-                if (parts.Length != 2) return email;
-
-                string local = parts[0];
-                string domain = parts[1];
-
-                if (local.Length <= 1)
-                {
-                    return $"{local}***@{domain}";
-                }
-                else
-                {
-                    return $"{local.First()}{new string('*', local.Length - 1)}@{domain}";
-                }
-            }
-            catch
-            {
-                return email;
-            }
         }
 
         private string NumberToWords(int number)
@@ -390,27 +350,11 @@ namespace kursovoy_proekt
 
             StringBuilder result = new StringBuilder();
 
-            if (number >= 1000000)
-            {
-                int millions = number / 1000000;
-                AppendNumberPart(millions, result, units, teens, tens, hundreds);
-
-                if (millions == 1) result.Append(" миллион ");
-                else if (millions >= 2 && millions <= 4) result.Append(" миллиона ");
-                else result.Append(" миллионов ");
-
-                number %= 1000000;
-            }
-
             if (number >= 1000)
             {
                 int thousands = number / 1000;
                 AppendNumberPart(thousands, result, units, teens, tens, hundreds);
-
-                if (thousands == 1) result.Append(" тысяча ");
-                else if (thousands >= 2 && thousands <= 4) result.Append(" тысячи ");
-                else result.Append(" тысяч ");
-
+                result.Append(" тысяч ");
                 number %= 1000;
             }
 
@@ -455,12 +399,13 @@ namespace kursovoy_proekt
             }
         }
 
+        // ПЕЧАТЬ ДОГОВОРА
         private void buttonPrint_Click(object sender, EventArgs e)
         {
             try
             {
                 PrintDocument printDocument = new PrintDocument();
-                printDocument.PrintPage += PrintReceiptPage;
+                printDocument.PrintPage += PrintContractPage;
 
                 PrintDialog printDialog = new PrintDialog();
                 printDialog.Document = printDocument;
@@ -468,7 +413,7 @@ namespace kursovoy_proekt
                 if (printDialog.ShowDialog() == DialogResult.OK)
                 {
                     printDocument.Print();
-                    MessageBox.Show("Чек отправлен на печать.", "Печать",
+                    MessageBox.Show("Договор отправлен на печать.", "Печать",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -479,176 +424,159 @@ namespace kursovoy_proekt
             }
         }
 
-        private void PrintReceiptPage(object sender, PrintPageEventArgs e)
+        private void PrintContractPage(object sender, PrintPageEventArgs e)
         {
             try
             {
-                Font titleFont = new Font("Arial", 16, FontStyle.Bold);
-                Font headerFont = new Font("Arial", 14, FontStyle.Bold);
-                Font normalFont = new Font("Arial", 10);
-                Font boldFont = new Font("Arial", 10, FontStyle.Bold);
-                Font totalFont = new Font("Arial", 12, FontStyle.Bold);
+                Font titleFont = new Font("Times New Roman", 16, FontStyle.Bold);
+                Font headerFont = new Font("Times New Roman", 14, FontStyle.Bold);
+                Font normalFont = new Font("Times New Roman", 11);
+                Font boldFont = new Font("Times New Roman", 11, FontStyle.Bold);
+                Font smallFont = new Font("Times New Roman", 9);
 
                 float yPos = e.MarginBounds.Top;
                 float leftMargin = e.MarginBounds.Left;
-                float rightMargin = e.MarginBounds.Right;
                 float pageWidth = e.MarginBounds.Width;
 
                 // Заголовок
-                string title = "БАЗА ОТДЫХА \"ПРЕМИУМ КОТТЕДЖИ\"";
+                string title = "ДОГОВОР НА ПРОЖИВАНИЕ";
                 SizeF titleSize = e.Graphics.MeasureString(title, titleFont);
                 e.Graphics.DrawString(title, titleFont, Brushes.Black,
                     leftMargin + (pageWidth - titleSize.Width) / 2, yPos);
-                yPos += titleSize.Height + 10;
+                yPos += titleSize.Height + 5;
 
-                // Номер чека
-                string receiptNumber = $"КАССОВЫЙ ЧЕК № {orderId}";
-                SizeF numberSize = e.Graphics.MeasureString(receiptNumber, headerFont);
-                e.Graphics.DrawString(receiptNumber, headerFont, Brushes.Black,
-                    leftMargin + (pageWidth - numberSize.Width) / 2, yPos);
-                yPos += numberSize.Height + 15;
+                // Номер договора
+                string contractNum = $"№ {contractNumber}";
+                SizeF numSize = e.Graphics.MeasureString(contractNum, headerFont);
+                e.Graphics.DrawString(contractNum, headerFont, Brushes.Black,
+                    leftMargin + (pageWidth - numSize.Width) / 2, yPos);
+                yPos += numSize.Height + 15;
 
-                // Дата
-                e.Graphics.DrawString($"Дата: {DateTime.Now:dd.MM.yyyy HH:mm}",
-                    normalFont, Brushes.Black, leftMargin, yPos);
+                // Дата и место
+                e.Graphics.DrawString($"г. Москва", normalFont, Brushes.Black, leftMargin, yPos);
+                e.Graphics.DrawString($"{DateTime.Now:dd MMMM yyyy г.}", normalFont, Brushes.Black, leftMargin + 500, yPos);
                 yPos += normalFont.GetHeight() + 20;
 
-                // Клиент
-                e.Graphics.DrawString("КЛИЕНТ:", boldFont, Brushes.Black, leftMargin, yPos);
+                // ИСПОЛНИТЕЛЬ
+                e.Graphics.DrawString("ИСПОЛНИТЕЛЬ:", boldFont, Brushes.Black, leftMargin, yPos);
                 yPos += boldFont.GetHeight() + 5;
 
-                e.Graphics.DrawString(labelClientName.Text.Replace("Клиент: ", ""),
-                    normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
+                e.Graphics.DrawString("ООО \"Премиум Коттеджи\"", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
 
-                e.Graphics.DrawString(labelClientPassport.Text, normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
+                e.Graphics.DrawString("ИНН 1234567890, КПП 123456789", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
 
-                e.Graphics.DrawString(labelClientPhone.Text, normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
+                e.Graphics.DrawString("123456, г. Москва, ул. Лесная, д. 10", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight() + 15;
 
-                e.Graphics.DrawString(labelClientEmail.Text, normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 20;
-
-                // Проживание
-                e.Graphics.DrawString("ПРОЖИВАНИЕ:", boldFont, Brushes.Black, leftMargin, yPos);
+                // ЗАКАЗЧИК
+                e.Graphics.DrawString("ЗАКАЗЧИК:", boldFont, Brushes.Black, leftMargin, yPos);
                 yPos += boldFont.GetHeight() + 5;
 
-                e.Graphics.DrawString(labelHouseName.Text, normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
+                e.Graphics.DrawString($"ФИО: {clientFIO}", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
 
-                e.Graphics.DrawString(labelHouseClass.Text, normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
+                e.Graphics.DrawString($"Паспорт: {clientPassport}", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
 
-                e.Graphics.DrawString(labelHouseAddress.Text, normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
+                e.Graphics.DrawString($"Телефон: {clientPhone}", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
 
-                // Даты проживания
-                e.Graphics.DrawString($"Дата заезда: {checkInDate:dd.MM.yyyy}",
-                    normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
-
-                e.Graphics.DrawString($"Дата выезда: {checkOutDate:dd.MM.yyyy}",
-                    normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
-
-                e.Graphics.DrawString($"Период проживания: {stayDays} дней",
-                    normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
-
-                e.Graphics.DrawString($"Стоимость проживания: {houseTotal:N2} ₽",
-                    normalFont, Brushes.Black, leftMargin, yPos);
+                e.Graphics.DrawString($"Email: {clientEmail}", normalFont, Brushes.Black, leftMargin + 20, yPos);
                 yPos += normalFont.GetHeight() + 20;
 
-                // Услуги
+                // ПРЕДМЕТ ДОГОВОРА
+                e.Graphics.DrawString("1. ПРЕДМЕТ ДОГОВОРА", boldFont, Brushes.Black, leftMargin, yPos);
+                yPos += boldFont.GetHeight() + 5;
+
+                e.Graphics.DrawString("   1.1. Исполнитель предоставляет, а Заказчик принимает во временное пользование", normalFont, Brushes.Black, leftMargin, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString("        жилое помещение (далее - Дом) для проживания.", normalFont, Brushes.Black, leftMargin, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString("   1.2. Характеристики Дома:", normalFont, Brushes.Black, leftMargin, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString($"        - Наименование: {houseName}", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString($"        - Класс: {houseClass}", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString($"        - Адрес: участок № {houseAddress}", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString($"        - Вместимость: {houseCapacity} чел.", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString("   1.3. Срок проживания:", normalFont, Brushes.Black, leftMargin, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString($"        - Заезд: {checkInDate:dd.MM.yyyy} с 14:00", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString($"        - Выезд: {checkOutDate:dd.MM.yyyy} до 12:00", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
+
+                e.Graphics.DrawString($"        - Количество суток: {stayDays}", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight() + 15;
+
+                // СТОИМОСТЬ
+                e.Graphics.DrawString("2. СТОИМОСТЬ И ПОРЯДОК РАСЧЕТОВ", boldFont, Brushes.Black, leftMargin, yPos);
+                yPos += boldFont.GetHeight() + 5;
+
+                e.Graphics.DrawString($"   2.1. Стоимость проживания: {houseTotal:N2} ₽", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += normalFont.GetHeight();
+
                 if (servicesList.Count > 0)
                 {
-                    e.Graphics.DrawString("ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ:", boldFont, Brushes.Black, leftMargin, yPos);
-                    yPos += boldFont.GetHeight() + 10;
+                    e.Graphics.DrawString($"   2.2. Дополнительные услуги: {servicesTotal:N2} ₽", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                    yPos += normalFont.GetHeight();
 
-                    float[] columnWidths = { 200, 70, 100, 100 };
-                    string[] headers = { "Услуга", "Кол-во", "Цена за ед.", "Сумма" };
-
-                    for (int i = 0; i < headers.Length; i++)
-                    {
-                        e.Graphics.DrawString(headers[i], boldFont, Brushes.Black,
-                            leftMargin + (i > 0 ? columnWidths.Take(i).Sum() : 0), yPos);
-                    }
-                    yPos += boldFont.GetHeight() + 5;
-
-                    e.Graphics.DrawLine(Pens.Black, leftMargin, yPos, leftMargin + columnWidths.Sum(), yPos);
-                    yPos += 5;
+                    e.Graphics.DrawString("   2.3. Перечень услуг:", normalFont, Brushes.Black, leftMargin + 20, yPos);
+                    yPos += normalFont.GetHeight();
 
                     foreach (var service in servicesList)
                     {
-                        if (yPos > e.MarginBounds.Bottom - 50)
-                        {
-                            e.HasMorePages = true;
-                            return;
-                        }
-
-                        decimal totalPrice = service.Price * service.Quantity;
-
-                        e.Graphics.DrawString(service.Name, normalFont, Brushes.Black, leftMargin, yPos);
-                        e.Graphics.DrawString(service.Quantity.ToString(), normalFont, Brushes.Black,
-                            leftMargin + columnWidths[0], yPos);
-                        e.Graphics.DrawString($"{service.Price:N2} ₽", normalFont, Brushes.Black,
-                            leftMargin + columnWidths[0] + columnWidths[1], yPos);
-                        e.Graphics.DrawString($"{totalPrice:N2} ₽", normalFont, Brushes.Black,
-                            leftMargin + columnWidths[0] + columnWidths[1] + columnWidths[2], yPos);
-
-                        yPos += normalFont.GetHeight() + 5;
+                        decimal total = service.Price * service.Quantity;
+                        e.Graphics.DrawString($"        - {service.Name}: {service.Quantity} × {service.Price:N2} = {total:N2} ₽",
+                            normalFont, Brushes.Black, leftMargin + 40, yPos);
+                        yPos += normalFont.GetHeight();
                     }
 
-                    e.Graphics.DrawString($"Итого услуг: {servicesTotal:N2} ₽",
-                        normalFont, Brushes.Black, leftMargin, yPos);
-                    yPos += normalFont.GetHeight() + 20;
+                    e.Graphics.DrawString($"   2.4. Общая стоимость договора: {grandTotal:N2} ₽", boldFont, Brushes.Black, leftMargin + 20, yPos);
+                    yPos += boldFont.GetHeight();
+                }
+                else
+                {
+                    e.Graphics.DrawString($"   2.2. Общая стоимость договора: {grandTotal:N2} ₽", boldFont, Brushes.Black, leftMargin + 20, yPos);
+                    yPos += boldFont.GetHeight();
                 }
 
-                // Итог
-                e.Graphics.DrawLine(Pens.Black, leftMargin, yPos, leftMargin + 300, yPos);
-                yPos += 10;
+                e.Graphics.DrawString($"       ({labelAmountInWords.Text})", smallFont, Brushes.Black, leftMargin + 20, yPos);
+                yPos += smallFont.GetHeight() + 20;
 
-                e.Graphics.DrawString($"Стоимость проживания: {houseTotal:N2} ₽",
-                    normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
+                // ПОДПИСИ
+                yPos = e.MarginBounds.Bottom - 70;
 
-                e.Graphics.DrawString($"Дополнительные услуги: {servicesTotal:N2} ₽",
-                    normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 5;
+                e.Graphics.DrawString("ИСПОЛНИТЕЛЬ:", boldFont, Brushes.Black, leftMargin, yPos);
+                e.Graphics.DrawString("ЗАКАЗЧИК:", boldFont, Brushes.Black, leftMargin + 400, yPos);
+                yPos += 25;
 
-                e.Graphics.DrawLine(Pens.Black, leftMargin, yPos, leftMargin + 250, yPos);
-                yPos += 10;
+                e.Graphics.DrawString("____________________ /_______________/", normalFont, Brushes.Black, leftMargin, yPos);
+                e.Graphics.DrawString("____________________ /_______________/", normalFont, Brushes.Black, leftMargin + 400, yPos);
+                yPos += 20;
 
-                e.Graphics.DrawString($"ВСЕГО К ОПЛАТЕ: {grandTotal:N2} ₽",
-                    totalFont, Brushes.Black, leftMargin, yPos);
-                yPos += totalFont.GetHeight() + 10;
-
-                string words = $"({labelAmountInWords.Text})";
-                e.Graphics.DrawString(words, normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 30;
-
-                // Подпись
-                e.Graphics.DrawLine(Pens.Black, leftMargin, yPos, leftMargin + 200, yPos);
-                yPos += 15;
-
-                e.Graphics.DrawString(labelStaffName.Text, normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 10;
-
-                e.Graphics.DrawString("Подпись сотрудника: _________________________",
-                    normalFont, Brushes.Black, leftMargin, yPos);
-                yPos += normalFont.GetHeight() + 20;
-
-                e.Graphics.DrawString("СПАСИБО ЗА ВАШ ЗАКАЗ!",
-                    new Font("Arial", 11, FontStyle.Italic), Brushes.Black,
-                    leftMargin + (pageWidth - 200) / 2, yPos);
+                e.Graphics.DrawString("М.П.", boldFont, Brushes.Black, leftMargin, yPos);
+                e.Graphics.DrawString($"Сотрудник: {staffFIO}", smallFont, Brushes.Black, leftMargin + 400, yPos);
 
                 e.HasMorePages = false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при формировании страницы для печати: {ex.Message}",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка при формировании страницы для печати: {ex.Message}");
             }
         }
 
@@ -657,54 +585,29 @@ namespace kursovoy_proekt
             try
             {
                 SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Filter = "PDF файлы (*.pdf)|*.pdf|Текстовые файлы (*.txt)|*.txt|HTML файлы (*.html)|*.html";
-                saveDialog.FileName = $"Чек_{orderId}_{DateTime.Now:yyyyMMdd_HHmm}";
+                saveDialog.Filter = "PDF файлы (*.pdf)|*.pdf";
+                saveDialog.FileName = $"Договор_{contractNumber}_{DateTime.Now:yyyyMMdd_HHmm}";
                 saveDialog.DefaultExt = "pdf";
-                saveDialog.OverwritePrompt = true;
-                saveDialog.Title = "Сохранить чек";
+                saveDialog.Title = "Сохранить договор";
 
                 if (saveDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string extension = Path.GetExtension(saveDialog.FileName).ToLower();
-
-                    switch (extension)
-                    {
-                        case ".pdf":
-                            SaveAsPDFWithMicrosoftPrintToPDF(saveDialog.FileName);
-                            break;
-                        case ".html":
-                            SaveAsHTML(saveDialog.FileName);
-                            break;
-                        default:
-                            SaveReceiptAsText(saveDialog.FileName);
-                            break;
-                    }
-
-                    try
-                    {
-                        if (File.Exists(saveDialog.FileName))
-                        {
-                            System.Diagnostics.Process.Start(saveDialog.FileName);
-                        }
-                    }
-                    catch { }
+                    SaveAsPDF(saveDialog.FileName);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при сохранении: {ex.Message}",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка при сохранении: {ex.Message}");
             }
         }
 
-        private void SaveAsPDFWithMicrosoftPrintToPDF(string pdfFilePath)
+        private void SaveAsPDF(string pdfFilePath)
         {
             try
             {
                 PrintDocument pd = new PrintDocument();
-                pd.PrintPage += PrintReceiptPage;
+                pd.PrintPage += PrintContractPage;
 
-                // Ищем Microsoft Print to PDF
                 string pdfPrinterName = "";
                 foreach (string printer in PrinterSettings.InstalledPrinters)
                 {
@@ -717,18 +620,14 @@ namespace kursovoy_proekt
 
                 if (string.IsNullOrEmpty(pdfPrinterName))
                 {
-                    MessageBox.Show("Принтер 'Microsoft Print to PDF' не найден.\n\nСохранено как текстовый файл.",
-                        "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    SaveReceiptAsText(pdfFilePath.Replace(".pdf", ".txt"));
+                    MessageBox.Show("Принтер 'Microsoft Print to PDF' не найден.");
                     return;
                 }
 
-                // Настройки печати
                 pd.PrinterSettings.PrinterName = pdfPrinterName;
                 pd.PrinterSettings.PrintToFile = true;
                 pd.PrinterSettings.PrintFileName = pdfFilePath;
 
-                // Настройка размера страницы
                 foreach (PaperSize size in pd.PrinterSettings.PaperSizes)
                 {
                     if (size.Kind == PaperKind.A4)
@@ -738,232 +637,15 @@ namespace kursovoy_proekt
                     }
                 }
 
-                pd.DefaultPageSettings.Landscape = false;
                 pd.DefaultPageSettings.Margins = new Margins(50, 50, 50, 50);
-
-                // Создаем PDF
                 pd.Print();
 
-                MessageBox.Show($"Чек успешно сохранен в PDF:\n{pdfFilePath}",
-                    "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Договор сохранен в PDF:\n{pdfFilePath}", "Успех");
+                System.Diagnostics.Process.Start(pdfFilePath);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при сохранении PDF: {ex.Message}\nСохранено как текстовый файл.",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                SaveReceiptAsText(pdfFilePath.Replace(".pdf", ".txt"));
-            }
-        }
-
-        private void SaveReceiptAsText(string filePath)
-        {
-            try
-            {
-                StringBuilder txt = new StringBuilder();
-
-                txt.AppendLine("БАЗА ОТДЫХА \"ПРЕМИУМ КОТТЕДЖИ\"");
-                txt.AppendLine(new string('=', 50));
-                txt.AppendLine($"КАССОВЫЙ ЧЕК № {orderId:00000}");
-                txt.AppendLine($"Дата: {DateTime.Now:dd.MM.yyyy HH:mm}");
-                txt.AppendLine();
-
-                txt.AppendLine("КЛИЕНТ:");
-                txt.AppendLine($"ФИО: {labelClientName.Text.Replace("Клиент: ", "")}");
-                txt.AppendLine(labelClientPassport.Text);
-                txt.AppendLine(labelClientPhone.Text);
-                txt.AppendLine(labelClientEmail.Text);
-                txt.AppendLine();
-
-                txt.AppendLine("ПРОЖИВАНИЕ:");
-                txt.AppendLine(labelHouseName.Text);
-                txt.AppendLine(labelHouseClass.Text);
-                txt.AppendLine(labelHouseAddress.Text);
-                txt.AppendLine(labelHouseCapacity.Text);
-                txt.AppendLine(labelHouseDescription.Text);
-                txt.AppendLine($"Дата заезда: {checkInDate:dd.MM.yyyy}");
-                txt.AppendLine($"Дата выезда: {checkOutDate:dd.MM.yyyy}");
-                txt.AppendLine($"Период проживания: {stayDays} дней");
-                txt.AppendLine($"Стоимость проживания: {houseTotal:N2} ₽");
-                txt.AppendLine();
-
-                if (servicesList.Count > 0)
-                {
-                    txt.AppendLine("ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ:");
-                    txt.AppendLine(new string('-', 70));
-                    txt.AppendLine(string.Format("{0,-30} {1,-8} {2,-15} {3,-15}",
-                        "Услуга", "Кол-во", "Цена за ед.", "Общая стоимость"));
-                    txt.AppendLine(new string('-', 70));
-
-                    foreach (var service in servicesList)
-                    {
-                        string serviceName = service.Name.Length > 30 ?
-                            service.Name.Substring(0, 27) + "..." : service.Name;
-                        decimal totalPrice = service.Price * service.Quantity;
-
-                        txt.AppendLine(string.Format("{0,-30} {1,-8} {2,-15} {3,-15}",
-                            serviceName,
-                            service.Quantity,
-                            $"{service.Price:N2} ₽",
-                            $"{totalPrice:N2} ₽"));
-                    }
-
-                    txt.AppendLine(new string('-', 70));
-                    txt.AppendLine($"Итого услуг: {servicesTotal:N2} ₽");
-                    txt.AppendLine();
-                }
-
-                txt.AppendLine("ИТОГ:");
-                txt.AppendLine(new string('=', 50));
-                txt.AppendLine($"Стоимость проживания: {houseTotal:N2} ₽");
-                txt.AppendLine($"Дополнительные услуги: {servicesTotal:N2} ₽");
-                txt.AppendLine(new string('-', 40));
-                txt.AppendLine($"ВСЕГО К ОПЛАТЕ: {grandTotal:N2} ₽");
-                txt.AppendLine($"({labelAmountInWords.Text})");
-                txt.AppendLine();
-
-                txt.AppendLine(new string('_', 40));
-                txt.AppendLine(labelStaffName.Text);
-                txt.AppendLine(labelStaffLogin.Text);
-                txt.AppendLine("Подпись сотрудника: _________________________");
-                txt.AppendLine();
-                txt.AppendLine("СПАСИБО ЗА ВАШ ЗАКАЗ!");
-
-                File.WriteAllText(filePath, txt.ToString(), Encoding.UTF8);
-
-                MessageBox.Show($"Чек успешно сохранен:\n{filePath}",
-                    "Сохранено", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка сохранения текстового файла: {ex.Message}",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void SaveAsHTML(string htmlFilePath)
-        {
-            try
-            {
-                StringBuilder html = new StringBuilder();
-
-                html.AppendLine("<!DOCTYPE html>");
-                html.AppendLine("<html lang='ru'>");
-                html.AppendLine("<head>");
-                html.AppendLine("    <meta charset='UTF-8'>");
-                html.AppendLine("    <meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-                html.AppendLine($"    <title>Чек №{orderId}</title>");
-                html.AppendLine("    <style>");
-                html.AppendLine("        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; color: #333; }");
-                html.AppendLine("        .header { text-align: center; margin-bottom: 30px; }");
-                html.AppendLine("        .title { font-size: 24px; font-weight: bold; color: #2c3e50; }");
-                html.AppendLine("        .receipt-number { font-size: 18px; color: #27ae60; font-weight: bold; margin: 20px 0; }");
-                html.AppendLine("        .section { margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px; }");
-                html.AppendLine("        .section-title { font-weight: bold; color: #2c3e50; margin-bottom: 10px; font-size: 16px; }");
-                html.AppendLine("        .item { margin-bottom: 5px; }");
-                html.AppendLine("        .total { font-weight: bold; font-size: 18px; color: #27ae60; margin-top: 20px; }");
-                html.AppendLine("        table { width: 100%; border-collapse: collapse; margin: 20px 0; }");
-                html.AppendLine("        th { background-color: #f8f9fa; padding: 12px; text-align: left; border: 1px solid #dee2e6; font-weight: bold; }");
-                html.AppendLine("        td { padding: 12px; border: 1px solid #dee2e6; }");
-                html.AppendLine("        .signature { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px; }");
-                html.AppendLine("        .footer { text-align: center; margin-top: 40px; font-style: italic; color: #7f8c8d; }");
-                html.AppendLine("        .stay-dates { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0; }");
-                html.AppendLine("    </style>");
-                html.AppendLine("</head>");
-                html.AppendLine("<body>");
-
-                html.AppendLine("    <div class='header'>");
-                html.AppendLine("        <div class='title'>БАЗА ОТДЫХА \"ПРЕМИУМ КОТТЕДЖИ\"</div>");
-                html.AppendLine($"        <div class='receipt-number'>КАССОВЫЙ ЧЕК № {orderId:00000}</div>");
-                html.AppendLine($"        <div>Дата: {DateTime.Now:dd.MM.yyyy HH:mm}</div>");
-                html.AppendLine("    </div>");
-
-                html.AppendLine("    <div class='section'>");
-                html.AppendLine("        <div class='section-title'>КЛИЕНТ</div>");
-                html.AppendLine($"        <div class='item'>ФИО: {labelClientName.Text.Replace("Клиент: ", "")}</div>");
-                html.AppendLine($"        <div class='item'>{labelClientPassport.Text}</div>");
-                html.AppendLine($"        <div class='item'>{labelClientPhone.Text}</div>");
-                html.AppendLine($"        <div class='item'>{labelClientEmail.Text}</div>");
-                html.AppendLine("    </div>");
-
-                html.AppendLine("    <div class='section'>");
-                html.AppendLine("        <div class='section-title'>ПРОЖИВАНИЕ</div>");
-                html.AppendLine($"        <div class='item'>{labelHouseName.Text}</div>");
-                html.AppendLine($"        <div class='item'>{labelHouseClass.Text}</div>");
-                html.AppendLine($"        <div class='item'>{labelHouseAddress.Text}</div>");
-                html.AppendLine($"        <div class='item'>{labelHouseCapacity.Text}</div>");
-                html.AppendLine($"        <div class='item'>{labelHouseDescription.Text}</div>");
-
-                html.AppendLine("        <div class='stay-dates'>");
-                html.AppendLine($"            <div class='item'><strong>Дата заезда:</strong> {checkInDate:dd.MM.yyyy}</div>");
-                html.AppendLine($"            <div class='item'><strong>Дата выезда:</strong> {checkOutDate:dd.MM.yyyy}</div>");
-                html.AppendLine($"            <div class='item'><strong>Период проживания:</strong> {stayDays} дней</div>");
-                html.AppendLine($"            <div class='item'><strong>Стоимость проживания:</strong> {houseTotal:N2} ₽</div>");
-                html.AppendLine("        </div>");
-                html.AppendLine("    </div>");
-
-                if (servicesList.Count > 0)
-                {
-                    html.AppendLine("    <div class='section'>");
-                    html.AppendLine("        <div class='section-title'>ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ</div>");
-                    html.AppendLine("        <table>");
-                    html.AppendLine("            <thead>");
-                    html.AppendLine("                <tr>");
-                    html.AppendLine("                    <th>Услуга</th>");
-                    html.AppendLine("                    <th>Кол-во</th>");
-                    html.AppendLine("                    <th>Цена за ед.</th>");
-                    html.AppendLine("                    <th>Общая стоимость</th>");
-                    html.AppendLine("                </tr>");
-                    html.AppendLine("            </thead>");
-                    html.AppendLine("            <tbody>");
-
-                    foreach (var service in servicesList)
-                    {
-                        decimal totalPrice = service.Price * service.Quantity;
-
-                        html.AppendLine("                <tr>");
-                        html.AppendLine($"                    <td>{service.Name}</td>");
-                        html.AppendLine($"                    <td>{service.Quantity}</td>");
-                        html.AppendLine($"                    <td>{service.Price:N2} ₽</td>");
-                        html.AppendLine($"                    <td>{totalPrice:N2} ₽</td>");
-                        html.AppendLine("                </tr>");
-                    }
-
-                    html.AppendLine("            </tbody>");
-                    html.AppendLine("        </table>");
-                    html.AppendLine($"        <div class='item'><strong>Итого услуг:</strong> {servicesTotal:N2} ₽</div>");
-                    html.AppendLine("    </div>");
-                }
-
-                html.AppendLine("    <div class='section'>");
-                html.AppendLine("        <div class='section-title'>ИТОГ</div>");
-                html.AppendLine($"        <div class='item'><strong>Стоимость проживания:</strong> {houseTotal:N2} ₽</div>");
-                html.AppendLine($"        <div class='item'><strong>Дополнительные услуги:</strong> {servicesTotal:N2} ₽</div>");
-                html.AppendLine($"        <div class='total'>ВСЕГО К ОПЛАТЕ: {grandTotal:N2} ₽</div>");
-                html.AppendLine($"        <div class='item'>({labelAmountInWords.Text})</div>");
-                html.AppendLine("    </div>");
-
-                html.AppendLine("    <div class='signature'>");
-                html.AppendLine($"        <div class='item'>{labelStaffName.Text}</div>");
-                html.AppendLine($"        <div class='item'>{labelStaffLogin.Text}</div>");
-                html.AppendLine("        <div class='item'>Подпись сотрудника: _________________________</div>");
-                html.AppendLine("    </div>");
-
-                html.AppendLine("    <div class='footer'>");
-                html.AppendLine("        СПАСИБО ЗА ВАШ ЗАКАЗ!");
-                html.AppendLine("    </div>");
-
-                html.AppendLine("</body>");
-                html.AppendLine("</html>");
-
-                File.WriteAllText(htmlFilePath, html.ToString(), Encoding.UTF8);
-
-                MessageBox.Show($"Чек успешно сохранен как HTML:\n{htmlFilePath}",
-                    "Сохранено", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Не удалось сохранить HTML: {ex.Message}",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка при сохранении PDF: {ex.Message}");
             }
         }
 

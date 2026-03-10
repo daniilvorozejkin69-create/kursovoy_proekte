@@ -307,6 +307,7 @@
             this.buttonApplyFilter.TabIndex = 9;
             this.buttonApplyFilter.Text = "🔍 Применить";
             this.buttonApplyFilter.UseVisualStyleBackColor = false;
+            this.buttonApplyFilter.Click += new System.EventHandler(this.buttonApplyFilter_Click_1);
             // 
             // comboBoxStatusFilter
             // 

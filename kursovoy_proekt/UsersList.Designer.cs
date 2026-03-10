@@ -39,7 +39,6 @@ namespace kursovoy_proekt
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsersList));
-
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelSearch = new System.Windows.Forms.Label();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
@@ -57,26 +56,23 @@ namespace kursovoy_proekt
             this.panelBackground = new System.Windows.Forms.Panel();
             this.comboBoxRoles = new System.Windows.Forms.ComboBox();
             this.labelRoles = new System.Windows.Forms.Label();
-
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelBackground.SuspendLayout();
             this.SuspendLayout();
-
+            // 
             // dataGridView1
+            // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top
-                | System.Windows.Forms.AnchorStyles.Bottom)
-                | System.Windows.Forms.AnchorStyles.Left)
-                | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -86,10 +82,8 @@ namespace kursovoy_proekt
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-
             this.dataGridView1.ColumnHeadersHeight = 45;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -99,12 +93,10 @@ namespace kursovoy_proekt
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(235)))), ((int)(((byte)(210)))));
             this.dataGridView1.Location = new System.Drawing.Point(3, 63);
             this.dataGridView1.Name = "dataGridView1";
-
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -113,19 +105,19 @@ namespace kursovoy_proekt
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 40;
             this.dataGridView1.RowTemplate.Height = 40;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(997, 376);
+            this.dataGridView1.Size = new System.Drawing.Size(1114, 376);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
-
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            // 
             // labelSearch
+            // 
             this.labelSearch.AutoSize = true;
             this.labelSearch.BackColor = System.Drawing.Color.Transparent;
             this.labelSearch.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
@@ -135,8 +127,9 @@ namespace kursovoy_proekt
             this.labelSearch.Size = new System.Drawing.Size(114, 20);
             this.labelSearch.TabIndex = 1;
             this.labelSearch.Text = "Поиск по ФИО";
-
+            // 
             // textBoxSearch
+            // 
             this.textBoxSearch.BackColor = System.Drawing.Color.White;
             this.textBoxSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F);
@@ -146,8 +139,9 @@ namespace kursovoy_proekt
             this.textBoxSearch.Size = new System.Drawing.Size(250, 27);
             this.textBoxSearch.TabIndex = 2;
             this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
-
+            // 
             // buttonPrev
+            // 
             this.buttonPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonPrev.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.buttonPrev.FlatAppearance.BorderSize = 0;
@@ -163,8 +157,9 @@ namespace kursovoy_proekt
             this.buttonPrev.Text = "◀";
             this.buttonPrev.UseVisualStyleBackColor = false;
             this.buttonPrev.Click += new System.EventHandler(this.buttonPrev_Click);
-
+            // 
             // buttonNext
+            // 
             this.buttonNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonNext.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.buttonNext.FlatAppearance.BorderSize = 0;
@@ -180,8 +175,9 @@ namespace kursovoy_proekt
             this.buttonNext.Text = "▶";
             this.buttonNext.UseVisualStyleBackColor = false;
             this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
-
+            // 
             // labelHeader
+            // 
             this.labelHeader.AutoSize = true;
             this.labelHeader.Font = new System.Drawing.Font("Segoe UI Light", 24F);
             this.labelHeader.ForeColor = System.Drawing.Color.White;
@@ -190,8 +186,9 @@ namespace kursovoy_proekt
             this.labelHeader.Size = new System.Drawing.Size(216, 45);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "Пользователи";
-
+            // 
             // buttonBackToMenu
+            // 
             this.buttonBackToMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonBackToMenu.BackColor = System.Drawing.Color.Transparent;
             this.buttonBackToMenu.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
@@ -201,15 +198,16 @@ namespace kursovoy_proekt
             this.buttonBackToMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonBackToMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.buttonBackToMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
-            this.buttonBackToMenu.Location = new System.Drawing.Point(827, 580);
+            this.buttonBackToMenu.Location = new System.Drawing.Point(894, 580);
             this.buttonBackToMenu.Name = "buttonBackToMenu";
-            this.buttonBackToMenu.Size = new System.Drawing.Size(150, 40);
+            this.buttonBackToMenu.Size = new System.Drawing.Size(200, 40);
             this.buttonBackToMenu.TabIndex = 13;
             this.buttonBackToMenu.Text = "🏠 ВЕРНУТЬСЯ В МЕНЮ";
             this.buttonBackToMenu.UseVisualStyleBackColor = false;
             this.buttonBackToMenu.Click += new System.EventHandler(this.buttonBackToMenu_Click);
-
+            // 
             // buttonAdd
+            // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
             this.buttonAdd.FlatAppearance.BorderSize = 0;
@@ -218,15 +216,16 @@ namespace kursovoy_proekt
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdd.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.buttonAdd.ForeColor = System.Drawing.Color.White;
-            this.buttonAdd.Location = new System.Drawing.Point(800, 22);
+            this.buttonAdd.Location = new System.Drawing.Point(815, 22);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(90, 35);
+            this.buttonAdd.Size = new System.Drawing.Size(114, 35);
             this.buttonAdd.TabIndex = 14;
             this.buttonAdd.Text = "➕ Добавить";
             this.buttonAdd.UseVisualStyleBackColor = false;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-
+            // 
             // buttonEdit
+            // 
             this.buttonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
             this.buttonEdit.Enabled = false;
@@ -236,15 +235,16 @@ namespace kursovoy_proekt
             this.buttonEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEdit.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
             this.buttonEdit.ForeColor = System.Drawing.Color.White;
-            this.buttonEdit.Location = new System.Drawing.Point(900, 22);
+            this.buttonEdit.Location = new System.Drawing.Point(959, 22);
             this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(90, 35);
+            this.buttonEdit.Size = new System.Drawing.Size(149, 35);
             this.buttonEdit.TabIndex = 20;
             this.buttonEdit.Text = "✏️ Редактировать";
             this.buttonEdit.UseVisualStyleBackColor = false;
             this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
-
+            // 
             // labelPageInfo
+            // 
             this.labelPageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelPageInfo.BackColor = System.Drawing.Color.Transparent;
             this.labelPageInfo.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -255,40 +255,41 @@ namespace kursovoy_proekt
             this.labelPageInfo.TabIndex = 15;
             this.labelPageInfo.Text = "Страница 1 из 1 | Всего записей: 0";
             this.labelPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
+            // 
             // panel1
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top
-                | System.Windows.Forms.AnchorStyles.Left)
-                | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.panel1.Location = new System.Drawing.Point(0, 90);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1003, 3);
+            this.panel1.Size = new System.Drawing.Size(1120, 3);
             this.panel1.TabIndex = 16;
-
+            // 
             // panel2
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top
-                | System.Windows.Forms.AnchorStyles.Left)
-                | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(235)))), ((int)(((byte)(210)))));
             this.panel2.Location = new System.Drawing.Point(0, 165);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1003, 1);
+            this.panel2.Size = new System.Drawing.Size(1120, 1);
             this.panel2.TabIndex = 17;
-
+            // 
             // panelHeader
-            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top
-                | System.Windows.Forms.AnchorStyles.Left)
-                | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            this.panelHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
             this.panelHeader.Controls.Add(this.pictureBox1);
             this.panelHeader.Controls.Add(this.labelHeader);
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1003, 90);
+            this.panelHeader.Size = new System.Drawing.Size(1120, 90);
             this.panelHeader.TabIndex = 18;
-
+            // 
             // pictureBox1
+            // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(19, 30);
             this.pictureBox1.Name = "pictureBox1";
@@ -296,12 +297,12 @@ namespace kursovoy_proekt
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-
+            // 
             // panelBackground
-            this.panelBackground.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top
-                | System.Windows.Forms.AnchorStyles.Bottom)
-                | System.Windows.Forms.AnchorStyles.Left)
-                | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            this.panelBackground.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.panelBackground.Controls.Add(this.comboBoxRoles);
             this.panelBackground.Controls.Add(this.labelRoles);
@@ -313,10 +314,11 @@ namespace kursovoy_proekt
             this.panelBackground.Controls.Add(this.panel2);
             this.panelBackground.Location = new System.Drawing.Point(0, 96);
             this.panelBackground.Name = "panelBackground";
-            this.panelBackground.Size = new System.Drawing.Size(1003, 442);
+            this.panelBackground.Size = new System.Drawing.Size(1120, 442);
             this.panelBackground.TabIndex = 19;
-
+            // 
             // comboBoxRoles
+            // 
             this.comboBoxRoles.BackColor = System.Drawing.Color.White;
             this.comboBoxRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRoles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -328,8 +330,9 @@ namespace kursovoy_proekt
             this.comboBoxRoles.Size = new System.Drawing.Size(200, 28);
             this.comboBoxRoles.TabIndex = 4;
             this.comboBoxRoles.SelectedIndexChanged += new System.EventHandler(this.comboBoxRoles_SelectedIndexChanged);
-
+            // 
             // labelRoles
+            // 
             this.labelRoles.AutoSize = true;
             this.labelRoles.BackColor = System.Drawing.Color.Transparent;
             this.labelRoles.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
@@ -339,12 +342,13 @@ namespace kursovoy_proekt
             this.labelRoles.Size = new System.Drawing.Size(131, 20);
             this.labelRoles.TabIndex = 3;
             this.labelRoles.Text = "Фильтр по ролям";
-
+            // 
             // UsersList
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1003, 640);
+            this.ClientSize = new System.Drawing.Size(1120, 640);
             this.Controls.Add(this.panelBackground);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.labelPageInfo);
@@ -358,7 +362,6 @@ namespace kursovoy_proekt
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список пользователей - База отдыха";
             this.Load += new System.EventHandler(this.UsersList_Load);
-
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
@@ -366,6 +369,7 @@ namespace kursovoy_proekt
             this.panelBackground.ResumeLayout(false);
             this.panelBackground.PerformLayout();
             this.ResumeLayout(false);
+
         }
     }
 }

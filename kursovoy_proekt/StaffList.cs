@@ -670,5 +670,10 @@ namespace kursovoy_proekt
             buttonApplyFilter.BackColor = Color.FromArgb(106, 153, 85);
             buttonApplyFilter.Font = new Font(buttonApplyFilter.Font, FontStyle.Regular);
         }
+
+        private void buttonApplyFilter_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace kursovoy_proekt
+﻿namespace kursovoy_proekt
 {
     partial class Check
     {
@@ -49,6 +47,10 @@ namespace kursovoy_proekt
         private System.Windows.Forms.Button buttonCreateOrder;
         private System.Windows.Forms.Button buttonBackToMenu;
 
+        // НОВЫЕ ЭЛЕМЕНТЫ ДЛЯ БРОНИРОВАНИЙ
+        private System.Windows.Forms.ComboBox comboBoxBookings;
+        private System.Windows.Forms.Button buttonLoadBooking;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -60,13 +62,15 @@ namespace kursovoy_proekt
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelGreenLine = new System.Windows.Forms.Panel();
             this.panelContent = new System.Windows.Forms.Panel();
+            this.comboBoxBookings = new System.Windows.Forms.ComboBox();
+            this.buttonLoadBooking = new System.Windows.Forms.Button();
             this.buttonBackToMenu = new System.Windows.Forms.Button();
             this.buttonCreateOrder = new System.Windows.Forms.Button();
             this.labelTotalCost = new System.Windows.Forms.Label();
@@ -98,42 +102,50 @@ namespace kursovoy_proekt
             this.labelHouse = new System.Windows.Forms.Label();
             this.comboBoxClients = new System.Windows.Forms.ComboBox();
             this.labelClient = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.panelHeader.SuspendLayout();
             this.panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewServices)).BeginInit();
             this.panelServicesContainer.SuspendLayout();
             this.SuspendLayout();
-
+            // 
             // panelHeader
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+            // 
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
             this.panelHeader.Controls.Add(this.labelHeader);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1100, 80);
+            this.panelHeader.Size = new System.Drawing.Size(1166, 80);
             this.panelHeader.TabIndex = 0;
-
+            // 
             // labelHeader
+            // 
             this.labelHeader.AutoSize = true;
             this.labelHeader.Font = new System.Drawing.Font("Segoe UI Light", 24F);
             this.labelHeader.ForeColor = System.Drawing.Color.White;
             this.labelHeader.Location = new System.Drawing.Point(30, 20);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(242, 45);
+            this.labelHeader.Size = new System.Drawing.Size(305, 45);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "Оформление заказа";
-
+            // 
             // panelGreenLine
-            this.panelGreenLine.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            // 
+            this.panelGreenLine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.panelGreenLine.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelGreenLine.Location = new System.Drawing.Point(0, 80);
             this.panelGreenLine.Name = "panelGreenLine";
-            this.panelGreenLine.Size = new System.Drawing.Size(1100, 3);
+            this.panelGreenLine.Size = new System.Drawing.Size(1166, 3);
             this.panelGreenLine.TabIndex = 1;
-
+            // 
             // panelContent
+            // 
             this.panelContent.AutoScroll = true;
-            this.panelContent.BackColor = System.Drawing.Color.FromArgb(240, 245, 235);
+            this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
+            this.panelContent.Controls.Add(this.label1);
+            this.panelContent.Controls.Add(this.comboBoxBookings);
+            this.panelContent.Controls.Add(this.buttonLoadBooking);
             this.panelContent.Controls.Add(this.buttonBackToMenu);
             this.panelContent.Controls.Add(this.buttonCreateOrder);
             this.panelContent.Controls.Add(this.labelTotalCost);
@@ -163,112 +175,147 @@ namespace kursovoy_proekt
             this.panelContent.Location = new System.Drawing.Point(0, 83);
             this.panelContent.Name = "panelContent";
             this.panelContent.Padding = new System.Windows.Forms.Padding(20);
-            this.panelContent.Size = new System.Drawing.Size(1100, 617);
+            this.panelContent.Size = new System.Drawing.Size(1166, 617);
             this.panelContent.TabIndex = 2;
-
+            // 
+            // comboBoxBookings
+            // 
+            this.comboBoxBookings.BackColor = System.Drawing.Color.White;
+            this.comboBoxBookings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxBookings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxBookings.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.comboBoxBookings.FormattingEnabled = true;
+            this.comboBoxBookings.Location = new System.Drawing.Point(405, 78);
+            this.comboBoxBookings.Name = "comboBoxBookings";
+            this.comboBoxBookings.Size = new System.Drawing.Size(270, 25);
+            this.comboBoxBookings.TabIndex = 26;
+            // 
+            // buttonLoadBooking
+            // 
+            this.buttonLoadBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.buttonLoadBooking.FlatAppearance.BorderSize = 0;
+            this.buttonLoadBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonLoadBooking.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.buttonLoadBooking.ForeColor = System.Drawing.Color.White;
+            this.buttonLoadBooking.Location = new System.Drawing.Point(688, 76);
+            this.buttonLoadBooking.Name = "buttonLoadBooking";
+            this.buttonLoadBooking.Size = new System.Drawing.Size(177, 27);
+            this.buttonLoadBooking.TabIndex = 27;
+            this.buttonLoadBooking.Text = "Загрузить бронирование";
+            this.buttonLoadBooking.UseVisualStyleBackColor = false;
+            // 
             // buttonBackToMenu
-            this.buttonBackToMenu.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            // 
+            this.buttonBackToMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonBackToMenu.BackColor = System.Drawing.Color.Transparent;
-            this.buttonBackToMenu.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.buttonBackToMenu.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.buttonBackToMenu.FlatAppearance.BorderSize = 2;
             this.buttonBackToMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonBackToMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.buttonBackToMenu.ForeColor = System.Drawing.Color.FromArgb(106, 153, 85);
-            this.buttonBackToMenu.Location = new System.Drawing.Point(900, 520);
+            this.buttonBackToMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonBackToMenu.Location = new System.Drawing.Point(966, 520);
             this.buttonBackToMenu.Name = "buttonBackToMenu";
             this.buttonBackToMenu.Size = new System.Drawing.Size(160, 50);
             this.buttonBackToMenu.TabIndex = 24;
             this.buttonBackToMenu.Text = "🏠 В меню";
             this.buttonBackToMenu.UseVisualStyleBackColor = false;
-            this.buttonBackToMenu.Click += new System.EventHandler(this.buttonBackToMenu_Click);
-
+            // 
             // buttonCreateOrder
-            this.buttonCreateOrder.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            this.buttonCreateOrder.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            // 
+            this.buttonCreateOrder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCreateOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.buttonCreateOrder.FlatAppearance.BorderSize = 0;
             this.buttonCreateOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCreateOrder.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.buttonCreateOrder.ForeColor = System.Drawing.Color.White;
             this.buttonCreateOrder.Location = new System.Drawing.Point(20, 520);
             this.buttonCreateOrder.Name = "buttonCreateOrder";
-            this.buttonCreateOrder.Size = new System.Drawing.Size(870, 50);
+            this.buttonCreateOrder.Size = new System.Drawing.Size(936, 50);
             this.buttonCreateOrder.TabIndex = 23;
             this.buttonCreateOrder.Text = "✅ ОФОРМИТЬ ЗАКАЗ";
             this.buttonCreateOrder.UseVisualStyleBackColor = false;
-            this.buttonCreateOrder.Click += new System.EventHandler(this.buttonCreateOrder_Click);
-
+            // 
             // labelTotalCost
+            // 
             this.labelTotalCost.AutoSize = true;
             this.labelTotalCost.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.labelTotalCost.ForeColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.labelTotalCost.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.labelTotalCost.Location = new System.Drawing.Point(880, 430);
             this.labelTotalCost.Name = "labelTotalCost";
             this.labelTotalCost.Size = new System.Drawing.Size(66, 25);
             this.labelTotalCost.TabIndex = 22;
             this.labelTotalCost.Text = "0,00 ₽";
-
+            // 
             // labelTotalCostLabel
+            // 
             this.labelTotalCostLabel.AutoSize = true;
             this.labelTotalCostLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.labelTotalCostLabel.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelTotalCostLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelTotalCostLabel.Location = new System.Drawing.Point(690, 433);
             this.labelTotalCostLabel.Name = "labelTotalCostLabel";
-            this.labelTotalCostLabel.Size = new System.Drawing.Size(184, 21);
+            this.labelTotalCostLabel.Size = new System.Drawing.Size(183, 21);
             this.labelTotalCostLabel.TabIndex = 21;
             this.labelTotalCostLabel.Text = "Итого к оплате (всего):";
-
+            // 
             // labelServicesCost
+            // 
             this.labelServicesCost.AutoSize = true;
             this.labelServicesCost.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.labelServicesCost.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelServicesCost.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelServicesCost.Location = new System.Drawing.Point(880, 400);
             this.labelServicesCost.Name = "labelServicesCost";
-            this.labelServicesCost.Size = new System.Drawing.Size(56, 21);
+            this.labelServicesCost.Size = new System.Drawing.Size(53, 21);
             this.labelServicesCost.TabIndex = 20;
             this.labelServicesCost.Text = "0,00 ₽";
-
+            // 
             // labelServicesCostLabel
+            // 
             this.labelServicesCostLabel.AutoSize = true;
             this.labelServicesCostLabel.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.labelServicesCostLabel.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelServicesCostLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelServicesCostLabel.Location = new System.Drawing.Point(690, 400);
             this.labelServicesCostLabel.Name = "labelServicesCostLabel";
-            this.labelServicesCostLabel.Size = new System.Drawing.Size(170, 21);
+            this.labelServicesCostLabel.Size = new System.Drawing.Size(176, 21);
             this.labelServicesCostLabel.TabIndex = 19;
             this.labelServicesCostLabel.Text = "Стоимость услуг (итог):";
-
+            // 
             // labelHouseCost
+            // 
             this.labelHouseCost.AutoSize = true;
             this.labelHouseCost.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.labelHouseCost.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelHouseCost.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelHouseCost.Location = new System.Drawing.Point(880, 370);
             this.labelHouseCost.Name = "labelHouseCost";
-            this.labelHouseCost.Size = new System.Drawing.Size(56, 21);
+            this.labelHouseCost.Size = new System.Drawing.Size(53, 21);
             this.labelHouseCost.TabIndex = 18;
             this.labelHouseCost.Text = "0,00 ₽";
-
+            // 
             // labelHouseCostLabel
+            // 
             this.labelHouseCostLabel.AutoSize = true;
             this.labelHouseCostLabel.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.labelHouseCostLabel.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelHouseCostLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelHouseCostLabel.Location = new System.Drawing.Point(690, 370);
             this.labelHouseCostLabel.Name = "labelHouseCostLabel";
             this.labelHouseCostLabel.Size = new System.Drawing.Size(184, 21);
             this.labelHouseCostLabel.TabIndex = 17;
             this.labelHouseCostLabel.Text = "Стоимость проживания:";
-
+            // 
             // labelCostTitle
+            // 
             this.labelCostTitle.AutoSize = true;
             this.labelCostTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
-            this.labelCostTitle.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelCostTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCostTitle.Location = new System.Drawing.Point(690, 330);
             this.labelCostTitle.Name = "labelCostTitle";
-            this.labelCostTitle.Size = new System.Drawing.Size(184, 25);
+            this.labelCostTitle.Size = new System.Drawing.Size(172, 25);
             this.labelCostTitle.TabIndex = 16;
             this.labelCostTitle.Text = "Расчет стоимости:";
-
+            // 
             // buttonClearServices
-            this.buttonClearServices.BackColor = System.Drawing.Color.FromArgb(220, 100, 100);
+            // 
+            this.buttonClearServices.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.buttonClearServices.FlatAppearance.BorderSize = 0;
             this.buttonClearServices.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClearServices.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F);
@@ -279,10 +326,10 @@ namespace kursovoy_proekt
             this.buttonClearServices.TabIndex = 15;
             this.buttonClearServices.Text = "🗑️ Очистить все";
             this.buttonClearServices.UseVisualStyleBackColor = false;
-            this.buttonClearServices.Click += new System.EventHandler(this.buttonClearServices_Click);
-
+            // 
             // buttonRemoveService
-            this.buttonRemoveService.BackColor = System.Drawing.Color.FromArgb(220, 120, 120);
+            // 
+            this.buttonRemoveService.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.buttonRemoveService.FlatAppearance.BorderSize = 0;
             this.buttonRemoveService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRemoveService.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F);
@@ -293,10 +340,10 @@ namespace kursovoy_proekt
             this.buttonRemoveService.TabIndex = 14;
             this.buttonRemoveService.Text = "➖ Удалить выбранное";
             this.buttonRemoveService.UseVisualStyleBackColor = false;
-            this.buttonRemoveService.Click += new System.EventHandler(this.buttonRemoveService_Click);
-
+            // 
             // buttonAddService
-            this.buttonAddService.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            // 
+            this.buttonAddService.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.buttonAddService.FlatAppearance.BorderSize = 0;
             this.buttonAddService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAddService.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F);
@@ -307,65 +354,66 @@ namespace kursovoy_proekt
             this.buttonAddService.TabIndex = 13;
             this.buttonAddService.Text = "➕ Добавить выбранное";
             this.buttonAddService.UseVisualStyleBackColor = false;
-            this.buttonAddService.Click += new System.EventHandler(this.buttonAddService_Click);
-
+            // 
             // dataGridViewServices
+            // 
             this.dataGridViewServices.AllowUserToAddRows = false;
             this.dataGridViewServices.AllowUserToDeleteRows = false;
             this.dataGridViewServices.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewServices.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewServices.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dataGridViewServices.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(5);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(106, 153, 85);
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewServices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(5);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewServices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewServices.ColumnHeadersHeight = 40;
             this.dataGridViewServices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(5);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(220, 235, 210);
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewServices.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(5);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(235)))), ((int)(((byte)(210)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewServices.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewServices.EnableHeadersVisualStyles = false;
-            this.dataGridViewServices.GridColor = System.Drawing.Color.FromArgb(220, 235, 210);
+            this.dataGridViewServices.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(235)))), ((int)(((byte)(210)))));
             this.dataGridViewServices.Location = new System.Drawing.Point(340, 150);
             this.dataGridViewServices.Name = "dataGridViewServices";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(220, 235, 210);
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewServices.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(235)))), ((int)(((byte)(210)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewServices.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewServices.RowHeadersVisible = false;
             this.dataGridViewServices.RowTemplate.Height = 35;
             this.dataGridViewServices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewServices.Size = new System.Drawing.Size(720, 140);
+            this.dataGridViewServices.Size = new System.Drawing.Size(757, 140);
             this.dataGridViewServices.TabIndex = 12;
-            // !!! УДАЛЕНО событие KeyDown - его нет в коде !!!
-
+            // 
             // labelSelectedServices
+            // 
             this.labelSelectedServices.AutoSize = true;
             this.labelSelectedServices.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.labelSelectedServices.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelSelectedServices.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelSelectedServices.Location = new System.Drawing.Point(340, 120);
             this.labelSelectedServices.Name = "labelSelectedServices";
-            this.labelSelectedServices.Size = new System.Drawing.Size(165, 20);
+            this.labelSelectedServices.Size = new System.Drawing.Size(208, 20);
             this.labelSelectedServices.TabIndex = 11;
             this.labelSelectedServices.Text = "Выбранные услуги в заказе:";
-
+            // 
             // panelServicesContainer
+            // 
             this.panelServicesContainer.BackColor = System.Drawing.Color.White;
             this.panelServicesContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelServicesContainer.Controls.Add(this.labelServicePrice);
@@ -378,22 +426,24 @@ namespace kursovoy_proekt
             this.panelServicesContainer.Name = "panelServicesContainer";
             this.panelServicesContainer.Size = new System.Drawing.Size(300, 340);
             this.panelServicesContainer.TabIndex = 10;
-
+            // 
             // labelServicePrice
+            // 
             this.labelServicePrice.AutoSize = true;
             this.labelServicePrice.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.labelServicePrice.ForeColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            this.labelServicePrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.labelServicePrice.Location = new System.Drawing.Point(10, 300);
             this.labelServicePrice.Name = "labelServicePrice";
-            this.labelServicePrice.Size = new System.Drawing.Size(58, 20);
+            this.labelServicePrice.Size = new System.Drawing.Size(71, 20);
             this.labelServicePrice.TabIndex = 5;
             this.labelServicePrice.Text = "Цена: 0₽";
-
+            // 
             // textBoxServiceDescription
-            this.textBoxServiceDescription.BackColor = System.Drawing.Color.FromArgb(249, 245, 235);
+            // 
+            this.textBoxServiceDescription.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.textBoxServiceDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxServiceDescription.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.textBoxServiceDescription.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.textBoxServiceDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.textBoxServiceDescription.Location = new System.Drawing.Point(10, 250);
             this.textBoxServiceDescription.Multiline = true;
             this.textBoxServiceDescription.Name = "textBoxServiceDescription";
@@ -402,106 +452,113 @@ namespace kursovoy_proekt
             this.textBoxServiceDescription.Size = new System.Drawing.Size(275, 45);
             this.textBoxServiceDescription.TabIndex = 4;
             this.textBoxServiceDescription.Text = "Выберите услугу для просмотра описания...";
-
+            // 
             // labelServiceDetails
+            // 
             this.labelServiceDetails.AutoSize = true;
             this.labelServiceDetails.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelServiceDetails.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelServiceDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelServiceDetails.Location = new System.Drawing.Point(10, 230);
             this.labelServiceDetails.Name = "labelServiceDetails";
-            this.labelServiceDetails.Size = new System.Drawing.Size(135, 17);
+            this.labelServiceDetails.Size = new System.Drawing.Size(117, 17);
             this.labelServiceDetails.TabIndex = 3;
             this.labelServiceDetails.Text = "Описание услуги:";
-
+            // 
             // listBoxServices
-            this.listBoxServices.BackColor = System.Drawing.Color.FromArgb(249, 245, 235);
+            // 
+            this.listBoxServices.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.listBoxServices.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listBoxServices.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.listBoxServices.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.listBoxServices.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.listBoxServices.FormattingEnabled = true;
             this.listBoxServices.ItemHeight = 17;
             this.listBoxServices.Location = new System.Drawing.Point(10, 60);
             this.listBoxServices.Name = "listBoxServices";
             this.listBoxServices.Size = new System.Drawing.Size(275, 170);
             this.listBoxServices.TabIndex = 2;
-            this.listBoxServices.SelectedIndexChanged += new System.EventHandler(this.listBoxServices_SelectedIndexChanged);
-            this.listBoxServices.DoubleClick += new System.EventHandler(this.listBoxServices_DoubleClick);
-
+            // 
             // labelServicesTitle
+            // 
             this.labelServicesTitle.AutoSize = true;
             this.labelServicesTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.labelServicesTitle.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelServicesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelServicesTitle.Location = new System.Drawing.Point(10, 15);
             this.labelServicesTitle.Name = "labelServicesTitle";
-            this.labelServicesTitle.Size = new System.Drawing.Size(202, 21);
+            this.labelServicesTitle.Size = new System.Drawing.Size(284, 21);
             this.labelServicesTitle.TabIndex = 1;
             this.labelServicesTitle.Text = "Доступные дополнительные услуги:";
-
+            // 
             // panelServicesList
-            this.panelServicesList.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
+            // 
+            this.panelServicesList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.panelServicesList.Location = new System.Drawing.Point(10, 40);
             this.panelServicesList.Name = "panelServicesList";
             this.panelServicesList.Size = new System.Drawing.Size(275, 2);
             this.panelServicesList.TabIndex = 0;
-
+            // 
             // labelStayDays
+            // 
             this.labelStayDays.AutoSize = true;
             this.labelStayDays.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.labelStayDays.ForeColor = System.Drawing.Color.FromArgb(106, 153, 85);
-            this.labelStayDays.Location = new System.Drawing.Point(545, 95);
+            this.labelStayDays.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.labelStayDays.Location = new System.Drawing.Point(302, 83);
             this.labelStayDays.Name = "labelStayDays";
-            this.labelStayDays.Size = new System.Drawing.Size(50, 17);
+            this.labelStayDays.Size = new System.Drawing.Size(47, 17);
             this.labelStayDays.TabIndex = 9;
             this.labelStayDays.Text = "1 день";
-
+            // 
             // dateTimePickerCheckOut
+            // 
             this.dateTimePickerCheckOut.CalendarFont = new System.Drawing.Font("Segoe UI", 9F);
             this.dateTimePickerCheckOut.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.dateTimePickerCheckOut.Location = new System.Drawing.Point(405, 90);
+            this.dateTimePickerCheckOut.Location = new System.Drawing.Point(162, 78);
             this.dateTimePickerCheckOut.Name = "dateTimePickerCheckOut";
             this.dateTimePickerCheckOut.Size = new System.Drawing.Size(130, 25);
             this.dateTimePickerCheckOut.TabIndex = 8;
-            this.dateTimePickerCheckOut.ValueChanged += new System.EventHandler(this.dateTimePickerCheckOut_ValueChanged);
-
+            // 
             // labelCheckOut
+            // 
             this.labelCheckOut.AutoSize = true;
             this.labelCheckOut.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelCheckOut.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
-            this.labelCheckOut.Location = new System.Drawing.Point(405, 65);
+            this.labelCheckOut.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelCheckOut.Location = new System.Drawing.Point(162, 53);
             this.labelCheckOut.Name = "labelCheckOut";
-            this.labelCheckOut.Size = new System.Drawing.Size(87, 17);
+            this.labelCheckOut.Size = new System.Drawing.Size(89, 17);
             this.labelCheckOut.TabIndex = 7;
             this.labelCheckOut.Text = "Дата выезда:";
-
+            // 
             // dateTimePickerCheckIn
+            // 
             this.dateTimePickerCheckIn.CalendarFont = new System.Drawing.Font("Segoe UI", 9F);
             this.dateTimePickerCheckIn.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.dateTimePickerCheckIn.Location = new System.Drawing.Point(265, 90);
+            this.dateTimePickerCheckIn.Location = new System.Drawing.Point(22, 78);
             this.dateTimePickerCheckIn.Name = "dateTimePickerCheckIn";
             this.dateTimePickerCheckIn.Size = new System.Drawing.Size(130, 25);
             this.dateTimePickerCheckIn.TabIndex = 6;
-            this.dateTimePickerCheckIn.ValueChanged += new System.EventHandler(this.dateTimePickerCheckIn_ValueChanged);
-
+            // 
             // labelCheckIn
+            // 
             this.labelCheckIn.AutoSize = true;
             this.labelCheckIn.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelCheckIn.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
-            this.labelCheckIn.Location = new System.Drawing.Point(265, 65);
+            this.labelCheckIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelCheckIn.Location = new System.Drawing.Point(22, 53);
             this.labelCheckIn.Name = "labelCheckIn";
-            this.labelCheckIn.Size = new System.Drawing.Size(89, 17);
+            this.labelCheckIn.Size = new System.Drawing.Size(85, 17);
             this.labelCheckIn.TabIndex = 5;
             this.labelCheckIn.Text = "Дата заезда:";
-
+            // 
             // labelHouseInfo
+            // 
             this.labelHouseInfo.AutoSize = true;
             this.labelHouseInfo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            this.labelHouseInfo.ForeColor = System.Drawing.Color.FromArgb(100, 100, 100);
+            this.labelHouseInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.labelHouseInfo.Location = new System.Drawing.Point(685, 35);
             this.labelHouseInfo.Name = "labelHouseInfo";
             this.labelHouseInfo.Size = new System.Drawing.Size(0, 15);
             this.labelHouseInfo.TabIndex = 4;
-
+            // 
             // comboBoxHouses
+            // 
             this.comboBoxHouses.BackColor = System.Drawing.Color.White;
             this.comboBoxHouses.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxHouses.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -511,41 +568,57 @@ namespace kursovoy_proekt
             this.comboBoxHouses.Name = "comboBoxHouses";
             this.comboBoxHouses.Size = new System.Drawing.Size(270, 25);
             this.comboBoxHouses.TabIndex = 3;
-            this.comboBoxHouses.SelectedIndexChanged += new System.EventHandler(this.comboBoxHouses_SelectedIndexChanged);
-
+            // 
             // labelHouse
+            // 
             this.labelHouse.AutoSize = true;
             this.labelHouse.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelHouse.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelHouse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelHouse.Location = new System.Drawing.Point(405, 5);
             this.labelHouse.Name = "labelHouse";
             this.labelHouse.Size = new System.Drawing.Size(103, 17);
             this.labelHouse.TabIndex = 2;
             this.labelHouse.Text = "Выберите дом:";
-
+            // 
             // comboBoxClients
+            // 
             this.comboBoxClients.BackColor = System.Drawing.Color.White;
             this.comboBoxClients.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxClients.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxClients.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.comboBoxClients.FormattingEnabled = true;
-            this.comboBoxClients.Location = new System.Drawing.Point(20, 30);
+            this.comboBoxClients.Location = new System.Drawing.Point(20, 25);
             this.comboBoxClients.Name = "comboBoxClients";
             this.comboBoxClients.Size = new System.Drawing.Size(370, 25);
             this.comboBoxClients.TabIndex = 1;
-
+            // 
             // labelClient
+            // 
             this.labelClient.AutoSize = true;
             this.labelClient.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelClient.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            this.labelClient.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelClient.Location = new System.Drawing.Point(20, 5);
             this.labelClient.Name = "labelClient";
-            this.labelClient.Size = new System.Drawing.Size(116, 17);
+            this.labelClient.Size = new System.Drawing.Size(127, 17);
             this.labelClient.TabIndex = 0;
             this.labelClient.Text = "Выберите клиента:";
-
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label1.Location = new System.Drawing.Point(407, 53);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(116, 17);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Выберите бронь:";
+            // 
             // Check
-            this.ClientSize = new System.Drawing.Size(1100, 700);
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1166, 700);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelGreenLine);
             this.Controls.Add(this.panelHeader);
@@ -561,6 +634,9 @@ namespace kursovoy_proekt
             this.panelServicesContainer.ResumeLayout(false);
             this.panelServicesContainer.PerformLayout();
             this.ResumeLayout(false);
+
         }
+
+        private System.Windows.Forms.Label label1;
     }
 }
