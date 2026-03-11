@@ -40,14 +40,12 @@ namespace kursovoy_proekt
             {
                 labelHeader.Text = "✏️  РЕДАКТИРОВАНИЕ КЛИЕНТА";
                 buttonSave.Text = "💾  СОХРАНИТЬ ИЗМЕНЕНИЯ";
-                buttonDelete.Visible = true;
                 LoadClientData(editingClientId);
             }
             else
             {
                 labelHeader.Text = "➕  ДОБАВЛЕНИЕ НОВОГО КЛИЕНТА";
                 buttonSave.Text = "✅  ДОБАВИТЬ КЛИЕНТА";
-                buttonDelete.Visible = false;
             }
         }
 
@@ -61,13 +59,6 @@ namespace kursovoy_proekt
             buttonSave.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
             buttonSave.Cursor = Cursors.Hand;
 
-            buttonDelete.FlatStyle = FlatStyle.Flat;
-            buttonDelete.FlatAppearance.BorderSize = 0;
-            buttonDelete.BackColor = Color.FromArgb(231, 76, 60);
-            buttonDelete.ForeColor = Color.White;
-            buttonDelete.Font = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-            buttonDelete.Cursor = Cursors.Hand;
-
             buttonMenu.FlatStyle = FlatStyle.Flat;
             buttonMenu.FlatAppearance.BorderColor = Color.FromArgb(52, 152, 219);
             buttonMenu.FlatAppearance.BorderSize = 2;
@@ -79,8 +70,6 @@ namespace kursovoy_proekt
             // Подписка на события
             buttonSave.MouseEnter += ButtonSave_MouseEnter;
             buttonSave.MouseLeave += ButtonSave_MouseLeave;
-            buttonDelete.MouseEnter += ButtonDelete_MouseEnter;
-            buttonDelete.MouseLeave += ButtonDelete_MouseLeave;
             buttonMenu.MouseEnter += ButtonMenu_MouseEnter;
             buttonMenu.MouseLeave += ButtonMenu_MouseLeave;
         }
@@ -96,18 +85,6 @@ namespace kursovoy_proekt
         {
             buttonSave.BackColor = Color.FromArgb(46, 204, 113);
             buttonSave.Font = new Font(buttonSave.Font, FontStyle.Bold);
-        }
-
-        private void ButtonDelete_MouseEnter(object sender, EventArgs e)
-        {
-            buttonDelete.BackColor = Color.FromArgb(192, 57, 43);
-            buttonDelete.Font = new Font(buttonDelete.Font, FontStyle.Bold | FontStyle.Underline);
-        }
-
-        private void ButtonDelete_MouseLeave(object sender, EventArgs e)
-        {
-            buttonDelete.BackColor = Color.FromArgb(231, 76, 60);
-            buttonDelete.Font = new Font(buttonDelete.Font, FontStyle.Bold);
         }
 
         private void ButtonMenu_MouseEnter(object sender, EventArgs e)

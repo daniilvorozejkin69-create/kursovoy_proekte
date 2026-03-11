@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace kursovoy_proekt
 {
@@ -25,93 +26,96 @@ namespace kursovoy_proekt
 
         private void InitializeReport()
         {
-            // Настройка дат по умолчанию (последние 30 дней)
-            dateTimePickerStart.Value = DateTime.Now.AddMonths(-1);
-            dateTimePickerEnd.Value = DateTime.Now;
+            // Настройка дат по умолчанию
+            dateTimePickerFrom.Value = DateTime.Now.AddMonths(-1);
+            dateTimePickerTo.Value = DateTime.Now;
 
-            // Настройка DataGridView
-            dataGridViewReport.AutoGenerateColumns = false;
-            dataGridViewReport.Columns.Clear();
+            // По умолчанию выбран "Месяц"
+            radioMonth.Checked = true;
 
-            DataGridViewTextBoxColumn colRank = new DataGridViewTextBoxColumn();
-            colRank.Name = "Rank";
-            colRank.HeaderText = "№";
-            colRank.Width = 40;
-            colRank.ReadOnly = true;
+            // Подписка на события
+            radioToday.Click += RadioButton_Click;
+            radioWeek.Click += RadioButton_Click;
+            radioMonth.Click += RadioButton_Click;
+            radioYear.Click += RadioButton_Click;
+            radioCustom.Click += RadioButton_Click;
 
-            DataGridViewTextBoxColumn colHouseName = new DataGridViewTextBoxColumn();
-            colHouseName.Name = "HouseName";
-            colHouseName.HeaderText = "Название дома";
-            colHouseName.Width = 200;
-            colHouseName.ReadOnly = true;
+            buttonApplyFilter.Click += ButtonApplyFilter_Click;
+            buttonRefresh.Click += ButtonRefresh_Click;
+            buttonExportExcel.Click += ButtonExportExcel_Click;
+            buttonPrint.Click += ButtonPrint_Click;
+            buttonBackToMenu.Click += ButtonBackToMenu_Click;
 
-            DataGridViewTextBoxColumn colHouseClass = new DataGridViewTextBoxColumn();
-            colHouseClass.Name = "HouseClass";
-            colHouseClass.HeaderText = "Класс";
-            colHouseClass.Width = 100;
-            colHouseClass.ReadOnly = true;
-
-            DataGridViewTextBoxColumn colBookings = new DataGridViewTextBoxColumn();
-            colBookings.Name = "Bookings";
-            colBookings.HeaderText = "Бронирований";
-            colBookings.Width = 100;
-            colBookings.ReadOnly = true;
-            colBookings.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-            DataGridViewTextBoxColumn colDays = new DataGridViewTextBoxColumn();
-            colDays.Name = "Days";
-            colDays.HeaderText = "Занято дней";
-            colDays.Width = 100;
-            colDays.ReadOnly = true;
-            colDays.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-            DataGridViewTextBoxColumn colRevenue = new DataGridViewTextBoxColumn();
-            colRevenue.Name = "Revenue";
-            colRevenue.HeaderText = "Доход, ₽";
-            colRevenue.Width = 120;
-            colRevenue.ReadOnly = true;
-            colRevenue.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            colRevenue.DefaultCellStyle.Format = "N2";
-
-            DataGridViewTextBoxColumn colAvgStay = new DataGridViewTextBoxColumn();
-            colAvgStay.Name = "AvgStay";
-            colAvgStay.HeaderText = "Ср. длит.";
-            colAvgStay.Width = 80;
-            colAvgStay.ReadOnly = true;
-            colAvgStay.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-            DataGridViewTextBoxColumn colOccupancy = new DataGridViewTextBoxColumn();
-            colOccupancy.Name = "Occupancy";
-            colOccupancy.HeaderText = "Загрузка, %";
-            colOccupancy.Width = 80;
-            colOccupancy.ReadOnly = true;
-            colOccupancy.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            colOccupancy.DefaultCellStyle.Format = "N1";
-
-            dataGridViewReport.Columns.AddRange(colRank, colHouseName, colHouseClass, colBookings,
-                                                colDays, colRevenue, colAvgStay, colOccupancy);
+            // Загружаем данные
+            LoadReportData();
         }
 
-        private void buttonGenerate_Click(object sender, EventArgs e)
+        private void RadioButton_Click(object sender, EventArgs e)
         {
-            startDate = dateTimePickerStart.Value.Date;
-            endDate = dateTimePickerEnd.Value.Date;
-
-            if (startDate > endDate)
+            RadioButton radio = sender as RadioButton;
+            if (radio != null)
             {
-                MessageBox.Show("Дата начала не может быть позже даты окончания!", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                SetDateRangeByRadio(radio.Name);
             }
+        }
 
+        private void SetDateRangeByRadio(string radioName)
+        {
+            DateTime now = DateTime.Now;
+
+            switch (radioName)
+            {
+                case "radioToday":
+                    dateTimePickerFrom.Value = now.Date;
+                    dateTimePickerTo.Value = now.Date;
+                    break;
+
+                case "radioWeek":
+                    int daysToMonday = ((int)now.DayOfWeek - 1 + 7) % 7;
+                    dateTimePickerFrom.Value = now.AddDays(-daysToMonday).Date;
+                    dateTimePickerTo.Value = now.Date;
+                    break;
+
+                case "radioMonth":
+                    dateTimePickerFrom.Value = new DateTime(now.Year, now.Month, 1);
+                    dateTimePickerTo.Value = now.Date;
+                    break;
+
+                case "radioYear":
+                    dateTimePickerFrom.Value = new DateTime(now.Year, 1, 1);
+                    dateTimePickerTo.Value = now.Date;
+                    break;
+
+                case "radioCustom":
+                    // Оставляем текущие значения
+                    break;
+            }
+        }
+
+        private void ButtonApplyFilter_Click(object sender, EventArgs e)
+        {
             LoadReportData();
-            CalculateTotals();
+        }
+
+        private void ButtonRefresh_Click(object sender, EventArgs e)
+        {
+            LoadReportData();
         }
 
         private void LoadReportData()
         {
             try
             {
+                startDate = dateTimePickerFrom.Value.Date;
+                endDate = dateTimePickerTo.Value.Date;
+
+                if (startDate > endDate)
+                {
+                    MessageBox.Show("Дата начала не может быть позже даты окончания!", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 using (MySqlConnection connection = DatabaseConnection.GetConnection())
                 {
                     connection.Open();
@@ -122,32 +126,19 @@ namespace kursovoy_proekt
                             h.name AS HouseName,
                             hc.class AS HouseClass,
                             h.capacity,
-                            COUNT(DISTINCT b.id) AS BookingCount,
-                            COUNT(DISTINCT ci.order_number) AS CheckInCount,
-                            IFNULL(SUM(
-                                DATEDIFF(
-                                    LEAST(IFNULL(ci.check_out_date, @endDate), @endDate),
-                                    GREATEST(IFNULL(ci.check_in_date, @startDate), @startDate)
-                                )
-                            ), 0) AS OccupiedDays,
+                            COUNT(DISTINCT ci.order_number) AS BookingCount,
+                            IFNULL(SUM(DATEDIFF(ci.check_out_date, ci.check_in_date)), 0) AS OccupiedDays,
                             IFNULL(SUM(ci.house_total_price), 0) AS HouseRevenue,
                             IFNULL(SUM(cis.service_total_price), 0) AS ServiceRevenue,
-                            IFNULL(SUM(
-                                IFNULL(ci.house_total_price, 0) + IFNULL(cis.service_total_price, 0)
-                            ), 0) AS TotalRevenue,
+                            IFNULL(SUM(ci.house_total_price + IFNULL(cis.service_total_price, 0)), 0) AS TotalRevenue,
                             IFNULL(AVG(ci.residence_time), 0) AS AvgStayDays
                         FROM house h
                         JOIN home_class hc ON h.home_class_id = hc.id
                         LEFT JOIN check_in ci ON h.id = ci.house_id 
-                            AND ci.check_in_date <= @endDate 
-                            AND ci.check_out_date >= @startDate
+                            AND ci.check_in_date BETWEEN @startDate AND @endDate
                         LEFT JOIN check_in_services cis ON ci.order_number = cis.order_number
-                        LEFT JOIN booking b ON h.id = b.house_id 
-                            AND b.check_in_date <= @endDate 
-                            AND b.check_out_date >= @startDate
-                            AND b.status IN ('confirmed', 'pending')
                         GROUP BY h.id, h.name, hc.class, h.capacity
-                        ORDER BY TotalRevenue DESC, OccupiedDays DESC";
+                        ORDER BY TotalRevenue DESC, BookingCount DESC";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
@@ -161,11 +152,13 @@ namespace kursovoy_proekt
                 }
 
                 DisplayReportData();
+                UpdateStatus($"Данные загружены за период с {startDate:dd.MM.yyyy} по {endDate:dd.MM.yyyy}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке отчёта: {ex.Message}", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateStatus("Ошибка загрузки данных");
             }
         }
 
@@ -175,48 +168,37 @@ namespace kursovoy_proekt
 
             if (reportData == null || reportData.Rows.Count == 0)
             {
-                labelTotalBookings.Text = "0";
-                labelTotalRevenue.Text = "0.00";
-                labelAvgOccupancy.Text = "0";
-                labelPopularHouse.Text = "Нет данных";
-                labelHouseRevenue.Text = "0.00";
-                labelServiceRevenue.Text = "0.00";
+                labelTotalOrdersValue.Text = "0";
+                labelTotalHouseRevenueValue.Text = "0 ₽";
+                labelTotalServicesRevenueValue.Text = "0 ₽";
+                labelTotalRevenueValue.Text = "0 ₽";
+                labelAverageCheckValue.Text = "0 ₽";
                 return;
             }
 
-            int totalDays = (endDate - startDate).Days + 1;
             int rank = 1;
             int totalBookings = 0;
-            decimal totalRevenue = 0;
-            double totalOccupancy = 0;
-            string mostPopularHouse = "";
-            int maxBookings = 0;
             decimal totalHouseRevenue = 0;
             decimal totalServiceRevenue = 0;
+            decimal totalRevenue = 0;
+            int totalDays = (endDate - startDate).Days + 1;
 
             foreach (DataRow row in reportData.Rows)
             {
-                // Безопасное получение значений с проверкой на DBNull
-                int bookings = ConvertToInt(row["BookingCount"]) + ConvertToInt(row["CheckInCount"]);
+                int bookings = ConvertToInt(row["BookingCount"]);
+                decimal houseRevenue = ConvertToDecimal(row["HouseRevenue"]);
+                decimal serviceRevenue = ConvertToDecimal(row["ServiceRevenue"]);
                 decimal revenue = ConvertToDecimal(row["TotalRevenue"]);
                 int occupiedDays = ConvertToInt(row["OccupiedDays"]);
                 double avgStay = ConvertToDouble(row["AvgStayDays"]);
-                decimal houseRevenue = ConvertToDecimal(row["HouseRevenue"]);
-                decimal serviceRevenue = ConvertToDecimal(row["ServiceRevenue"]);
-
-                double occupancyPercent = totalDays > 0 ? (double)occupiedDays / totalDays * 100 : 0;
 
                 totalBookings += bookings;
-                totalRevenue += revenue;
-                totalOccupancy += occupancyPercent;
                 totalHouseRevenue += houseRevenue;
                 totalServiceRevenue += serviceRevenue;
+                totalRevenue += revenue;
 
-                if (bookings > maxBookings)
-                {
-                    maxBookings = bookings;
-                    mostPopularHouse = row["HouseName"].ToString();
-                }
+                // Расчет загрузки в процентах
+                double occupancyPercent = totalDays > 0 ? (double)occupiedDays / totalDays * 100 : 0;
 
                 dataGridViewReport.Rows.Add(
                     rank++,
@@ -224,23 +206,29 @@ namespace kursovoy_proekt
                     row["HouseClass"],
                     bookings,
                     occupiedDays,
-                    revenue,
+                    revenue.ToString("N2"),
                     avgStay.ToString("N1"),
-                    occupancyPercent.ToString("N1")
+                    occupancyPercent.ToString("N1") + "%"
                 );
             }
 
             // Обновление итогов
-            labelTotalBookings.Text = totalBookings.ToString();
-            labelTotalRevenue.Text = totalRevenue.ToString("N2");
-            labelAvgOccupancy.Text = (reportData.Rows.Count > 0 ? totalOccupancy / reportData.Rows.Count : 0).ToString("N1");
-            labelPopularHouse.Text = string.IsNullOrEmpty(mostPopularHouse) ? "Нет данных" : mostPopularHouse;
-            labelHouseRevenue.Text = totalHouseRevenue.ToString("N2");
-            labelServiceRevenue.Text = totalServiceRevenue.ToString("N2");
-            labelPeriodInfo.Text = $"с {startDate:dd.MM.yyyy} по {endDate:dd.MM.yyyy}";
+            labelTotalOrdersValue.Text = totalBookings.ToString();
+            labelTotalHouseRevenueValue.Text = totalHouseRevenue.ToString("N2") + " ₽";
+            labelTotalServicesRevenueValue.Text = totalServiceRevenue.ToString("N2") + " ₽";
+            labelTotalRevenueValue.Text = totalRevenue.ToString("N2") + " ₽";
+
+            if (totalBookings > 0)
+            {
+                decimal avgCheck = totalRevenue / totalBookings;
+                labelAverageCheckValue.Text = avgCheck.ToString("N2") + " ₽";
+            }
+            else
+            {
+                labelAverageCheckValue.Text = "0 ₽";
+            }
         }
 
-        // Безопасное преобразование в int
         private int ConvertToInt(object value)
         {
             if (value == null || value == DBNull.Value)
@@ -248,7 +236,6 @@ namespace kursovoy_proekt
             return Convert.ToInt32(value);
         }
 
-        // Безопасное преобразование в decimal
         private decimal ConvertToDecimal(object value)
         {
             if (value == null || value == DBNull.Value)
@@ -256,7 +243,6 @@ namespace kursovoy_proekt
             return Convert.ToDecimal(value);
         }
 
-        // Безопасное преобразование в double
         private double ConvertToDouble(object value)
         {
             if (value == null || value == DBNull.Value)
@@ -264,12 +250,12 @@ namespace kursovoy_proekt
             return Convert.ToDouble(value);
         }
 
-        private void CalculateTotals()
+        private void UpdateStatus(string message)
         {
-            // Дополнительные расчёты уже сделаны в DisplayReportData
+            toolStripStatusLabel.Text = message;
         }
 
-        private void buttonExport_Click(object sender, EventArgs e)
+        private void ButtonExportExcel_Click(object sender, EventArgs e)
         {
             if (reportData == null || reportData.Rows.Count == 0)
             {
@@ -279,49 +265,210 @@ namespace kursovoy_proekt
             }
 
             SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "CSV файлы (*.csv)|*.csv|Текстовые файлы (*.txt)|*.txt";
-            saveDialog.FileName = $"Отчёт_по_домам_{startDate:yyyyMMdd}_{endDate:yyyyMMdd}";
-            saveDialog.DefaultExt = "csv";
+            saveDialog.Filter = "Excel файлы (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls";
+            saveDialog.FileName = $"Отчёт_по_домам_{startDate:yyyyMMdd}_{endDate:yyyyMMdd}.xlsx";
+            saveDialog.Title = "Сохранить отчёт в Excel";
 
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
-                ExportToCSV(saveDialog.FileName);
+                try
+                {
+                    ExportToExcel(saveDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при экспорте в Excel: {ex.Message}\n\nПопробуйте установить Microsoft Excel.", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
-        private void ExportToCSV(string filePath)
+        private void ExportToExcel(string filePath)
+        {
+            Excel.Application excelApp = null;
+            Excel.Workbook workbook = null;
+            Excel.Worksheet worksheet = null;
+
+            try
+            {
+                // Создаем приложение Excel
+                excelApp = new Excel.Application();
+                excelApp.Visible = false;
+                excelApp.DisplayAlerts = false;
+
+                // Создаем новую книгу
+                workbook = excelApp.Workbooks.Add();
+                worksheet = (Excel.Worksheet)workbook.Worksheets[1];
+                worksheet.Name = "Отчёт по домам";
+
+                // Заголовок отчёта
+                Excel.Range titleRange = worksheet.get_Range("A1", "H1");
+                titleRange.Merge();
+                titleRange.Value = $"ОТЧЁТ ПО ДОМАМ";
+                titleRange.Font.Bold = true;
+                titleRange.Font.Size = 16;
+                titleRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                // Период
+                worksheet.Cells[2, 1] = $"Период: с {startDate:dd.MM.yyyy} по {endDate:dd.MM.yyyy}";
+                worksheet.get_Range("A2", "H2").Font.Bold = true;
+
+                // Заголовки колонок
+                string[] headers = { "№", "Название дома", "Класс", "Бронирований", "Занято дней", "Доход, ₽", "Ср. длит.", "Загрузка, %" };
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    worksheet.Cells[4, i + 1] = headers[i];
+                }
+
+                Excel.Range headerRange = worksheet.get_Range("A4", "H4");
+                headerRange.Font.Bold = true;
+                headerRange.Interior.Color = Excel.XlRgbColor.rgbLightGray;
+                headerRange.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+
+                // Данные
+                int row = 5;
+                int rank = 1;
+                int totalDays = (endDate - startDate).Days + 1;
+
+                foreach (DataRow dataRow in reportData.Rows)
+                {
+                    int bookings = ConvertToInt(dataRow["BookingCount"]);
+                    int occupiedDays = ConvertToInt(dataRow["OccupiedDays"]);
+                    double occupancyPercent = totalDays > 0 ? (double)occupiedDays / totalDays * 100 : 0;
+
+                    worksheet.Cells[row, 1] = rank++;
+                    worksheet.Cells[row, 2] = dataRow["HouseName"].ToString();
+                    worksheet.Cells[row, 3] = dataRow["HouseClass"].ToString();
+                    worksheet.Cells[row, 4] = bookings;
+                    worksheet.Cells[row, 5] = occupiedDays;
+                    worksheet.Cells[row, 6] = ConvertToDecimal(dataRow["TotalRevenue"]);
+                    worksheet.Cells[row, 7] = ConvertToDouble(dataRow["AvgStayDays"]);
+                    worksheet.Cells[row, 8] = occupancyPercent;
+
+                    // Форматирование чисел
+                    ((Excel.Range)worksheet.Cells[row, 6]).NumberFormat = "#,##0.00 ₽";
+                    ((Excel.Range)worksheet.Cells[row, 7]).NumberFormat = "0.0";
+                    ((Excel.Range)worksheet.Cells[row, 8]).NumberFormat = "0.0";
+
+                    row++;
+                }
+
+                // Итоги
+                row += 2;
+                worksheet.Cells[row, 1] = "ИТОГИ:";
+                worksheet.get_Range($"A{row}", $"H{row}").Font.Bold = true;
+
+                row++;
+                worksheet.Cells[row, 1] = $"Всего бронирований: {labelTotalOrdersValue.Text}";
+                row++;
+                worksheet.Cells[row, 1] = $"Выручка с проживания: {labelTotalHouseRevenueValue.Text}";
+                row++;
+                worksheet.Cells[row, 1] = $"Выручка с услуг: {labelTotalServicesRevenueValue.Text}";
+                row++;
+                worksheet.Cells[row, 1] = $"Общая выручка: {labelTotalRevenueValue.Text}";
+                row++;
+                worksheet.Cells[row, 1] = $"Средний чек: {labelAverageCheckValue.Text}";
+
+                // Дата формирования
+                row += 2;
+                worksheet.Cells[row, 1] = $"Отчёт сформирован: {DateTime.Now:dd.MM.yyyy HH:mm:ss}";
+
+                // Автоширина колонок
+                worksheet.Columns.AutoFit();
+
+                // Сохраняем файл
+                workbook.SaveAs(filePath);
+
+                MessageBox.Show($"Отчёт успешно сохранён в Excel:\n{filePath}", "Успех",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Открываем файл
+                System.Diagnostics.Process.Start(filePath);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка при создании Excel файла: {ex.Message}");
+            }
+            finally
+            {
+                // Освобождаем ресурсы
+                if (workbook != null)
+                {
+                    workbook.Close(false);
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+                }
+                if (excelApp != null)
+                {
+                    excelApp.Quit();
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+                }
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+
+        private void ButtonExportWord_Click(object sender, EventArgs e)
+        {
+            if (reportData == null || reportData.Rows.Count == 0)
+            {
+                MessageBox.Show("Нет данных для экспорта!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Текстовые файлы (*.txt)|*.txt";
+            saveDialog.FileName = $"Отчёт_по_домам_{startDate:yyyyMMdd}_{endDate:yyyyMMdd}.txt";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                ExportToTXT(saveDialog.FileName);
+            }
+        }
+
+        private void ExportToTXT(string filePath)
         {
             try
             {
                 StringBuilder sb = new StringBuilder();
 
-                // Заголовок отчёта
-                sb.AppendLine($"Отчёт по домам за период с {startDate:dd.MM.yyyy} по {endDate:dd.MM.yyyy}");
+                sb.AppendLine("=".PadRight(80, '='));
+                sb.AppendLine("ОТЧЁТ ПО ДОМАМ".PadLeft(40 + "ОТЧЁТ ПО ДОМАМ".Length / 2));
+                sb.AppendLine("=".PadRight(80, '='));
                 sb.AppendLine();
+                sb.AppendLine($"Период: с {startDate:dd.MM.yyyy} по {endDate:dd.MM.yyyy}");
+                sb.AppendLine();
+                sb.AppendLine("-".PadRight(80, '-'));
+                sb.AppendLine($"{"№",-4} {"Название дома",-25} {"Класс",-10} {"Бронир.",-8} {"Дней",-8} {"Доход, ₽",-12} {"Ср.длит.",-8} {"Загр.%",-8}");
+                sb.AppendLine("-".PadRight(80, '-'));
 
-                // Заголовки колонок
-                sb.AppendLine("№;Название дома;Класс;Бронирований;Занято дней;Доход, ₽;Ср. длит.;Загрузка, %");
-
-                // Данные
                 int rank = 1;
+                int totalDays = (endDate - startDate).Days + 1;
+
                 foreach (DataRow row in reportData.Rows)
                 {
-                    int bookings = ConvertToInt(row["BookingCount"]) + ConvertToInt(row["CheckInCount"]);
+                    int bookings = ConvertToInt(row["BookingCount"]);
                     int occupiedDays = ConvertToInt(row["OccupiedDays"]);
-                    int totalDays = (endDate - startDate).Days + 1;
                     double occupancyPercent = totalDays > 0 ? (double)occupiedDays / totalDays * 100 : 0;
 
-                    sb.AppendLine($"{rank++};{row["HouseName"]};{row["HouseClass"]};{bookings};{occupiedDays};{ConvertToDecimal(row["TotalRevenue"]):F2};{ConvertToDouble(row["AvgStayDays"]):F1};{occupancyPercent:F1}");
+                    string name = row["HouseName"].ToString();
+                    if (name.Length > 22) name = name.Substring(0, 22) + "...";
+
+                    sb.AppendLine($"{rank++,-4} {name,-25} {row["HouseClass"],-10} {bookings,-8} {occupiedDays,-8} {ConvertToDecimal(row["TotalRevenue"]),-12:F2} {ConvertToDouble(row["AvgStayDays"]),-8:F1} {occupancyPercent,-8:F1}");
                 }
 
-                // Итоги
+                sb.AppendLine("-".PadRight(80, '-'));
                 sb.AppendLine();
-                sb.AppendLine($"Всего бронирований: {labelTotalBookings.Text}");
-                sb.AppendLine($"Общий доход: {labelTotalRevenue.Text} ₽");
-                sb.AppendLine($"Средняя загрузка: {labelAvgOccupancy.Text}%");
-                sb.AppendLine($"Самый популярный дом: {labelPopularHouse.Text}");
-                sb.AppendLine($"Доход от проживания: {labelHouseRevenue.Text} ₽");
-                sb.AppendLine($"Доход от доп. услуг: {labelServiceRevenue.Text} ₽");
+                sb.AppendLine("ИТОГИ:");
+                sb.AppendLine($"  Всего бронирований: {labelTotalOrdersValue.Text}");
+                sb.AppendLine($"  Выручка с проживания: {labelTotalHouseRevenueValue.Text}");
+                sb.AppendLine($"  Выручка с услуг: {labelTotalServicesRevenueValue.Text}");
+                sb.AppendLine($"  Общая выручка: {labelTotalRevenueValue.Text}");
+                sb.AppendLine($"  Средний чек: {labelAverageCheckValue.Text}");
+                sb.AppendLine();
+                sb.AppendLine("=".PadRight(80, '='));
+                sb.AppendLine($"Отчёт сформирован: {DateTime.Now:dd.MM.yyyy HH:mm:ss}");
+                sb.AppendLine("=".PadRight(80, '='));
 
                 File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
 
@@ -337,7 +484,7 @@ namespace kursovoy_proekt
             }
         }
 
-        private void buttonPrint_Click(object sender, EventArgs e)
+        private void ButtonPrint_Click(object sender, EventArgs e)
         {
             if (reportData == null || reportData.Rows.Count == 0)
             {
@@ -355,6 +502,7 @@ namespace kursovoy_proekt
             if (printDialog.ShowDialog() == DialogResult.OK)
             {
                 printDocument.Print();
+                UpdateStatus("Отчёт отправлен на печать");
             }
         }
 
@@ -362,14 +510,14 @@ namespace kursovoy_proekt
         {
             try
             {
-                Font titleFont = new Font("Arial", 14, FontStyle.Bold);
-                Font headerFont = new Font("Arial", 10, FontStyle.Bold);
-                Font normalFont = new Font("Arial", 9);
-                Font totalFont = new Font("Arial", 10, FontStyle.Bold);
+                Font titleFont = new Font("Segoe UI", 14, FontStyle.Bold);
+                Font headerFont = new Font("Segoe UI", 10, FontStyle.Bold);
+                Font normalFont = new Font("Segoe UI", 9);
 
                 float y = e.MarginBounds.Top;
                 float left = e.MarginBounds.Left;
                 float pageWidth = e.MarginBounds.Width;
+                float lineHeight = 15;
 
                 // Заголовок
                 string title = "ОТЧЁТ ПО ДОМАМ";
@@ -381,11 +529,11 @@ namespace kursovoy_proekt
                 // Период
                 string period = $"с {startDate:dd.MM.yyyy} по {endDate:dd.MM.yyyy}";
                 e.Graphics.DrawString(period, headerFont, Brushes.Black, left, y);
-                y += headerFont.GetHeight() + 15;
+                y += headerFont.GetHeight() + 10;
 
                 // Заголовки таблицы
                 string[] headers = { "№", "Название дома", "Класс", "Бронир.", "Дней", "Доход, ₽", "Ср.длит.", "Загр.%" };
-                float[] colWidths = { 30, 180, 80, 60, 50, 90, 50, 60 };
+                float[] colWidths = { 30, 180, 70, 60, 50, 90, 50, 60 };
                 float x = left;
 
                 for (int i = 0; i < headers.Length; i++)
@@ -401,20 +549,23 @@ namespace kursovoy_proekt
 
                 // Данные
                 int rank = 1;
+                int totalDays = (endDate - startDate).Days + 1;
+
                 foreach (DataRow row in reportData.Rows)
                 {
                     x = left;
 
-                    int bookings = ConvertToInt(row["BookingCount"]) + ConvertToInt(row["CheckInCount"]);
+                    int bookings = ConvertToInt(row["BookingCount"]);
                     int occupiedDays = ConvertToInt(row["OccupiedDays"]);
-                    int totalDays = (endDate - startDate).Days + 1;
                     double occupancyPercent = totalDays > 0 ? (double)occupiedDays / totalDays * 100 : 0;
                     decimal revenue = ConvertToDecimal(row["TotalRevenue"]);
 
                     e.Graphics.DrawString(rank.ToString(), normalFont, Brushes.Black, x, y);
                     x += colWidths[0];
 
-                    e.Graphics.DrawString(row["HouseName"].ToString(), normalFont, Brushes.Black, x, y);
+                    string name = row["HouseName"].ToString();
+                    if (name.Length > 18) name = name.Substring(0, 18) + "...";
+                    e.Graphics.DrawString(name, normalFont, Brushes.Black, x, y);
                     x += colWidths[1];
 
                     e.Graphics.DrawString(row["HouseClass"].ToString(), normalFont, Brushes.Black, x, y);
@@ -426,7 +577,7 @@ namespace kursovoy_proekt
                     e.Graphics.DrawString(occupiedDays.ToString(), normalFont, Brushes.Black, x, y);
                     x += colWidths[4];
 
-                    e.Graphics.DrawString(revenue.ToString("N0"), normalFont, Brushes.Black, x, y);
+                    e.Graphics.DrawString(revenue.ToString("N2"), normalFont, Brushes.Black, x, y);
                     x += colWidths[5];
 
                     e.Graphics.DrawString(ConvertToDouble(row["AvgStayDays"]).ToString("N1"), normalFont, Brushes.Black, x, y);
@@ -434,10 +585,10 @@ namespace kursovoy_proekt
 
                     e.Graphics.DrawString(occupancyPercent.ToString("N1"), normalFont, Brushes.Black, x, y);
 
-                    y += normalFont.GetHeight() + 2;
+                    y += lineHeight;
                     rank++;
 
-                    if (y > e.MarginBounds.Bottom - 50)
+                    if (y > e.MarginBounds.Bottom - 60)
                     {
                         e.HasMorePages = true;
                         return;
@@ -445,15 +596,11 @@ namespace kursovoy_proekt
                 }
 
                 // Итоги
-                y = e.MarginBounds.Bottom - 40;
+                y = e.MarginBounds.Bottom - 45;
                 e.Graphics.DrawLine(Pens.Black, left, y - 5, left + colWidths.Sum(), y - 5);
 
-                e.Graphics.DrawString($"Всего бронирований: {labelTotalBookings.Text}", totalFont, Brushes.Black, left, y);
-                e.Graphics.DrawString($"Общий доход: {labelTotalRevenue.Text} ₽", totalFont, Brushes.Black, left + 250, y);
-                y += totalFont.GetHeight() + 5;
-
-                e.Graphics.DrawString($"Средняя загрузка: {labelAvgOccupancy.Text}%", totalFont, Brushes.Black, left, y);
-                e.Graphics.DrawString($"Популярный дом: {labelPopularHouse.Text}", totalFont, Brushes.Black, left + 250, y);
+                e.Graphics.DrawString($"Всего бронирований: {labelTotalOrdersValue.Text}", headerFont, Brushes.Black, left, y);
+                e.Graphics.DrawString($"Общая выручка: {labelTotalRevenueValue.Text}", headerFont, Brushes.Black, left + 300, y);
 
                 e.HasMorePages = false;
             }
@@ -463,17 +610,7 @@ namespace kursovoy_proekt
             }
         }
 
-        private void buttonExcel_Click(object sender, EventArgs e)
-        {
-            buttonExport_Click(sender, e);
-        }
-
-        private void buttonRefresh_Click(object sender, EventArgs e)
-        {
-            buttonGenerate_Click(sender, e);
-        }
-
-        private void buttonClose_Click(object sender, EventArgs e)
+        private void ButtonBackToMenu_Click(object sender, EventArgs e)
         {
             this.Close();
         }

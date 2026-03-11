@@ -4,6 +4,43 @@
     {
         private System.ComponentModel.IContainer components = null;
 
+        // Элементы управления
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelHeader;
+        private System.Windows.Forms.Panel panelGreenLine;
+        private System.Windows.Forms.Panel panelContent;
+        private System.Windows.Forms.Panel panelFilter;
+        private System.Windows.Forms.Label labelPeriod;
+        private System.Windows.Forms.RadioButton radioToday;
+        private System.Windows.Forms.RadioButton radioWeek;
+        private System.Windows.Forms.RadioButton radioMonth;
+        private System.Windows.Forms.RadioButton radioYear;
+        private System.Windows.Forms.RadioButton radioCustom;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFrom;
+        private System.Windows.Forms.DateTimePicker dateTimePickerTo;
+        private System.Windows.Forms.Label labelFrom;
+        private System.Windows.Forms.Label labelTo;
+        private System.Windows.Forms.Button buttonApplyFilter;
+        private System.Windows.Forms.Button buttonRefresh;
+        private System.Windows.Forms.Button buttonExportExcel;
+        private System.Windows.Forms.Button buttonPrint;
+        private System.Windows.Forms.Button buttonBackToMenu;
+        private System.Windows.Forms.DataGridView dataGridViewReport;
+        private System.Windows.Forms.Panel panelSummary;
+        private System.Windows.Forms.Label labelSummaryTitle;
+        private System.Windows.Forms.Label labelTotalOrders;
+        private System.Windows.Forms.Label labelTotalOrdersValue;
+        private System.Windows.Forms.Label labelTotalHouseRevenue;
+        private System.Windows.Forms.Label labelTotalHouseRevenueValue;
+        private System.Windows.Forms.Label labelTotalServicesRevenue;
+        private System.Windows.Forms.Label labelTotalServicesRevenueValue;
+        private System.Windows.Forms.Label labelTotalRevenue;
+        private System.Windows.Forms.Label labelTotalRevenueValue;
+        private System.Windows.Forms.Label labelAverageCheck;
+        private System.Windows.Forms.Label labelAverageCheckValue;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -13,411 +50,541 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
-            this.panelMain = new System.Windows.Forms.Panel();
-            this.panelTop = new System.Windows.Forms.Panel();
-            this.labelPeriod = new System.Windows.Forms.Label();
-            this.dateTimePickerStart = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
-            this.labelTo = new System.Windows.Forms.Label();
-            this.buttonGenerate = new System.Windows.Forms.Button();
-            this.buttonRefresh = new System.Windows.Forms.Button();
-            this.buttonExport = new System.Windows.Forms.Button();
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.labelHeader = new System.Windows.Forms.Label();
+            this.panelGreenLine = new System.Windows.Forms.Panel();
+            this.panelContent = new System.Windows.Forms.Panel();
+            this.panelFilter = new System.Windows.Forms.Panel();
+            this.buttonBackToMenu = new System.Windows.Forms.Button();
             this.buttonPrint = new System.Windows.Forms.Button();
-            this.buttonExcel = new System.Windows.Forms.Button();
-            this.buttonClose = new System.Windows.Forms.Button();
-            this.panelReport = new System.Windows.Forms.Panel();
+            this.buttonExportExcel = new System.Windows.Forms.Button();
+            this.buttonRefresh = new System.Windows.Forms.Button();
+            this.buttonApplyFilter = new System.Windows.Forms.Button();
+            this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
+            this.labelTo = new System.Windows.Forms.Label();
+            this.labelFrom = new System.Windows.Forms.Label();
+            this.radioCustom = new System.Windows.Forms.RadioButton();
+            this.radioYear = new System.Windows.Forms.RadioButton();
+            this.radioMonth = new System.Windows.Forms.RadioButton();
+            this.radioWeek = new System.Windows.Forms.RadioButton();
+            this.radioToday = new System.Windows.Forms.RadioButton();
+            this.labelPeriod = new System.Windows.Forms.Label();
             this.dataGridViewReport = new System.Windows.Forms.DataGridView();
-            this.panelStats = new System.Windows.Forms.Panel();
-            this.groupStats = new System.Windows.Forms.GroupBox();
-            this.labelTotalBookingsTitle = new System.Windows.Forms.Label();
-            this.labelTotalBookings = new System.Windows.Forms.Label();
-            this.labelTotalRevenueTitle = new System.Windows.Forms.Label();
+            this.colRank = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHouseName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHouseClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBookings = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDays = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRevenue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAvgStay = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOccupancy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panelSummary = new System.Windows.Forms.Panel();
+            this.labelSummaryTitle = new System.Windows.Forms.Label();
+            this.labelTotalOrders = new System.Windows.Forms.Label();
+            this.labelTotalOrdersValue = new System.Windows.Forms.Label();
+            this.labelTotalHouseRevenue = new System.Windows.Forms.Label();
+            this.labelTotalHouseRevenueValue = new System.Windows.Forms.Label();
+            this.labelTotalServicesRevenue = new System.Windows.Forms.Label();
+            this.labelTotalServicesRevenueValue = new System.Windows.Forms.Label();
             this.labelTotalRevenue = new System.Windows.Forms.Label();
-            this.labelAvgOccupancyTitle = new System.Windows.Forms.Label();
-            this.labelAvgOccupancy = new System.Windows.Forms.Label();
-            this.labelPopularHouseTitle = new System.Windows.Forms.Label();
-            this.labelPopularHouse = new System.Windows.Forms.Label();
-            this.labelHouseRevenueTitle = new System.Windows.Forms.Label();
-            this.labelHouseRevenue = new System.Windows.Forms.Label();
-            this.labelServiceRevenueTitle = new System.Windows.Forms.Label();
-            this.labelServiceRevenue = new System.Windows.Forms.Label();
-            this.labelPeriodInfo = new System.Windows.Forms.Label();
-            this.panelMain.SuspendLayout();
-            this.panelTop.SuspendLayout();
-            this.panelReport.SuspendLayout();
+            this.labelTotalRevenueValue = new System.Windows.Forms.Label();
+            this.labelAverageCheck = new System.Windows.Forms.Label();
+            this.labelAverageCheckValue = new System.Windows.Forms.Label();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.panelHeader.SuspendLayout();
+            this.panelContent.SuspendLayout();
+            this.panelFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReport)).BeginInit();
-            this.panelStats.SuspendLayout();
-            this.groupStats.SuspendLayout();
+            this.panelSummary.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panelMain
+            // panelHeader
             // 
-            this.panelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(245)))));
-            this.panelMain.Controls.Add(this.panelTop);
-            this.panelMain.Controls.Add(this.panelReport);
-            this.panelMain.Controls.Add(this.panelStats);
-            this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 0);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Padding = new System.Windows.Forms.Padding(10);
-            this.panelMain.Size = new System.Drawing.Size(1100, 700);
-            this.panelMain.TabIndex = 0;
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.panelHeader.Controls.Add(this.labelHeader);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(1151, 70);
+            this.panelHeader.TabIndex = 0;
             // 
-            // panelTop
+            // labelHeader
             // 
-            this.panelTop.BackColor = System.Drawing.Color.White;
-            this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelTop.Controls.Add(this.labelPeriod);
-            this.panelTop.Controls.Add(this.dateTimePickerStart);
-            this.panelTop.Controls.Add(this.dateTimePickerEnd);
-            this.panelTop.Controls.Add(this.labelTo);
-            this.panelTop.Controls.Add(this.buttonGenerate);
-            this.panelTop.Controls.Add(this.buttonRefresh);
-            this.panelTop.Controls.Add(this.buttonExport);
-            this.panelTop.Controls.Add(this.buttonPrint);
-            this.panelTop.Controls.Add(this.buttonExcel);
-            this.panelTop.Controls.Add(this.buttonClose);
-            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTop.Location = new System.Drawing.Point(10, 10);
-            this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1080, 70);
-            this.panelTop.TabIndex = 0;
+            this.labelHeader.AutoSize = true;
+            this.labelHeader.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.labelHeader.ForeColor = System.Drawing.Color.White;
+            this.labelHeader.Location = new System.Drawing.Point(20, 20);
+            this.labelHeader.Name = "labelHeader";
+            this.labelHeader.Size = new System.Drawing.Size(231, 37);
+            this.labelHeader.TabIndex = 0;
+            this.labelHeader.Text = "Отчёт по домам";
             // 
-            // labelPeriod
+            // panelGreenLine
             // 
-            this.labelPeriod.AutoSize = true;
-            this.labelPeriod.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.labelPeriod.Location = new System.Drawing.Point(15, 25);
-            this.labelPeriod.Name = "labelPeriod";
-            this.labelPeriod.Size = new System.Drawing.Size(68, 19);
-            this.labelPeriod.TabIndex = 0;
-            this.labelPeriod.Text = "Период:";
+            this.panelGreenLine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.panelGreenLine.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelGreenLine.Location = new System.Drawing.Point(0, 70);
+            this.panelGreenLine.Name = "panelGreenLine";
+            this.panelGreenLine.Size = new System.Drawing.Size(1151, 3);
+            this.panelGreenLine.TabIndex = 1;
             // 
-            // dateTimePickerStart
+            // panelContent
             // 
-            this.dateTimePickerStart.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dateTimePickerStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerStart.Location = new System.Drawing.Point(89, 22);
-            this.dateTimePickerStart.Name = "dateTimePickerStart";
-            this.dateTimePickerStart.Size = new System.Drawing.Size(120, 25);
-            this.dateTimePickerStart.TabIndex = 1;
+            this.panelContent.AutoScroll = true;
+            this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
+            this.panelContent.Controls.Add(this.panelFilter);
+            this.panelContent.Controls.Add(this.dataGridViewReport);
+            this.panelContent.Controls.Add(this.panelSummary);
+            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContent.Location = new System.Drawing.Point(0, 73);
+            this.panelContent.Name = "panelContent";
+            this.panelContent.Padding = new System.Windows.Forms.Padding(10);
+            this.panelContent.Size = new System.Drawing.Size(1151, 505);
+            this.panelContent.TabIndex = 2;
             // 
-            // dateTimePickerEnd
+            // panelFilter
             // 
-            this.dateTimePickerEnd.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dateTimePickerEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerEnd.Location = new System.Drawing.Point(269, 22);
-            this.dateTimePickerEnd.Name = "dateTimePickerEnd";
-            this.dateTimePickerEnd.Size = new System.Drawing.Size(120, 25);
-            this.dateTimePickerEnd.TabIndex = 3;
+            this.panelFilter.BackColor = System.Drawing.Color.White;
+            this.panelFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelFilter.Controls.Add(this.buttonBackToMenu);
+            this.panelFilter.Controls.Add(this.buttonPrint);
+            this.panelFilter.Controls.Add(this.buttonExportExcel);
+            this.panelFilter.Controls.Add(this.buttonRefresh);
+            this.panelFilter.Controls.Add(this.buttonApplyFilter);
+            this.panelFilter.Controls.Add(this.dateTimePickerTo);
+            this.panelFilter.Controls.Add(this.dateTimePickerFrom);
+            this.panelFilter.Controls.Add(this.labelTo);
+            this.panelFilter.Controls.Add(this.labelFrom);
+            this.panelFilter.Controls.Add(this.radioCustom);
+            this.panelFilter.Controls.Add(this.radioYear);
+            this.panelFilter.Controls.Add(this.radioMonth);
+            this.panelFilter.Controls.Add(this.radioWeek);
+            this.panelFilter.Controls.Add(this.radioToday);
+            this.panelFilter.Controls.Add(this.labelPeriod);
+            this.panelFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelFilter.Location = new System.Drawing.Point(10, 10);
+            this.panelFilter.Name = "panelFilter";
+            this.panelFilter.Size = new System.Drawing.Size(1131, 130);
+            this.panelFilter.TabIndex = 0;
+            // 
+            // buttonBackToMenu
+            // 
+            this.buttonBackToMenu.BackColor = System.Drawing.Color.Transparent;
+            this.buttonBackToMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBackToMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonBackToMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonBackToMenu.Location = new System.Drawing.Point(130, 80);
+            this.buttonBackToMenu.Name = "buttonBackToMenu";
+            this.buttonBackToMenu.Size = new System.Drawing.Size(100, 30);
+            this.buttonBackToMenu.TabIndex = 14;
+            this.buttonBackToMenu.Text = "🏠 В меню";
+            this.buttonBackToMenu.UseVisualStyleBackColor = false;
+            // 
+            // buttonPrint
+            // 
+            this.buttonPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.buttonPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPrint.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonPrint.ForeColor = System.Drawing.Color.White;
+            this.buttonPrint.Location = new System.Drawing.Point(20, 80);
+            this.buttonPrint.Name = "buttonPrint";
+            this.buttonPrint.Size = new System.Drawing.Size(100, 30);
+            this.buttonPrint.TabIndex = 13;
+            this.buttonPrint.Text = "🖨️ Печать";
+            this.buttonPrint.UseVisualStyleBackColor = false;
+            // 
+            // buttonExportExcel
+            // 
+            this.buttonExportExcel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.buttonExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExportExcel.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonExportExcel.ForeColor = System.Drawing.Color.White;
+            this.buttonExportExcel.Location = new System.Drawing.Point(881, 41);
+            this.buttonExportExcel.Name = "buttonExportExcel";
+            this.buttonExportExcel.Size = new System.Drawing.Size(104, 29);
+            this.buttonExportExcel.TabIndex = 11;
+            this.buttonExportExcel.Text = "📊 Excel";
+            this.buttonExportExcel.UseVisualStyleBackColor = false;
+            // 
+            // buttonRefresh
+            // 
+            this.buttonRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonRefresh.ForeColor = System.Drawing.Color.White;
+            this.buttonRefresh.Location = new System.Drawing.Point(750, 80);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(235, 30);
+            this.buttonRefresh.TabIndex = 10;
+            this.buttonRefresh.Text = "🔄 Обновить";
+            this.buttonRefresh.UseVisualStyleBackColor = false;
+            // 
+            // buttonApplyFilter
+            // 
+            this.buttonApplyFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.buttonApplyFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonApplyFilter.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonApplyFilter.ForeColor = System.Drawing.Color.White;
+            this.buttonApplyFilter.Location = new System.Drawing.Point(750, 40);
+            this.buttonApplyFilter.Name = "buttonApplyFilter";
+            this.buttonApplyFilter.Size = new System.Drawing.Size(125, 30);
+            this.buttonApplyFilter.TabIndex = 9;
+            this.buttonApplyFilter.Text = "✅ Применить";
+            this.buttonApplyFilter.UseVisualStyleBackColor = false;
+            // 
+            // dateTimePickerTo
+            // 
+            this.dateTimePickerTo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.dateTimePickerTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerTo.Location = new System.Drawing.Point(620, 42);
+            this.dateTimePickerTo.Name = "dateTimePickerTo";
+            this.dateTimePickerTo.Size = new System.Drawing.Size(110, 25);
+            this.dateTimePickerTo.TabIndex = 8;
+            // 
+            // dateTimePickerFrom
+            // 
+            this.dateTimePickerFrom.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.dateTimePickerFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerFrom.Location = new System.Drawing.Point(500, 42);
+            this.dateTimePickerFrom.Name = "dateTimePickerFrom";
+            this.dateTimePickerFrom.Size = new System.Drawing.Size(110, 25);
+            this.dateTimePickerFrom.TabIndex = 6;
             // 
             // labelTo
             // 
             this.labelTo.AutoSize = true;
             this.labelTo.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.labelTo.Location = new System.Drawing.Point(239, 25);
+            this.labelTo.Location = new System.Drawing.Point(620, 20);
             this.labelTo.Name = "labelTo";
-            this.labelTo.Size = new System.Drawing.Size(25, 19);
-            this.labelTo.TabIndex = 2;
-            this.labelTo.Text = "по";
+            this.labelTo.Size = new System.Drawing.Size(30, 19);
+            this.labelTo.TabIndex = 7;
+            this.labelTo.Text = "По:";
             // 
-            // buttonGenerate
+            // labelFrom
             // 
-            this.buttonGenerate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
-            this.buttonGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonGenerate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonGenerate.ForeColor = System.Drawing.Color.White;
-            this.buttonGenerate.Location = new System.Drawing.Point(404, 20);
-            this.buttonGenerate.Name = "buttonGenerate";
-            this.buttonGenerate.Size = new System.Drawing.Size(100, 30);
-            this.buttonGenerate.TabIndex = 4;
-            this.buttonGenerate.Text = "📊 Сформировать";
-            this.buttonGenerate.UseVisualStyleBackColor = false;
-            this.buttonGenerate.Click += new System.EventHandler(this.buttonGenerate_Click);
+            this.labelFrom.AutoSize = true;
+            this.labelFrom.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelFrom.Location = new System.Drawing.Point(500, 20);
+            this.labelFrom.Name = "labelFrom";
+            this.labelFrom.Size = new System.Drawing.Size(21, 19);
+            this.labelFrom.TabIndex = 5;
+            this.labelFrom.Text = "С:";
             // 
-            // buttonRefresh
+            // radioCustom
             // 
-            this.buttonRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.buttonRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonRefresh.ForeColor = System.Drawing.Color.White;
-            this.buttonRefresh.Location = new System.Drawing.Point(514, 20);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(80, 30);
-            this.buttonRefresh.TabIndex = 5;
-            this.buttonRefresh.Text = "🔄 Обновить";
-            this.buttonRefresh.UseVisualStyleBackColor = false;
-            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            this.radioCustom.AutoSize = true;
+            this.radioCustom.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.radioCustom.Location = new System.Drawing.Point(360, 40);
+            this.radioCustom.Name = "radioCustom";
+            this.radioCustom.Size = new System.Drawing.Size(122, 23);
+            this.radioCustom.TabIndex = 4;
+            this.radioCustom.Text = "Произвольный";
+            this.radioCustom.UseVisualStyleBackColor = true;
             // 
-            // buttonExport
+            // radioYear
             // 
-            this.buttonExport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
-            this.buttonExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExport.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonExport.ForeColor = System.Drawing.Color.White;
-            this.buttonExport.Location = new System.Drawing.Point(604, 20);
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(80, 30);
-            this.buttonExport.TabIndex = 6;
-            this.buttonExport.Text = "📁 CSV";
-            this.buttonExport.UseVisualStyleBackColor = false;
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            this.radioYear.AutoSize = true;
+            this.radioYear.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.radioYear.Location = new System.Drawing.Point(290, 40);
+            this.radioYear.Name = "radioYear";
+            this.radioYear.Size = new System.Drawing.Size(50, 23);
+            this.radioYear.TabIndex = 3;
+            this.radioYear.Text = "Год";
+            this.radioYear.UseVisualStyleBackColor = true;
             // 
-            // buttonPrint
+            // radioMonth
             // 
-            this.buttonPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.buttonPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonPrint.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonPrint.ForeColor = System.Drawing.Color.White;
-            this.buttonPrint.Location = new System.Drawing.Point(784, 20);
-            this.buttonPrint.Name = "buttonPrint";
-            this.buttonPrint.Size = new System.Drawing.Size(80, 30);
-            this.buttonPrint.TabIndex = 8;
-            this.buttonPrint.Text = "🖨️ Печать";
-            this.buttonPrint.UseVisualStyleBackColor = false;
-            this.buttonPrint.Click += new System.EventHandler(this.buttonPrint_Click);
+            this.radioMonth.AutoSize = true;
+            this.radioMonth.Checked = true;
+            this.radioMonth.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.radioMonth.Location = new System.Drawing.Point(200, 40);
+            this.radioMonth.Name = "radioMonth";
+            this.radioMonth.Size = new System.Drawing.Size(68, 23);
+            this.radioMonth.TabIndex = 2;
+            this.radioMonth.TabStop = true;
+            this.radioMonth.Text = "Месяц";
+            this.radioMonth.UseVisualStyleBackColor = true;
             // 
-            // buttonExcel
+            // radioWeek
             // 
-            this.buttonExcel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.buttonExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExcel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonExcel.ForeColor = System.Drawing.Color.White;
-            this.buttonExcel.Location = new System.Drawing.Point(694, 20);
-            this.buttonExcel.Name = "buttonExcel";
-            this.buttonExcel.Size = new System.Drawing.Size(80, 30);
-            this.buttonExcel.TabIndex = 7;
-            this.buttonExcel.Text = "📗 Excel";
-            this.buttonExcel.UseVisualStyleBackColor = false;
-            this.buttonExcel.Click += new System.EventHandler(this.buttonExcel_Click);
+            this.radioWeek.AutoSize = true;
+            this.radioWeek.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.radioWeek.Location = new System.Drawing.Point(110, 40);
+            this.radioWeek.Name = "radioWeek";
+            this.radioWeek.Size = new System.Drawing.Size(73, 23);
+            this.radioWeek.TabIndex = 1;
+            this.radioWeek.Text = "Неделя";
+            this.radioWeek.UseVisualStyleBackColor = true;
             // 
-            // buttonClose
+            // radioToday
             // 
-            this.buttonClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.buttonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonClose.ForeColor = System.Drawing.Color.White;
-            this.buttonClose.Location = new System.Drawing.Point(980, 20);
-            this.buttonClose.Name = "buttonClose";
-            this.buttonClose.Size = new System.Drawing.Size(80, 30);
-            this.buttonClose.TabIndex = 9;
-            this.buttonClose.Text = "✖️ Закрыть";
-            this.buttonClose.UseVisualStyleBackColor = false;
-            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
+            this.radioToday.AutoSize = true;
+            this.radioToday.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.radioToday.Location = new System.Drawing.Point(20, 40);
+            this.radioToday.Name = "radioToday";
+            this.radioToday.Size = new System.Drawing.Size(79, 23);
+            this.radioToday.TabIndex = 0;
+            this.radioToday.Text = "Сегодня";
+            this.radioToday.UseVisualStyleBackColor = true;
             // 
-            // panelReport
+            // labelPeriod
             // 
-            this.panelReport.BackColor = System.Drawing.Color.White;
-            this.panelReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelReport.Controls.Add(this.dataGridViewReport);
-            this.panelReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelReport.Location = new System.Drawing.Point(10, 10);
-            this.panelReport.Name = "panelReport";
-            this.panelReport.Padding = new System.Windows.Forms.Padding(10);
-            this.panelReport.Size = new System.Drawing.Size(1080, 520);
-            this.panelReport.TabIndex = 1;
+            this.labelPeriod.AutoSize = true;
+            this.labelPeriod.Font = new System.Drawing.Font("Segoe UI Semibold", 11F);
+            this.labelPeriod.Location = new System.Drawing.Point(20, 15);
+            this.labelPeriod.Name = "labelPeriod";
+            this.labelPeriod.Size = new System.Drawing.Size(68, 20);
+            this.labelPeriod.TabIndex = 15;
+            this.labelPeriod.Text = "Период:";
             // 
             // dataGridViewReport
             // 
             this.dataGridViewReport.AllowUserToAddRows = false;
             this.dataGridViewReport.AllowUserToDeleteRows = false;
             this.dataGridViewReport.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridViewReport.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridViewReport.ColumnHeadersHeight = 35;
+            this.dataGridViewReport.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dataGridViewReport.ColumnHeadersHeight = 40;
+            this.dataGridViewReport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colRank,
+            this.colHouseName,
+            this.colHouseClass,
+            this.colBookings,
+            this.colDays,
+            this.colRevenue,
+            this.colAvgStay,
+            this.colOccupancy});
             this.dataGridViewReport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewReport.EnableHeadersVisualStyles = false;
-            this.dataGridViewReport.GridColor = System.Drawing.Color.LightGray;
+            this.dataGridViewReport.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(235)))), ((int)(((byte)(210)))));
             this.dataGridViewReport.Location = new System.Drawing.Point(10, 10);
             this.dataGridViewReport.Name = "dataGridViewReport";
             this.dataGridViewReport.ReadOnly = true;
             this.dataGridViewReport.RowHeadersVisible = false;
             this.dataGridViewReport.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewReport.Size = new System.Drawing.Size(1058, 498);
-            this.dataGridViewReport.TabIndex = 0;
+            this.dataGridViewReport.Size = new System.Drawing.Size(1131, 405);
+            this.dataGridViewReport.TabIndex = 1;
             // 
-            // panelStats
+            // colRank
             // 
-            this.panelStats.BackColor = System.Drawing.Color.White;
-            this.panelStats.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelStats.Controls.Add(this.groupStats);
-            this.panelStats.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelStats.Location = new System.Drawing.Point(10, 530);
-            this.panelStats.Name = "panelStats";
-            this.panelStats.Padding = new System.Windows.Forms.Padding(10);
-            this.panelStats.Size = new System.Drawing.Size(1080, 160);
-            this.panelStats.TabIndex = 2;
+            this.colRank.HeaderText = "№";
+            this.colRank.Name = "colRank";
+            this.colRank.ReadOnly = true;
+            this.colRank.Width = 40;
             // 
-            // groupStats
+            // colHouseName
             // 
-            this.groupStats.Controls.Add(this.labelTotalBookingsTitle);
-            this.groupStats.Controls.Add(this.labelTotalBookings);
-            this.groupStats.Controls.Add(this.labelTotalRevenueTitle);
-            this.groupStats.Controls.Add(this.labelTotalRevenue);
-            this.groupStats.Controls.Add(this.labelAvgOccupancyTitle);
-            this.groupStats.Controls.Add(this.labelAvgOccupancy);
-            this.groupStats.Controls.Add(this.labelPopularHouseTitle);
-            this.groupStats.Controls.Add(this.labelPopularHouse);
-            this.groupStats.Controls.Add(this.labelHouseRevenueTitle);
-            this.groupStats.Controls.Add(this.labelHouseRevenue);
-            this.groupStats.Controls.Add(this.labelServiceRevenueTitle);
-            this.groupStats.Controls.Add(this.labelServiceRevenue);
-            this.groupStats.Controls.Add(this.labelPeriodInfo);
-            this.groupStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupStats.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.groupStats.Location = new System.Drawing.Point(10, 10);
-            this.groupStats.Name = "groupStats";
-            this.groupStats.Size = new System.Drawing.Size(1058, 138);
-            this.groupStats.TabIndex = 0;
-            this.groupStats.TabStop = false;
-            this.groupStats.Text = "ИТОГОВАЯ СТАТИСТИКА";
+            this.colHouseName.HeaderText = "Название дома";
+            this.colHouseName.Name = "colHouseName";
+            this.colHouseName.ReadOnly = true;
+            this.colHouseName.Width = 200;
             // 
-            // labelTotalBookingsTitle
+            // colHouseClass
             // 
-            this.labelTotalBookingsTitle.AutoSize = true;
-            this.labelTotalBookingsTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.labelTotalBookingsTitle.Location = new System.Drawing.Point(20, 30);
-            this.labelTotalBookingsTitle.Name = "labelTotalBookingsTitle";
-            this.labelTotalBookingsTitle.Size = new System.Drawing.Size(144, 19);
-            this.labelTotalBookingsTitle.TabIndex = 0;
-            this.labelTotalBookingsTitle.Text = "Всего бронирований:";
+            this.colHouseClass.HeaderText = "Класс";
+            this.colHouseClass.Name = "colHouseClass";
+            this.colHouseClass.ReadOnly = true;
+            this.colHouseClass.Width = 80;
             // 
-            // labelTotalBookings
+            // colBookings
             // 
-            this.labelTotalBookings.AutoSize = true;
-            this.labelTotalBookings.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.labelTotalBookings.ForeColor = System.Drawing.Color.DarkBlue;
-            this.labelTotalBookings.Location = new System.Drawing.Point(170, 28);
-            this.labelTotalBookings.Name = "labelTotalBookings";
-            this.labelTotalBookings.Size = new System.Drawing.Size(37, 21);
-            this.labelTotalBookings.TabIndex = 1;
-            this.labelTotalBookings.Text = "125";
+            this.colBookings.HeaderText = "Бронирований";
+            this.colBookings.Name = "colBookings";
+            this.colBookings.ReadOnly = true;
             // 
-            // labelTotalRevenueTitle
+            // colDays
             // 
-            this.labelTotalRevenueTitle.AutoSize = true;
-            this.labelTotalRevenueTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.labelTotalRevenueTitle.Location = new System.Drawing.Point(20, 60);
-            this.labelTotalRevenueTitle.Name = "labelTotalRevenueTitle";
-            this.labelTotalRevenueTitle.Size = new System.Drawing.Size(101, 19);
-            this.labelTotalRevenueTitle.TabIndex = 2;
-            this.labelTotalRevenueTitle.Text = "Общий доход:";
+            this.colDays.HeaderText = "Занято дней";
+            this.colDays.Name = "colDays";
+            this.colDays.ReadOnly = true;
+            this.colDays.Width = 90;
+            // 
+            // colRevenue
+            // 
+            this.colRevenue.HeaderText = "Доход, ₽";
+            this.colRevenue.Name = "colRevenue";
+            this.colRevenue.ReadOnly = true;
+            this.colRevenue.Width = 120;
+            // 
+            // colAvgStay
+            // 
+            this.colAvgStay.HeaderText = "Ср. длит.";
+            this.colAvgStay.Name = "colAvgStay";
+            this.colAvgStay.ReadOnly = true;
+            this.colAvgStay.Width = 80;
+            // 
+            // colOccupancy
+            // 
+            this.colOccupancy.HeaderText = "Загрузка";
+            this.colOccupancy.Name = "colOccupancy";
+            this.colOccupancy.ReadOnly = true;
+            this.colOccupancy.Width = 80;
+            // 
+            // panelSummary
+            // 
+            this.panelSummary.BackColor = System.Drawing.Color.White;
+            this.panelSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelSummary.Controls.Add(this.labelSummaryTitle);
+            this.panelSummary.Controls.Add(this.labelTotalOrders);
+            this.panelSummary.Controls.Add(this.labelTotalOrdersValue);
+            this.panelSummary.Controls.Add(this.labelTotalHouseRevenue);
+            this.panelSummary.Controls.Add(this.labelTotalHouseRevenueValue);
+            this.panelSummary.Controls.Add(this.labelTotalServicesRevenue);
+            this.panelSummary.Controls.Add(this.labelTotalServicesRevenueValue);
+            this.panelSummary.Controls.Add(this.labelTotalRevenue);
+            this.panelSummary.Controls.Add(this.labelTotalRevenueValue);
+            this.panelSummary.Controls.Add(this.labelAverageCheck);
+            this.panelSummary.Controls.Add(this.labelAverageCheckValue);
+            this.panelSummary.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelSummary.Location = new System.Drawing.Point(10, 415);
+            this.panelSummary.Name = "panelSummary";
+            this.panelSummary.Size = new System.Drawing.Size(1131, 80);
+            this.panelSummary.TabIndex = 2;
+            // 
+            // labelSummaryTitle
+            // 
+            this.labelSummaryTitle.AutoSize = true;
+            this.labelSummaryTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 11F);
+            this.labelSummaryTitle.Location = new System.Drawing.Point(10, 30);
+            this.labelSummaryTitle.Name = "labelSummaryTitle";
+            this.labelSummaryTitle.Size = new System.Drawing.Size(64, 20);
+            this.labelSummaryTitle.TabIndex = 0;
+            this.labelSummaryTitle.Text = "Сводка:";
+            // 
+            // labelTotalOrders
+            // 
+            this.labelTotalOrders.AutoSize = true;
+            this.labelTotalOrders.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelTotalOrders.Location = new System.Drawing.Point(90, 32);
+            this.labelTotalOrders.Name = "labelTotalOrders";
+            this.labelTotalOrders.Size = new System.Drawing.Size(98, 19);
+            this.labelTotalOrders.TabIndex = 1;
+            this.labelTotalOrders.Text = "Всего заказов:";
+            // 
+            // labelTotalOrdersValue
+            // 
+            this.labelTotalOrdersValue.AutoSize = true;
+            this.labelTotalOrdersValue.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.labelTotalOrdersValue.Location = new System.Drawing.Point(190, 32);
+            this.labelTotalOrdersValue.Name = "labelTotalOrdersValue";
+            this.labelTotalOrdersValue.Size = new System.Drawing.Size(17, 19);
+            this.labelTotalOrdersValue.TabIndex = 2;
+            this.labelTotalOrdersValue.Text = "0";
+            // 
+            // labelTotalHouseRevenue
+            // 
+            this.labelTotalHouseRevenue.AutoSize = true;
+            this.labelTotalHouseRevenue.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelTotalHouseRevenue.Location = new System.Drawing.Point(234, 32);
+            this.labelTotalHouseRevenue.Name = "labelTotalHouseRevenue";
+            this.labelTotalHouseRevenue.Size = new System.Drawing.Size(160, 19);
+            this.labelTotalHouseRevenue.TabIndex = 3;
+            this.labelTotalHouseRevenue.Text = "Выручка с проживания:";
+            // 
+            // labelTotalHouseRevenueValue
+            // 
+            this.labelTotalHouseRevenueValue.AutoSize = true;
+            this.labelTotalHouseRevenueValue.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.labelTotalHouseRevenueValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.labelTotalHouseRevenueValue.Location = new System.Drawing.Point(400, 32);
+            this.labelTotalHouseRevenueValue.Name = "labelTotalHouseRevenueValue";
+            this.labelTotalHouseRevenueValue.Size = new System.Drawing.Size(29, 19);
+            this.labelTotalHouseRevenueValue.TabIndex = 4;
+            this.labelTotalHouseRevenueValue.Text = "0 ₽";
+            // 
+            // labelTotalServicesRevenue
+            // 
+            this.labelTotalServicesRevenue.AutoSize = true;
+            this.labelTotalServicesRevenue.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelTotalServicesRevenue.Location = new System.Drawing.Point(467, 32);
+            this.labelTotalServicesRevenue.Name = "labelTotalServicesRevenue";
+            this.labelTotalServicesRevenue.Size = new System.Drawing.Size(113, 19);
+            this.labelTotalServicesRevenue.TabIndex = 5;
+            this.labelTotalServicesRevenue.Text = "Выручка с услуг:";
+            // 
+            // labelTotalServicesRevenueValue
+            // 
+            this.labelTotalServicesRevenueValue.AutoSize = true;
+            this.labelTotalServicesRevenueValue.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.labelTotalServicesRevenueValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.labelTotalServicesRevenueValue.Location = new System.Drawing.Point(587, 32);
+            this.labelTotalServicesRevenueValue.Name = "labelTotalServicesRevenueValue";
+            this.labelTotalServicesRevenueValue.Size = new System.Drawing.Size(29, 19);
+            this.labelTotalServicesRevenueValue.TabIndex = 6;
+            this.labelTotalServicesRevenueValue.Text = "0 ₽";
             // 
             // labelTotalRevenue
             // 
             this.labelTotalRevenue.AutoSize = true;
-            this.labelTotalRevenue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.labelTotalRevenue.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelTotalRevenue.Location = new System.Drawing.Point(120, 58);
+            this.labelTotalRevenue.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelTotalRevenue.Location = new System.Drawing.Point(670, 32);
             this.labelTotalRevenue.Name = "labelTotalRevenue";
-            this.labelTotalRevenue.Size = new System.Drawing.Size(103, 21);
-            this.labelTotalRevenue.TabIndex = 3;
-            this.labelTotalRevenue.Text = "1 250 000.00";
+            this.labelTotalRevenue.Size = new System.Drawing.Size(101, 19);
+            this.labelTotalRevenue.TabIndex = 7;
+            this.labelTotalRevenue.Text = "Общая сумма:";
             // 
-            // labelAvgOccupancyTitle
+            // labelTotalRevenueValue
             // 
-            this.labelAvgOccupancyTitle.AutoSize = true;
-            this.labelAvgOccupancyTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.labelAvgOccupancyTitle.Location = new System.Drawing.Point(350, 30);
-            this.labelAvgOccupancyTitle.Name = "labelAvgOccupancyTitle";
-            this.labelAvgOccupancyTitle.Size = new System.Drawing.Size(123, 19);
-            this.labelAvgOccupancyTitle.TabIndex = 4;
-            this.labelAvgOccupancyTitle.Text = "Средняя загрузка:";
+            this.labelTotalRevenueValue.AutoSize = true;
+            this.labelTotalRevenueValue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.labelTotalRevenueValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.labelTotalRevenueValue.Location = new System.Drawing.Point(780, 30);
+            this.labelTotalRevenueValue.Name = "labelTotalRevenueValue";
+            this.labelTotalRevenueValue.Size = new System.Drawing.Size(55, 21);
+            this.labelTotalRevenueValue.TabIndex = 8;
+            this.labelTotalRevenueValue.Text = "0,00 ₽";
             // 
-            // labelAvgOccupancy
+            // labelAverageCheck
             // 
-            this.labelAvgOccupancy.AutoSize = true;
-            this.labelAvgOccupancy.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.labelAvgOccupancy.ForeColor = System.Drawing.Color.DarkBlue;
-            this.labelAvgOccupancy.Location = new System.Drawing.Point(470, 28);
-            this.labelAvgOccupancy.Name = "labelAvgOccupancy";
-            this.labelAvgOccupancy.Size = new System.Drawing.Size(55, 21);
-            this.labelAvgOccupancy.TabIndex = 5;
-            this.labelAvgOccupancy.Text = "67.5%";
+            this.labelAverageCheck.AutoSize = true;
+            this.labelAverageCheck.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelAverageCheck.Location = new System.Drawing.Point(903, 32);
+            this.labelAverageCheck.Name = "labelAverageCheck";
+            this.labelAverageCheck.Size = new System.Drawing.Size(94, 19);
+            this.labelAverageCheck.TabIndex = 9;
+            this.labelAverageCheck.Text = "Средний чек:";
             // 
-            // labelPopularHouseTitle
+            // labelAverageCheckValue
             // 
-            this.labelPopularHouseTitle.AutoSize = true;
-            this.labelPopularHouseTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.labelPopularHouseTitle.Location = new System.Drawing.Point(350, 60);
-            this.labelPopularHouseTitle.Name = "labelPopularHouseTitle";
-            this.labelPopularHouseTitle.Size = new System.Drawing.Size(139, 19);
-            this.labelPopularHouseTitle.TabIndex = 6;
-            this.labelPopularHouseTitle.Text = "Самый популярный:";
+            this.labelAverageCheckValue.AutoSize = true;
+            this.labelAverageCheckValue.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.labelAverageCheckValue.Location = new System.Drawing.Point(1003, 32);
+            this.labelAverageCheckValue.Name = "labelAverageCheckValue";
+            this.labelAverageCheckValue.Size = new System.Drawing.Size(29, 19);
+            this.labelAverageCheckValue.TabIndex = 10;
+            this.labelAverageCheckValue.Text = "0 ₽";
             // 
-            // labelPopularHouse
+            // statusStrip
             // 
-            this.labelPopularHouse.AutoSize = true;
-            this.labelPopularHouse.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.labelPopularHouse.ForeColor = System.Drawing.Color.DarkBlue;
-            this.labelPopularHouse.Location = new System.Drawing.Point(500, 58);
-            this.labelPopularHouse.Name = "labelPopularHouse";
-            this.labelPopularHouse.Size = new System.Drawing.Size(135, 20);
-            this.labelPopularHouse.TabIndex = 7;
-            this.labelPopularHouse.Text = "Коттедж Уютный";
+            this.statusStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 578);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1151, 22);
+            this.statusStrip.TabIndex = 3;
+            this.statusStrip.Text = "statusStrip";
             // 
-            // labelHouseRevenueTitle
+            // toolStripStatusLabel
             // 
-            this.labelHouseRevenueTitle.AutoSize = true;
-            this.labelHouseRevenueTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.labelHouseRevenueTitle.Location = new System.Drawing.Point(700, 30);
-            this.labelHouseRevenueTitle.Name = "labelHouseRevenueTitle";
-            this.labelHouseRevenueTitle.Size = new System.Drawing.Size(153, 19);
-            this.labelHouseRevenueTitle.TabIndex = 8;
-            this.labelHouseRevenueTitle.Text = "Доход от проживания:";
-            // 
-            // labelHouseRevenue
-            // 
-            this.labelHouseRevenue.AutoSize = true;
-            this.labelHouseRevenue.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.labelHouseRevenue.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelHouseRevenue.Location = new System.Drawing.Point(859, 28);
-            this.labelHouseRevenue.Name = "labelHouseRevenue";
-            this.labelHouseRevenue.Size = new System.Drawing.Size(89, 20);
-            this.labelHouseRevenue.TabIndex = 9;
-            this.labelHouseRevenue.Text = "980 000.00";
-            // 
-            // labelServiceRevenueTitle
-            // 
-            this.labelServiceRevenueTitle.AutoSize = true;
-            this.labelServiceRevenueTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.labelServiceRevenueTitle.Location = new System.Drawing.Point(700, 60);
-            this.labelServiceRevenueTitle.Name = "labelServiceRevenueTitle";
-            this.labelServiceRevenueTitle.Size = new System.Drawing.Size(137, 19);
-            this.labelServiceRevenueTitle.TabIndex = 10;
-            this.labelServiceRevenueTitle.Text = "Доход от доп. услуг:";
-            // 
-            // labelServiceRevenue
-            // 
-            this.labelServiceRevenue.AutoSize = true;
-            this.labelServiceRevenue.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.labelServiceRevenue.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelServiceRevenue.Location = new System.Drawing.Point(843, 58);
-            this.labelServiceRevenue.Name = "labelServiceRevenue";
-            this.labelServiceRevenue.Size = new System.Drawing.Size(89, 20);
-            this.labelServiceRevenue.TabIndex = 11;
-            this.labelServiceRevenue.Text = "270 000.00";
-            // 
-            // labelPeriodInfo
-            // 
-            this.labelPeriodInfo.AutoSize = true;
-            this.labelPeriodInfo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            this.labelPeriodInfo.ForeColor = System.Drawing.Color.Gray;
-            this.labelPeriodInfo.Location = new System.Drawing.Point(20, 100);
-            this.labelPeriodInfo.Name = "labelPeriodInfo";
-            this.labelPeriodInfo.Size = new System.Drawing.Size(142, 15);
-            this.labelPeriodInfo.TabIndex = 12;
-            this.labelPeriodInfo.Text = "с 01.01.2025 по 31.01.2025";
+            this.toolStripStatusLabel.ForeColor = System.Drawing.Color.White;
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(191, 17);
+            this.toolStripStatusLabel.Text = "Готов к работе. Выберите период";
             // 
             // HouseReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1100, 700);
-            this.Controls.Add(this.panelMain);
+            this.ClientSize = new System.Drawing.Size(1151, 600);
+            this.Controls.Add(this.panelContent);
+            this.Controls.Add(this.panelGreenLine);
+            this.Controls.Add(this.panelHeader);
+            this.Controls.Add(this.statusStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -425,48 +592,28 @@
             this.Name = "HouseReportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Отчёт по домам";
-            this.panelMain.ResumeLayout(false);
-            this.panelTop.ResumeLayout(false);
-            this.panelTop.PerformLayout();
-            this.panelReport.ResumeLayout(false);
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            this.panelContent.ResumeLayout(false);
+            this.panelFilter.ResumeLayout(false);
+            this.panelFilter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReport)).EndInit();
-            this.panelStats.ResumeLayout(false);
-            this.groupStats.ResumeLayout(false);
-            this.groupStats.PerformLayout();
+            this.panelSummary.ResumeLayout(false);
+            this.panelSummary.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
-        #endregion
-
-        private System.Windows.Forms.Panel panelMain;
-        private System.Windows.Forms.Panel panelTop;
-        private System.Windows.Forms.Label labelPeriod;
-        private System.Windows.Forms.DateTimePicker dateTimePickerStart;
-        private System.Windows.Forms.Label labelTo;
-        private System.Windows.Forms.DateTimePicker dateTimePickerEnd;
-        private System.Windows.Forms.Button buttonGenerate;
-        private System.Windows.Forms.Button buttonRefresh;
-        private System.Windows.Forms.Button buttonExport;
-        private System.Windows.Forms.Button buttonPrint;
-        private System.Windows.Forms.Button buttonExcel;
-        private System.Windows.Forms.Button buttonClose;
-        private System.Windows.Forms.Panel panelReport;
-        private System.Windows.Forms.DataGridView dataGridViewReport;
-        private System.Windows.Forms.Panel panelStats;
-        private System.Windows.Forms.GroupBox groupStats;
-        private System.Windows.Forms.Label labelTotalBookingsTitle;
-        private System.Windows.Forms.Label labelTotalBookings;
-        private System.Windows.Forms.Label labelTotalRevenueTitle;
-        private System.Windows.Forms.Label labelTotalRevenue;
-        private System.Windows.Forms.Label labelAvgOccupancyTitle;
-        private System.Windows.Forms.Label labelAvgOccupancy;
-        private System.Windows.Forms.Label labelPopularHouseTitle;
-        private System.Windows.Forms.Label labelPopularHouse;
-        private System.Windows.Forms.Label labelHouseRevenueTitle;
-        private System.Windows.Forms.Label labelHouseRevenue;
-        private System.Windows.Forms.Label labelServiceRevenueTitle;
-        private System.Windows.Forms.Label labelServiceRevenue;
-        private System.Windows.Forms.Label labelPeriodInfo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRank;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHouseName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHouseClass;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBookings;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDays;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRevenue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAvgStay;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOccupancy;
     }
 }
