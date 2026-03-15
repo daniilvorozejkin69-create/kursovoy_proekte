@@ -21,6 +21,7 @@ namespace kursovoy_proekt
         public HouseReportForm()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             InitializeReport();
         }
 

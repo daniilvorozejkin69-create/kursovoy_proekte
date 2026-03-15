@@ -21,6 +21,7 @@ namespace kursovoy_proekt
         public Check()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             SetupForm();
         }
 

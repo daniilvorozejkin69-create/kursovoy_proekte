@@ -9,6 +9,7 @@ namespace kursovoy_proekt
         public RecephenForm()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             SetupForm();
         }
 

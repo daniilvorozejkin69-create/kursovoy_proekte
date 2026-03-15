@@ -24,6 +24,7 @@ namespace kursovoy_proekt
         public RevenueReport()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             SetupForm();
         }
 

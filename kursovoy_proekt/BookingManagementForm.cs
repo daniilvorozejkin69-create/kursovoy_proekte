@@ -17,6 +17,7 @@ namespace kursovoy_proekt
         public BookingManagementForm()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             SetupForm();
         }
 

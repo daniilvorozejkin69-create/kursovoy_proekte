@@ -21,6 +21,7 @@ namespace kursovoy_proekt
         public AddUser()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             currentMode = FormMode.Add;
             SetupForm();
         }

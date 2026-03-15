@@ -52,6 +52,7 @@ namespace kursovoy_proekt
                           DateTime checkInDate, DateTime checkOutDate, int stayDays)
         {
             InitializeComponent();
+            InactivityManager.Start(this);
 
             this.orderId = orderId;
             this.clientId = clientId;

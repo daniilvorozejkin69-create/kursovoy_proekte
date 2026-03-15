@@ -14,6 +14,7 @@ namespace kursovoy_proekt
         public DepositForm(int bookingId, decimal currentDeposit)
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             this.bookingId = bookingId;
             this.currentDeposit = currentDeposit;
             LoadBookingInfo();

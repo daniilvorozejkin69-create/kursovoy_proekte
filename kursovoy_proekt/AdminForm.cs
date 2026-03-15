@@ -11,6 +11,7 @@ namespace kursovoy_proekt
         public AdminForm()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
 
             if (Session.IsLoggedIn)
             {

@@ -20,6 +20,7 @@ namespace kursovoy_proekt
         public StaffList()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             SetupForm();
         }
 

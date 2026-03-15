@@ -13,6 +13,7 @@ namespace kursovoy_proekt
         public EditBookingForm(MySqlDataReader reader)
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             this.bookingData = reader;
             LoadBookingData();
         }

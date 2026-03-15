@@ -19,6 +19,7 @@ namespace kursovoy_proekt
         public HousList()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             this.DoubleBuffered = true;
         }
 

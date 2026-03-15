@@ -9,6 +9,7 @@ namespace kursovoy_proekt
         public ManagerForm()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             SetupForm();
         }
 

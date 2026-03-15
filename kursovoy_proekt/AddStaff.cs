@@ -20,6 +20,7 @@ namespace kursovoy_proekt
         public AddStaff()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             currentMode = FormMode.Add;
             SetupForm();
         }

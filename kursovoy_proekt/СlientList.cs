@@ -21,6 +21,7 @@ namespace kursovoy_proekt
         public ClientList()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             SetupForm();
         }
 

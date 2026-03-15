@@ -16,6 +16,7 @@ namespace kursovoy_proekt
         public AddClient()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             currentMode = FormMode.Add;
             SetupForm();
         }

@@ -18,6 +18,7 @@ namespace kursovoy_proekt
         public UsersList()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             SetupModernControls();
         }
 

@@ -15,6 +15,7 @@ namespace kursovoy_proekt
         public DirectoriesForm()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             LoadData("positions");
         }
 

@@ -18,6 +18,7 @@ namespace kursovoy_proekt
         public AddHous()
         {
             InitializeComponent();
+            InactivityManager.Start(this);
             currentMode = FormMode.Add;
             LoadHouseClasses();
             SetupForm();

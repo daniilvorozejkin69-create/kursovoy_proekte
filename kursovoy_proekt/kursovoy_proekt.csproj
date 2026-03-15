@@ -228,12 +228,7 @@
     <Compile Include="HousList.Designer.cs">
       <DependentUpon>HousList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Order.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Order.Designer.cs">
-      <DependentUpon>Order.cs</DependentUpon>
-    </Compile>
+    <Compile Include="InactivityManager.cs" />
     <Compile Include="ReceiptForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -265,12 +260,6 @@
     </Compile>
     <Compile Include="ManagerForm.Designer.cs">
       <DependentUpon>ManagerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="OtchetForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OtchetForm.Designer.cs">
-      <DependentUpon>OtchetForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -355,9 +344,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ManagerForm.resx">
       <DependentUpon>ManagerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OtchetForm.resx">
-      <DependentUpon>OtchetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
