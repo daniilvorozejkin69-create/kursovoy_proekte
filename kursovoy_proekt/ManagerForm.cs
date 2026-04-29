@@ -30,8 +30,8 @@ namespace kursovoy_proekt
             buttonEditService.Click += ButtonEditService_Click;
             buttonManageStaff.Click += ButtonManageStaff_Click;
             buttonReportHouse.Click += ButtonReportHouse_Click;
-            //buttonBudget.Click += ButtonBudget_Click;
-            buttonExit.Click += ButtonExit_Click;  // ПОДПИСКА КНОПКИ ВЫХОДА
+            buttonDiscounts.Click += ButtonDiscounts_Click;  // НОВАЯ КНОПКА
+            buttonExit.Click += ButtonExit_Click;
 
             // Эффекты наведения
             buttonAddHouse.MouseEnter += (s, e) => buttonAddHouse.BackColor = Color.FromArgb(96, 165, 215);
@@ -52,10 +52,10 @@ namespace kursovoy_proekt
             buttonReportHouse.MouseEnter += (s, e) => buttonReportHouse.BackColor = Color.FromArgb(96, 165, 215);
             buttonReportHouse.MouseLeave += (s, e) => buttonReportHouse.BackColor = Color.FromArgb(76, 145, 195);
 
-            //buttonBudget.MouseEnter += (s, e) => buttonBudget.BackColor = Color.FromArgb(175, 109, 202);
-            //buttonBudget.MouseLeave += (s, e) => buttonBudget.BackColor = Color.FromArgb(155, 89, 182);
+            buttonDiscounts.MouseEnter += (s, e) => buttonDiscounts.BackColor = Color.FromArgb(175, 109, 202);
+            buttonDiscounts.MouseLeave += (s, e) => buttonDiscounts.BackColor = Color.FromArgb(155, 89, 182);
 
-            // ЭФФЕКТЫ ДЛЯ КНОПКИ ВЫХОДА
+            // Эффекты для кнопки ВЫХОДА
             buttonExit.MouseEnter += (s, e) => {
                 buttonExit.BackColor = Color.FromArgb(220, 80, 80);
                 buttonExit.ForeColor = Color.White;
@@ -69,55 +69,45 @@ namespace kursovoy_proekt
         private void ButtonAddHouse_Click(object sender, EventArgs e)
         {
             AddHous addHous = new AddHous();
-            addHous.Show();
-            this.Hide();
+            addHous.ShowDialog();
         }
 
         private void ButtonEditHouse_Click(object sender, EventArgs e)
         {
             HousList housList = new HousList();
-            housList.Show();
-            this.Hide();
+            housList.ShowDialog();
         }
 
         private void ButtonAddService_Click(object sender, EventArgs e)
         {
             AddService addService = new AddService();
-            addService.Show();
-            this.Hide();
+            addService.ShowDialog();
         }
 
         private void ButtonEditService_Click(object sender, EventArgs e)
         {
             ServiceList serviceList = new ServiceList();
-            serviceList.Show();
-            this.Hide();
+            serviceList.ShowDialog();
         }
 
         private void ButtonManageStaff_Click(object sender, EventArgs e)
         {
             StaffList staffList = new StaffList();
-            staffList.Show();
-            this.Hide();
+            staffList.ShowDialog();
         }
 
         private void ButtonReportHouse_Click(object sender, EventArgs e)
         {
             RevenueReport revenueReport = new RevenueReport();
-            revenueReport.Show();
-            this.Hide();
+            revenueReport.ShowDialog();
         }
 
-        private void ButtonBudget_Click(object sender, EventArgs e)
+        private void ButtonDiscounts_Click(object sender, EventArgs e)
         {
-         
-        }
-        private void buttonBudget_Click_1(object sender, EventArgs e)
-        {
-            ButtonBudget_Click(sender, e);
+            DiscountsForm discountsForm = new DiscountsForm();
+            discountsForm.ShowDialog();
         }
 
-        // ОБРАБОТЧИК КНОПКИ ВЫХОДА
         private void ButtonExit_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Вы уверены, что хотите выйти из системы?",
@@ -130,11 +120,6 @@ namespace kursovoy_proekt
                 loginForm.Show();
                 this.Close();
             }
-        }
-
-        private void panelContent_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

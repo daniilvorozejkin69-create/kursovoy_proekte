@@ -4,25 +4,22 @@
     {
         private System.ComponentModel.IContainer components = null;
 
-        // Основные панели
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.PictureBox pictureBoxLogo;
         private System.Windows.Forms.Label labelHeader;
         private System.Windows.Forms.Panel panelGreenLine;
         private System.Windows.Forms.Panel panelContent;
-
-        // Информация о пользователе
         private System.Windows.Forms.Label labelWelcome;
         private System.Windows.Forms.Label labelUserInfo;
         private System.Windows.Forms.Panel panelSeparator;
-
-        // Кнопки
         private System.Windows.Forms.Button buttonAddHouse;
         private System.Windows.Forms.Button buttonEditHouse;
         private System.Windows.Forms.Button buttonAddService;
         private System.Windows.Forms.Button buttonEditService;
         private System.Windows.Forms.Button buttonManageStaff;
+        private System.Windows.Forms.Button buttonDiscounts;
         private System.Windows.Forms.Button buttonReportHouse;
+        private System.Windows.Forms.Button buttonExit;
 
         protected override void Dispose(bool disposing)
         {
@@ -42,6 +39,7 @@
             this.panelContent = new System.Windows.Forms.Panel();
             this.buttonExit = new System.Windows.Forms.Button();
             this.buttonReportHouse = new System.Windows.Forms.Button();
+            this.buttonDiscounts = new System.Windows.Forms.Button();
             this.buttonManageStaff = new System.Windows.Forms.Button();
             this.buttonEditService = new System.Windows.Forms.Button();
             this.buttonAddService = new System.Windows.Forms.Button();
@@ -100,6 +98,7 @@
             this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.panelContent.Controls.Add(this.buttonExit);
             this.panelContent.Controls.Add(this.buttonReportHouse);
+            this.panelContent.Controls.Add(this.buttonDiscounts);
             this.panelContent.Controls.Add(this.buttonManageStaff);
             this.panelContent.Controls.Add(this.buttonEditService);
             this.panelContent.Controls.Add(this.buttonAddService);
@@ -114,7 +113,6 @@
             this.panelContent.Padding = new System.Windows.Forms.Padding(30);
             this.panelContent.Size = new System.Drawing.Size(900, 533);
             this.panelContent.TabIndex = 2;
-            this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
             // 
             // buttonExit
             // 
@@ -127,7 +125,7 @@
             this.buttonExit.Location = new System.Drawing.Point(638, 459);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(250, 50);
-            this.buttonExit.TabIndex = 7;
+            this.buttonExit.TabIndex = 8;
             this.buttonExit.Text = "🚪 ВЫХОД";
             this.buttonExit.UseVisualStyleBackColor = false;
             // 
@@ -141,9 +139,23 @@
             this.buttonReportHouse.Location = new System.Drawing.Point(30, 370);
             this.buttonReportHouse.Name = "buttonReportHouse";
             this.buttonReportHouse.Size = new System.Drawing.Size(840, 70);
-            this.buttonReportHouse.TabIndex = 5;
+            this.buttonReportHouse.TabIndex = 7;
             this.buttonReportHouse.Text = "📊 ОТЧЁТ ПО ВЫРУЧКЕ";
             this.buttonReportHouse.UseVisualStyleBackColor = false;
+            // 
+            // buttonDiscounts
+            // 
+            this.buttonDiscounts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
+            this.buttonDiscounts.FlatAppearance.BorderSize = 0;
+            this.buttonDiscounts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDiscounts.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.buttonDiscounts.ForeColor = System.Drawing.Color.White;
+            this.buttonDiscounts.Location = new System.Drawing.Point(30, 280);
+            this.buttonDiscounts.Name = "buttonDiscounts";
+            this.buttonDiscounts.Size = new System.Drawing.Size(400, 70);
+            this.buttonDiscounts.TabIndex = 5;
+            this.buttonDiscounts.Text = "💎 УПРАВЛЕНИЕ СКИДКАМИ";
+            this.buttonDiscounts.UseVisualStyleBackColor = false;
             // 
             // buttonManageStaff
             // 
@@ -152,9 +164,9 @@
             this.buttonManageStaff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonManageStaff.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.buttonManageStaff.ForeColor = System.Drawing.Color.White;
-            this.buttonManageStaff.Location = new System.Drawing.Point(30, 280);
+            this.buttonManageStaff.Location = new System.Drawing.Point(470, 280);
             this.buttonManageStaff.Name = "buttonManageStaff";
-            this.buttonManageStaff.Size = new System.Drawing.Size(840, 70);
+            this.buttonManageStaff.Size = new System.Drawing.Size(400, 70);
             this.buttonManageStaff.TabIndex = 4;
             this.buttonManageStaff.Text = "👥 УПРАВЛЕНИЕ ПЕРСОНАЛОМ";
             this.buttonManageStaff.UseVisualStyleBackColor = false;
@@ -228,7 +240,7 @@
             this.labelUserInfo.AutoSize = true;
             this.labelUserInfo.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
             this.labelUserInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
-            this.labelUserInfo.Location = new System.Drawing.Point(185, 30);
+            this.labelUserInfo.Location = new System.Drawing.Point(208, 30);
             this.labelUserInfo.Name = "labelUserInfo";
             this.labelUserInfo.Size = new System.Drawing.Size(179, 25);
             this.labelUserInfo.TabIndex = 1;
@@ -266,7 +278,5 @@
             this.ResumeLayout(false);
 
         }
-
-        private System.Windows.Forms.Button buttonExit;
     }
 }

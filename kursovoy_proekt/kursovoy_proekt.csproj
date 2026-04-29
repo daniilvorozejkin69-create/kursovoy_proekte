@@ -201,6 +201,13 @@
     <Compile Include="DirectoriesForm.Designer.cs">
       <DependentUpon>DirectoriesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DiscountItem.cs" />
+    <Compile Include="DiscountsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DiscountsForm.Designer.cs">
+      <DependentUpon>DiscountsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditBookingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -326,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DirectoriesForm.resx">
       <DependentUpon>DirectoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DiscountsForm.resx">
+      <DependentUpon>DiscountsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditBookingForm.resx">
       <DependentUpon>EditBookingForm.cs</DependentUpon>
