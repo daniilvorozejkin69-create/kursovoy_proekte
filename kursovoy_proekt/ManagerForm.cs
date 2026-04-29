@@ -56,11 +56,13 @@ namespace kursovoy_proekt
             buttonDiscounts.MouseLeave += (s, e) => buttonDiscounts.BackColor = Color.FromArgb(155, 89, 182);
 
             // Эффекты для кнопки ВЫХОДА
-            buttonExit.MouseEnter += (s, e) => {
+            buttonExit.MouseEnter += (s, e) =>
+            {
                 buttonExit.BackColor = Color.FromArgb(220, 80, 80);
                 buttonExit.ForeColor = Color.White;
             };
-            buttonExit.MouseLeave += (s, e) => {
+            buttonExit.MouseLeave += (s, e) =>
+            {
                 buttonExit.BackColor = Color.Transparent;
                 buttonExit.ForeColor = Color.FromArgb(220, 80, 80);
             };

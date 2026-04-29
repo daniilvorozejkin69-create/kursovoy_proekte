@@ -416,58 +416,58 @@ namespace kursovoy_proekt
         }
 
         private void LoadFilterComboBoxes()
-{
-    try
-    {
-        using (var connection = DatabaseConnection.GetConnection())
         {
-            connection.Open();
-
-            // Загрузка статусов
-            if (comboBoxFilterStatus.Items.Count == 0)
+            try
             {
-                comboBoxFilterStatus.Items.Clear();
-                comboBoxFilterStatus.Items.Add("Все статусы");
-                comboBoxFilterStatus.Items.Add("Ожидание");
-                comboBoxFilterStatus.Items.Add("Подтверждено");
-                comboBoxFilterStatus.Items.Add("Отменено");
-                comboBoxFilterStatus.Items.Add("Завершено");
-                comboBoxFilterStatus.Items.Add("Истекло");
-                comboBoxFilterStatus.SelectedIndex = 0;
-            }
-
-            // Загрузка домов
-            if (comboBoxFilterHouse.Items.Count == 0)
-            {
-                comboBoxFilterHouse.Items.Clear();
-                comboBoxFilterHouse.Items.Add("Все дома");
-
-                string housesQuery = "SELECT h.id, CONCAT(h.name, ' (', hc.class, ')') as display FROM house h JOIN home_class hc ON h.home_class_id = hc.id ORDER BY h.name";
-                using (var cmd = new MySqlCommand(housesQuery, connection))
-                using (var reader = cmd.ExecuteReader())
+                using (var connection = DatabaseConnection.GetConnection())
                 {
-                    while (reader.Read())
+                    connection.Open();
+
+                    // Загрузка статусов
+                    if (comboBoxFilterStatus.Items.Count == 0)
                     {
-                        comboBoxFilterHouse.Items.Add(new HouseData
+                        comboBoxFilterStatus.Items.Clear();
+                        comboBoxFilterStatus.Items.Add("Все статусы");
+                        comboBoxFilterStatus.Items.Add("Ожидание");
+                        comboBoxFilterStatus.Items.Add("Подтверждено");
+                        comboBoxFilterStatus.Items.Add("Отменено");
+                        comboBoxFilterStatus.Items.Add("Завершено");
+                        comboBoxFilterStatus.Items.Add("Истекло");
+                        comboBoxFilterStatus.SelectedIndex = 0;
+                    }
+
+                    // Загрузка домов
+                    if (comboBoxFilterHouse.Items.Count == 0)
+                    {
+                        comboBoxFilterHouse.Items.Clear();
+                        comboBoxFilterHouse.Items.Add("Все дома");
+
+                        string housesQuery = "SELECT h.id, CONCAT(h.name, ' (', hc.class, ')') as display FROM house h JOIN home_class hc ON h.home_class_id = hc.id ORDER BY h.name";
+                        using (var cmd = new MySqlCommand(housesQuery, connection))
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            Id = reader.GetInt32("id"),
-                            Name = reader.GetString("display"),
-                            Class = "", 
-                            Capacity = 0,
-                            PricePerDay = 0
-                        });
+                            while (reader.Read())
+                            {
+                                comboBoxFilterHouse.Items.Add(new HouseData
+                                {
+                                    Id = reader.GetInt32("id"),
+                                    Name = reader.GetString("display"),
+                                    Class = "",
+                                    Capacity = 0,
+                                    PricePerDay = 0
+                                });
+                            }
+                        }
+                        comboBoxFilterHouse.SelectedIndex = 0;
                     }
                 }
-                comboBoxFilterHouse.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки фильтров: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show($"Ошибка загрузки фильтров: {ex.Message}", "Ошибка",
-            MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
-}
 
         private string GetStatusFromDisplay(string displayStatus)
         {

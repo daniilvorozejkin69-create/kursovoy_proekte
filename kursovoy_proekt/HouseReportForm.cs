@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace kursovoy_proekt

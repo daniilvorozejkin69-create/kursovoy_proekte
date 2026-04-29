@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Drawing;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
 using System.Text;
+using System.Windows.Forms;
 
 namespace kursovoy_proekt
 {

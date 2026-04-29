@@ -1,14 +1,11 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace kursovoy_proekt
 {

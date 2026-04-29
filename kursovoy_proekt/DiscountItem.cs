@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace kursovoy_proekt
+﻿namespace kursovoy_proekt
 {
     public class DiscountItem
     {

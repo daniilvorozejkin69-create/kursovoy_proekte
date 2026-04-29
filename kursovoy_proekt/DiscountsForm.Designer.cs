@@ -42,6 +42,11 @@
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
             this.dataGridViewDiscounts = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MinDays = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelEdit = new System.Windows.Forms.Panel();
             this.labelEditTitle = new System.Windows.Forms.Label();
             this.labelName = new System.Windows.Forms.Label();
@@ -58,11 +63,6 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MinDays = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelHeader.SuspendLayout();
             this.panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDiscounts)).BeginInit();
@@ -78,7 +78,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(814, 60);
+            this.panelHeader.Size = new System.Drawing.Size(798, 60);
             this.panelHeader.TabIndex = 1;
             // 
             // labelHeader
@@ -89,7 +89,7 @@
             this.labelHeader.Location = new System.Drawing.Point(0, 0);
             this.labelHeader.Name = "labelHeader";
             this.labelHeader.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.labelHeader.Size = new System.Drawing.Size(814, 60);
+            this.labelHeader.Size = new System.Drawing.Size(798, 60);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "💎 Управление скидками";
             this.labelHeader.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -102,7 +102,7 @@
             this.panelContent.Location = new System.Drawing.Point(0, 60);
             this.panelContent.Name = "panelContent";
             this.panelContent.Padding = new System.Windows.Forms.Padding(20);
-            this.panelContent.Size = new System.Drawing.Size(814, 548);
+            this.panelContent.Size = new System.Drawing.Size(798, 551);
             this.panelContent.TabIndex = 0;
             // 
             // dataGridViewDiscounts
@@ -127,15 +127,56 @@
             this.Type,
             this.MinDays});
             this.dataGridViewDiscounts.EnableHeadersVisualStyles = false;
-            this.dataGridViewDiscounts.Location = new System.Drawing.Point(12, 20);
+            this.dataGridViewDiscounts.Location = new System.Drawing.Point(20, 20);
             this.dataGridViewDiscounts.MultiSelect = false;
             this.dataGridViewDiscounts.Name = "dataGridViewDiscounts";
             this.dataGridViewDiscounts.ReadOnly = true;
             this.dataGridViewDiscounts.RowHeadersVisible = false;
             this.dataGridViewDiscounts.RowTemplate.Height = 30;
             this.dataGridViewDiscounts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewDiscounts.Size = new System.Drawing.Size(448, 520);
+            this.dataGridViewDiscounts.Size = new System.Drawing.Size(450, 520);
             this.dataGridViewDiscounts.TabIndex = 0;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "ID";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            this.Id.Width = 40;
+            // 
+            // Name
+            // 
+            this.Name.HeaderText = "Название скидки";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            this.Name.Width = 180;
+            // 
+            // Percent
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Format = "N0";
+            this.Percent.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Percent.HeaderText = "%";
+            this.Percent.Name = "Percent";
+            this.Percent.ReadOnly = true;
+            this.Percent.Width = 60;
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Тип";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            this.Type.Width = 110;
+            // 
+            // MinDays
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.MinDays.DefaultCellStyle = dataGridViewCellStyle3;
+            this.MinDays.HeaderText = "Мин. дней";
+            this.MinDays.Name = "MinDays";
+            this.MinDays.ReadOnly = true;
+            this.MinDays.Width = 80;
             // 
             // panelEdit
             // 
@@ -351,55 +392,13 @@
             this.buttonAdd.Text = "➕ Новая скидка";
             this.buttonAdd.UseVisualStyleBackColor = false;
             // 
-            // Id
-            // 
-            this.Id.HeaderText = "ID";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            this.Id.Width = 40;
-            // 
-            // Name
-            // 
-            this.Name.HeaderText = "Название скидки";
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
-            this.Name.Width = 180;
-            // 
-            // Percent
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Format = "N0";
-            this.Percent.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Percent.HeaderText = "%";
-            this.Percent.Name = "Percent";
-            this.Percent.ReadOnly = true;
-            this.Percent.Width = 60;
-            // 
-            // Type
-            // 
-            this.Type.HeaderText = "Тип";
-            this.Type.Name = "Type";
-            this.Type.ReadOnly = true;
-            this.Type.Width = 110;
-            // 
-            // MinDays
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.MinDays.DefaultCellStyle = dataGridViewCellStyle3;
-            this.MinDays.FillWeight = 120F;
-            this.MinDays.HeaderText = "Мин. дней";
-            this.MinDays.Name = "MinDays";
-            this.MinDays.ReadOnly = true;
-            this.MinDays.Width = 90;
-            // 
             // DiscountsForm
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
-            this.ClientSize = new System.Drawing.Size(814, 608);
+            this.ClientSize = new System.Drawing.Size(798, 611);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelHeader);
-            this.Name = "DiscountsForm";
+           //this.Name = "DiscountsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Управление скидками";
             this.panelHeader.ResumeLayout(false);

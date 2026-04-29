@@ -1,14 +1,11 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Word = Microsoft.Office.Interop.Word;

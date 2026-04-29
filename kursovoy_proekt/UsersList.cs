@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace kursovoy_proekt
 {
