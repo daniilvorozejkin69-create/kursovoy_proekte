@@ -100,7 +100,7 @@ namespace kursovoy_proekt
 
         private void ButtonReportHouse_Click(object sender, EventArgs e)
         {
-            RevenueReport revenueReport = new RevenueReport();
+            HouseAnalyticsForm revenueReport = new HouseAnalyticsForm();
             revenueReport.ShowDialog();
         }
 
