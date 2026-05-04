@@ -47,6 +47,7 @@
             this.panelSeparator = new System.Windows.Forms.Panel();
             this.labelUserInfo = new System.Windows.Forms.Label();
             this.labelWelcome = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panelContent.SuspendLayout();
@@ -95,6 +96,7 @@
             // panelContent
             // 
             this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
+            this.panelContent.Controls.Add(this.button1);
             this.panelContent.Controls.Add(this.buttonExit);
             this.panelContent.Controls.Add(this.buttonReport);
             this.panelContent.Controls.Add(this.buttonDirectories);
@@ -107,7 +109,7 @@
             this.panelContent.Location = new System.Drawing.Point(0, 93);
             this.panelContent.Name = "panelContent";
             this.panelContent.Padding = new System.Windows.Forms.Padding(30);
-            this.panelContent.Size = new System.Drawing.Size(900, 459);
+            this.panelContent.Size = new System.Drawing.Size(900, 530);
             this.panelContent.TabIndex = 2;
             // 
             // buttonExit
@@ -117,7 +119,7 @@
             this.buttonExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExit.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.buttonExit.ForeColor = System.Drawing.Color.White;
-            this.buttonExit.Location = new System.Drawing.Point(30, 370);
+            this.buttonExit.Location = new System.Drawing.Point(30, 442);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(840, 70);
             this.buttonExit.TabIndex = 7;
@@ -135,7 +137,7 @@
             this.buttonReport.Name = "buttonReport";
             this.buttonReport.Size = new System.Drawing.Size(840, 70);
             this.buttonReport.TabIndex = 6;
-            this.buttonReport.Text = "📊 ОТЧЁТ ПО ВЫРУЧКЕ";
+            this.buttonReport.Text = "📊 РЕЗЕРВНОЕ КОПИРОВАНИЕ БД";
             this.buttonReport.UseVisualStyleBackColor = false;
             // 
             // buttonDirectories
@@ -211,11 +213,25 @@
             this.labelWelcome.TabIndex = 0;
             this.labelWelcome.Text = "Добро пожаловать,";
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(30, 366);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(840, 70);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "📊 ИМПОРТ И ЭКСПОРТ";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 552);
+            this.ClientSize = new System.Drawing.Size(900, 623);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelGreenLine);
             this.Controls.Add(this.panelHeader);
@@ -234,5 +250,7 @@
             this.ResumeLayout(false);
 
         }
+
+        private System.Windows.Forms.Button button1;
     }
 }

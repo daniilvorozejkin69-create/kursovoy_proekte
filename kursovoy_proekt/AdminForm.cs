@@ -157,7 +157,7 @@ namespace kursovoy_proekt
         {
             try
             {
-                HouseReportForm reportForm = new HouseReportForm();
+                BackupForm reportForm = new BackupForm();
                 reportForm.Show();
                 // НЕ ЗАКРЫВАЕМ AdminForm - просто открываем поверх
                 // this.Hide(); // можно Hide, но не Close!

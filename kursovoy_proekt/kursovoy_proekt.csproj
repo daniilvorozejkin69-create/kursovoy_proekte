@@ -164,6 +164,12 @@
     <Compile Include="AdminForm.Designer.cs">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BackupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BackupForm.Designer.cs">
+      <DependentUpon>BackupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BookingDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -240,6 +246,12 @@
     </Compile>
     <Compile Include="HousList.Designer.cs">
       <DependentUpon>HousList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportExportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExportForm.Designer.cs">
+      <DependentUpon>ImportExportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Order.cs">
       <SubType>Form</SubType>
@@ -323,6 +335,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BackupForm.resx">
+      <DependentUpon>BackupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BookingDetailsForm.resx">
       <DependentUpon>BookingDetailsForm.cs</DependentUpon>

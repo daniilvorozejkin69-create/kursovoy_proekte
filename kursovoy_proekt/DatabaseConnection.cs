@@ -4,11 +4,21 @@ namespace kursovoy_proekt
 {
     public static class DatabaseConnection
     {
-        public static string ConnectionString { get; } = "Server=localhost;Database=hotel_management;Uid=root;Pwd=Root123;";
+        public static string ConnectionString { get; private set; } = "Server=localhost;Database=hotel_management;Uid=root;Pwd=Root123;";
+
+        public static string GetConnectionString()
+        {
+            return ConnectionString;
+        }
 
         public static MySqlConnection GetConnection()
         {
             return new MySqlConnection(ConnectionString);
+        }
+
+        public static void UpdateConnectionString(string newConnectionString)
+        {
+            ConnectionString = newConnectionString;
         }
 
         public static bool TestConnection()

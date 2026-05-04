@@ -34,8 +34,6 @@
         private System.Windows.Forms.TextBox textBoxAddress;
         private System.Windows.Forms.Label labelHireDate;
         private System.Windows.Forms.DateTimePicker dateTimePickerHireDate;
-        private System.Windows.Forms.Label labelSalary;
-        private System.Windows.Forms.TextBox textBoxSalary;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.ComboBox comboBoxStatus;
 
@@ -67,9 +65,9 @@
             this.pictureBoxPhoto = new System.Windows.Forms.PictureBox();
             this.labelPhoto = new System.Windows.Forms.Label();
             this.panelButtons = new System.Windows.Forms.Panel();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonFire = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonFire = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.labelFIO = new System.Windows.Forms.Label();
             this.textBoxFIO = new System.Windows.Forms.TextBox();
             this.labelPosition = new System.Windows.Forms.Label();
@@ -84,11 +82,11 @@
             this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.labelHireDate = new System.Windows.Forms.Label();
             this.dateTimePickerHireDate = new System.Windows.Forms.DateTimePicker();
-            this.labelSalary = new System.Windows.Forms.Label();
-            this.textBoxSalary = new System.Windows.Forms.TextBox();
             this.labelStatus = new System.Windows.Forms.Label();
             this.comboBoxStatus = new System.Windows.Forms.ComboBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.labelSalary = new System.Windows.Forms.Label();
+            this.textBoxSalary = new System.Windows.Forms.TextBox();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panelContent.SuspendLayout();
@@ -242,20 +240,19 @@
             this.panelButtons.Size = new System.Drawing.Size(640, 70);
             this.panelButtons.TabIndex = 2;
             // 
-            // buttonCancel
+            // buttonSave
             // 
-            this.buttonCancel.BackColor = System.Drawing.Color.Transparent;
-            this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.buttonCancel.FlatAppearance.BorderSize = 2;
-            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.buttonCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.buttonCancel.Location = new System.Drawing.Point(410, 10);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(150, 50);
-            this.buttonCancel.TabIndex = 20;
-            this.buttonCancel.Text = "ОТМЕНА";
-            this.buttonCancel.UseVisualStyleBackColor = false;
+            this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonSave.FlatAppearance.BorderSize = 0;
+            this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSave.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonSave.ForeColor = System.Drawing.Color.White;
+            this.buttonSave.Location = new System.Drawing.Point(70, 10);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(150, 50);
+            this.buttonSave.TabIndex = 18;
+            this.buttonSave.Text = "СОХРАНИТЬ";
+            this.buttonSave.UseVisualStyleBackColor = false;
             // 
             // buttonFire
             // 
@@ -272,19 +269,20 @@
             this.buttonFire.UseVisualStyleBackColor = false;
             this.buttonFire.Visible = false;
             // 
-            // buttonSave
+            // buttonCancel
             // 
-            this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
-            this.buttonSave.FlatAppearance.BorderSize = 0;
-            this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSave.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.buttonSave.ForeColor = System.Drawing.Color.White;
-            this.buttonSave.Location = new System.Drawing.Point(70, 10);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(150, 50);
-            this.buttonSave.TabIndex = 18;
-            this.buttonSave.Text = "СОХРАНИТЬ";
-            this.buttonSave.UseVisualStyleBackColor = false;
+            this.buttonCancel.BackColor = System.Drawing.Color.Transparent;
+            this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.buttonCancel.FlatAppearance.BorderSize = 2;
+            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCancel.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.buttonCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.buttonCancel.Location = new System.Drawing.Point(410, 10);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(150, 50);
+            this.buttonCancel.TabIndex = 20;
+            this.buttonCancel.Text = "ОТМЕНА";
+            this.buttonCancel.UseVisualStyleBackColor = false;
             // 
             // labelFIO
             // 
@@ -417,26 +415,6 @@
             this.dateTimePickerHireDate.Size = new System.Drawing.Size(200, 25);
             this.dateTimePickerHireDate.TabIndex = 13;
             // 
-            // labelSalary
-            // 
-            this.labelSalary.AutoSize = true;
-            this.labelSalary.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.labelSalary.Location = new System.Drawing.Point(630, 230);
-            this.labelSalary.Name = "labelSalary";
-            this.labelSalary.Size = new System.Drawing.Size(71, 19);
-            this.labelSalary.TabIndex = 14;
-            this.labelSalary.Text = "Зарплата:";
-            // 
-            // textBoxSalary
-            // 
-            this.textBoxSalary.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBoxSalary.Location = new System.Drawing.Point(630, 255);
-            this.textBoxSalary.Name = "textBoxSalary";
-            this.textBoxSalary.Size = new System.Drawing.Size(150, 25);
-            this.textBoxSalary.TabIndex = 15;
-            this.textBoxSalary.Text = "0.00";
-            this.textBoxSalary.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
@@ -465,6 +443,26 @@
             this.openFileDialog.Filter = "Изображения|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
             this.openFileDialog.Title = "Выберите фото сотрудника";
             // 
+            // labelSalary
+            // 
+            this.labelSalary.AutoSize = true;
+            this.labelSalary.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.labelSalary.Location = new System.Drawing.Point(630, 230);
+            this.labelSalary.Name = "labelSalary";
+            this.labelSalary.Size = new System.Drawing.Size(71, 19);
+            this.labelSalary.TabIndex = 14;
+            this.labelSalary.Text = "Зарплата:";
+            // 
+            // textBoxSalary
+            // 
+            this.textBoxSalary.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBoxSalary.Location = new System.Drawing.Point(630, 255);
+            this.textBoxSalary.Name = "textBoxSalary";
+            this.textBoxSalary.Size = new System.Drawing.Size(150, 25);
+            this.textBoxSalary.TabIndex = 15;
+            this.textBoxSalary.Text = "0.00";
+            this.textBoxSalary.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // AddStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -490,5 +488,8 @@
             this.ResumeLayout(false);
 
         }
+
+        private System.Windows.Forms.Label labelSalary;
+        private System.Windows.Forms.TextBox textBoxSalary;
     }
 }
