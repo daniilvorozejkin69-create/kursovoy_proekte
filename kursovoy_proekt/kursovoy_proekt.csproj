@@ -375,6 +375,9 @@
     <EmbeddedResource Include="HousList.resx">
       <DependentUpon>HousList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ImportExportForm.resx">
+      <DependentUpon>ImportExportForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReceiptForm.resx">
       <DependentUpon>ReceiptForm.cs</DependentUpon>
     </EmbeddedResource>

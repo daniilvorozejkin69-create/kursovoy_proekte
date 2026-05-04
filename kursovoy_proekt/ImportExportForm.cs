@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -33,7 +34,8 @@ namespace kursovoy_proekt
         {
             if (string.IsNullOrWhiteSpace(textBoxExportPath.Text))
             {
-                MessageBox.Show("Укажите путь для сохранения.", "Внимание");
+                MessageBox.Show("Укажите путь для сохранения.", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -43,7 +45,8 @@ namespace kursovoy_proekt
                 ExportToCSV(textBoxExportPath.Text);
                 Cursor = Cursors.Default;
 
-                MessageBox.Show($"Данные экспортированы в CSV!\n{textBoxExportPath.Text}", "Успех");
+                MessageBox.Show($"Данные успешно экспортированы в CSV!\n{textBoxExportPath.Text}", "Готово",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 if (File.Exists(textBoxExportPath.Text))
                     System.Diagnostics.Process.Start(textBoxExportPath.Text);
@@ -51,7 +54,8 @@ namespace kursovoy_proekt
             catch (Exception ex)
             {
                 Cursor = Cursors.Default;
-                MessageBox.Show($"Ошибка экспорта: {ex.Message}", "Ошибка");
+                MessageBox.Show($"Ошибка экспорта:\n{ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -59,7 +63,8 @@ namespace kursovoy_proekt
         {
             if (string.IsNullOrWhiteSpace(textBoxExportPath.Text))
             {
-                MessageBox.Show("Укажите путь для сохранения.", "Внимание");
+                MessageBox.Show("Укажите путь для сохранения.", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -71,7 +76,8 @@ namespace kursovoy_proekt
                 ExportToExcel(excelPath);
 
                 Cursor = Cursors.Default;
-                MessageBox.Show($"Данные экспортированы в Excel!\n{excelPath}", "Успех");
+                MessageBox.Show($"Данные успешно экспортированы в Excel!\n{excelPath}", "Готово",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 if (File.Exists(excelPath))
                     System.Diagnostics.Process.Start(excelPath);
@@ -79,7 +85,8 @@ namespace kursovoy_proekt
             catch (Exception ex)
             {
                 Cursor = Cursors.Default;
-                MessageBox.Show($"Ошибка экспорта в Excel: {ex.Message}", "Ошибка");
+                MessageBox.Show($"Ошибка экспорта в Excel:\n{ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -96,7 +103,7 @@ namespace kursovoy_proekt
                 {
                     using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
                     {
-                        // Заголовки
+                        // Запись заголовков
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
                             writer.Write($"\"{reader.GetName(i)}\"");
@@ -104,7 +111,7 @@ namespace kursovoy_proekt
                         }
                         writer.WriteLine();
 
-                        // Данные
+                        // Запись данных
                         while (reader.Read())
                         {
                             for (int i = 0; i < reader.FieldCount; i++)
@@ -133,13 +140,14 @@ namespace kursovoy_proekt
                 {
                     using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
                     {
-                        writer.WriteLine("<?xml version=\"1.0\"?>");
+                        // Заголовок Excel XML
+                        writer.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
                         writer.WriteLine("<?mso-application progid=\"Excel.Sheet\"?>");
                         writer.WriteLine("<Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"");
                         writer.WriteLine(" xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\">");
                         writer.WriteLine("<Worksheet ss:Name=\"Export\"><Table>");
 
-                        // Заголовки
+                        // Заголовки колонок
                         writer.WriteLine("<Row>");
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
@@ -156,7 +164,8 @@ namespace kursovoy_proekt
                                 string val = reader.IsDBNull(i) ? "" : reader[i].ToString()
                                     .Replace("&", "&amp;")
                                     .Replace("<", "&lt;")
-                                    .Replace(">", "&gt;");
+                                    .Replace(">", "&gt;")
+                                    .Replace("\"", "&quot;");
                                 writer.WriteLine($"<Cell><Data ss:Type=\"String\">{val}</Data></Cell>");
                             }
                             writer.WriteLine("</Row>");
@@ -186,33 +195,52 @@ namespace kursovoy_proekt
         {
             if (string.IsNullOrWhiteSpace(textBoxImportPath.Text))
             {
-                MessageBox.Show("Выберите файл для импорта.", "Внимание");
+                MessageBox.Show("Выберите файл для импорта.", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!File.Exists(textBoxImportPath.Text))
             {
-                MessageBox.Show("Файл не найден.", "Ошибка");
+                MessageBox.Show("Файл не найден.", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            string tableName = GetTableName(comboBoxImportTable.SelectedIndex);
+
+            var result = MessageBox.Show(
+                $"Импортировать данные в таблицу «{tableName}»?\n\n" +
+                "ВНИМАНИЕ! Все существующие данные в этой таблице будут удалены перед импортом!",
+                "Подтверждение импорта",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes) return;
 
             try
             {
                 Cursor = Cursors.WaitCursor;
-                int count = ImportFromCSV(textBoxImportPath.Text);
-                Cursor = Cursors.Default;
+                labelImportStatus.Text = "Импорт...";
+                labelImportStatus.ForeColor = Color.FromArgb(100, 100, 100);
+                Application.DoEvents();
 
+                int count = ImportFromCSV(textBoxImportPath.Text);
+
+                Cursor = Cursors.Default;
                 labelImportStatus.Text = $"✅ Импортировано: {count} записей";
                 labelImportStatus.ForeColor = Color.FromArgb(46, 139, 87);
 
-                MessageBox.Show($"Успешно импортировано {count} записей!", "Успех");
+                MessageBox.Show($"Успешно импортировано {count} записей в таблицу «{tableName}»!", "Готово",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 Cursor = Cursors.Default;
                 labelImportStatus.Text = "❌ Ошибка импорта";
                 labelImportStatus.ForeColor = Color.FromArgb(220, 80, 80);
-                MessageBox.Show($"Ошибка импорта: {ex.Message}", "Ошибка");
+                MessageBox.Show($"Ошибка импорта:\n{ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -222,12 +250,12 @@ namespace kursovoy_proekt
             string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
             int count = 0;
 
-            if (lines.Length < 2) return 0;
+            if (lines.Length < 2)
+                throw new Exception("Файл пуст или содержит только заголовки.");
 
-            // Первая строка - заголовки
-            string[] headers = lines[0].Split(';');
+            string[] headers = ParseCSVLine(lines[0]);
             for (int i = 0; i < headers.Length; i++)
-                headers[i] = headers[i].Trim().Trim('"');
+                headers[i] = headers[i].Trim().Trim('"').Trim();
 
             using (var connection = DatabaseConnection.GetConnection())
             {
@@ -236,42 +264,112 @@ namespace kursovoy_proekt
                 {
                     try
                     {
+                        // Отключаем проверку внешних ключей
+                        using (var cmdFK = new MySqlCommand("SET FOREIGN_KEY_CHECKS = 0", connection, transaction))
+                        {
+                            cmdFK.ExecuteNonQuery();
+                        }
+
+                        // Очищаем таблицу
+                        using (var cmdDelete = new MySqlCommand($"DELETE FROM {tableName}", connection, transaction))
+                        {
+                            cmdDelete.ExecuteNonQuery();
+                        }
+
+                        // Сбрасываем AUTO_INCREMENT
+                        try
+                        {
+                            using (var cmdReset = new MySqlCommand($"ALTER TABLE {tableName} AUTO_INCREMENT = 1", connection, transaction))
+                            {
+                                cmdReset.ExecuteNonQuery();
+                            }
+                        }
+                        catch { }
+
+                        // Получаем список колонок и их типы из БД
+                        Dictionary<string, string> tableColumns = new Dictionary<string, string>();
+                        using (var cmdCols = new MySqlCommand($"SHOW COLUMNS FROM {tableName}", connection, transaction))
+                        using (var reader = cmdCols.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string colName = reader.GetString(0).ToLower();
+                                string colType = reader.GetString(1).ToLower();
+                                tableColumns[colName] = colType;
+                            }
+                        }
+
+                        // Импортируем данные
                         for (int i = 1; i < lines.Length; i++)
                         {
                             if (string.IsNullOrWhiteSpace(lines[i])) continue;
 
                             string[] values = ParseCSVLine(lines[i]);
+                            if (values.Length == 0) continue;
 
-                            // Строим INSERT запрос
+                            List<string> validColumns = new List<string>();
+                            List<object> validValues = new List<object>();
+
+                            for (int j = 0; j < headers.Length && j < values.Length; j++)
+                            {
+                                string colName = headers[j].ToLower().Trim();
+                                if (tableColumns.ContainsKey(colName))
+                                {
+                                    string rawValue = values[j].Trim();
+                                    object convertedValue = ConvertValue(rawValue, tableColumns[colName]);
+
+                                    validColumns.Add(colName);
+                                    validValues.Add(convertedValue);
+                                }
+                            }
+
+                            if (validColumns.Count == 0) continue;
+
                             StringBuilder sql = new StringBuilder();
                             sql.Append($"INSERT INTO {tableName} (");
-                            sql.Append(string.Join(", ", headers));
+                            sql.Append(string.Join(", ", validColumns));
                             sql.Append(") VALUES (");
 
-                            for (int j = 0; j < values.Length; j++)
-                            {
-                                if (j > 0) sql.Append(", ");
-                                sql.Append($"@p{j}");
-                            }
+                            List<string> paramNames = new List<string>();
+                            for (int j = 0; j < validValues.Count; j++)
+                                paramNames.Add($"@p{j}");
+                            sql.Append(string.Join(", ", paramNames));
                             sql.Append(")");
 
                             using (var cmd = new MySqlCommand(sql.ToString(), connection, transaction))
                             {
-                                for (int j = 0; j < values.Length && j < headers.Length; j++)
+                                for (int j = 0; j < validValues.Count; j++)
                                 {
-                                    cmd.Parameters.AddWithValue($"@p{j}", values[j].Trim());
+                                    object val = validValues[j] ?? DBNull.Value;
+                                    cmd.Parameters.AddWithValue($"@p{j}", val);
                                 }
                                 cmd.ExecuteNonQuery();
                                 count++;
                             }
                         }
 
+                        // Включаем проверку внешних ключей обратно
+                        using (var cmdFK = new MySqlCommand("SET FOREIGN_KEY_CHECKS = 1", connection, transaction))
+                        {
+                            cmdFK.ExecuteNonQuery();
+                        }
+
                         transaction.Commit();
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         transaction.Rollback();
-                        throw;
+
+                        try
+                        {
+                            using (var cmdFK = new MySqlCommand("SET FOREIGN_KEY_CHECKS = 1", connection))
+                            {
+                                cmdFK.ExecuteNonQuery();
+                            }
+                        }
+                        catch { }
+
+                        throw new Exception($"Ошибка при импорте (строка {count + 2}): {ex.Message}", ex);
                     }
                 }
             }
@@ -279,9 +377,76 @@ namespace kursovoy_proekt
             return count;
         }
 
+        /// <summary>
+        /// Конвертирует строковое значение в нужный тип в зависимости от типа колонки MySQL
+        /// </summary>
+        private object ConvertValue(string rawValue, string columnType)
+        {
+            if (string.IsNullOrEmpty(rawValue) || rawValue == "NULL" || rawValue == "null")
+                return DBNull.Value;
+
+            // Дата и время
+            if (columnType.Contains("date") || columnType.Contains("timestamp"))
+            {
+                // Пробуем разные форматы дат
+                string[] formats = {
+            "dd.MM.yyyy H:mm:ss",
+            "dd.MM.yyyy HH:mm:ss",
+            "dd.MM.yyyy",
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd",
+            "dd/MM/yyyy",
+            "MM/dd/yyyy",
+            "dd.MM.yyyy H:mm",
+            "yyyy-MM-dd H:mm:ss"
+        };
+
+                foreach (string format in formats)
+                {
+                    if (DateTime.TryParseExact(rawValue, format, null, System.Globalization.DateTimeStyles.None, out DateTime date))
+                    {
+                        if (columnType.Contains("timestamp") || columnType.Contains("datetime"))
+                            return date.ToString("yyyy-MM-dd HH:mm:ss");
+                        else
+                            return date.ToString("yyyy-MM-dd");
+                    }
+                }
+
+                // Если не подошёл ни один формат - пробуем стандартный парсинг
+                if (DateTime.TryParse(rawValue, out DateTime dt))
+                    return dt.ToString("yyyy-MM-dd HH:mm:ss");
+
+                // Если совсем не парсится - возвращаем NULL
+                return DBNull.Value;
+            }
+
+            // Десятичные числа (decimal)
+            if (columnType.Contains("decimal") || columnType.Contains("float") || columnType.Contains("double"))
+            {
+                rawValue = rawValue.Replace(",", ".").Replace(" ", "").Replace("₽", "").Replace("руб", "").Trim();
+                if (decimal.TryParse(rawValue, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal dec))
+                    return dec;
+                return DBNull.Value;
+            }
+
+            // Целые числа
+            if (columnType.Contains("int") || columnType.Contains("tinyint") || columnType.Contains("smallint") || columnType.Contains("bigint"))
+            {
+                if (int.TryParse(rawValue, out int intVal))
+                    return intVal;
+                return DBNull.Value;
+            }
+
+            // Строки
+            return rawValue;
+        }
+
+        /// <summary>
+        /// Парсинг строки CSV с поддержкой кавычек
+        /// </summary>
         private string[] ParseCSVLine(string line)
         {
-            var result = new System.Collections.Generic.List<string>();
+            var result = new List<string>();
             bool inQuotes = false;
             StringBuilder current = new StringBuilder();
 
@@ -293,6 +458,7 @@ namespace kursovoy_proekt
                 {
                     if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
                     {
+                        // Экранированная кавычка
                         current.Append('"');
                         i++;
                     }
@@ -327,6 +493,9 @@ namespace kursovoy_proekt
             return "client";
         }
 
-        private void buttonClose_Click(object sender, EventArgs e) => Close();
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

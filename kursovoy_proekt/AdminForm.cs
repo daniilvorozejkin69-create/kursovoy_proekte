@@ -184,6 +184,12 @@ namespace kursovoy_proekt
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ImportExportForm importExportForm = new ImportExportForm();
+            importExportForm.ShowDialog();
+        }
+
         // Убираем OnFormClosing - он не нужен
     }
 }
