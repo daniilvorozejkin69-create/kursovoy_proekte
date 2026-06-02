@@ -253,6 +253,7 @@
     <Compile Include="ImportExportForm.Designer.cs">
       <DependentUpon>ImportExportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="InactivityHelper.cs" />
     <Compile Include="Order.cs">
       <SubType>Form</SubType>
     </Compile>

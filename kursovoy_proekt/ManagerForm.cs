@@ -109,7 +109,17 @@ namespace kursovoy_proekt
             DiscountsForm discountsForm = new DiscountsForm();
             discountsForm.ShowDialog();
         }
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            InactivityHelper.StartMonitoring(this);
+        }
 
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            InactivityHelper.StopMonitoring();
+        }
         private void ButtonExit_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Вы уверены, что хотите выйти из системы?",

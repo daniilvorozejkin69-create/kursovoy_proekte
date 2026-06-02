@@ -183,6 +183,17 @@ namespace kursovoy_proekt
                 MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            InactivityHelper.StartMonitoring(this);
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            InactivityHelper.StopMonitoring();
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
