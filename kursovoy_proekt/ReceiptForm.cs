@@ -860,5 +860,10 @@ namespace kursovoy_proekt
             if (lastOne >= 2 && lastOne <= 4) return "суток";
             return "суток";
         }
+
+        private void labelQRInfo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -294,7 +294,7 @@
             this.buttonAddClient.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
             this.buttonAddClient.Size = new System.Drawing.Size(400, 70);
             this.buttonAddClient.TabIndex = 0;
-            this.buttonAddClient.Text = "    ➕ ДОБАВИТЬ НОВОГО КЛИЕНТА";
+            this.buttonAddClient.Text = "    ➕ УПРАВЛЕНИЕ ЗАКАЗАМИ";
             this.buttonAddClient.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonAddClient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonAddClient.UseVisualStyleBackColor = false;

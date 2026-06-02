@@ -50,7 +50,7 @@ namespace kursovoy_proekt
         // ===== ОБРАБОТЧИКИ КЛИКОВ =====
         private void buttonAddClient_Click(object sender, EventArgs e)
         {
-            AddClient addClient = new AddClient();
+            OrdersViewForm addClient = new OrdersViewForm();
             addClient.Show();
             this.Hide();
         }

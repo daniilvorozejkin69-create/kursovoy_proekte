@@ -259,6 +259,12 @@
     <Compile Include="Order.Designer.cs">
       <DependentUpon>Order.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrdersViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrdersViewForm.Designer.cs">
+      <DependentUpon>OrdersViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReceiptForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -377,6 +383,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ImportExportForm.resx">
       <DependentUpon>ImportExportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrdersViewForm.resx">
+      <DependentUpon>OrdersViewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReceiptForm.resx">
       <DependentUpon>ReceiptForm.cs</DependentUpon>

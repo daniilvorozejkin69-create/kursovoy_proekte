@@ -126,7 +126,7 @@
             this.labelStayPeriod.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.labelStayPeriod.Location = new System.Drawing.Point(40, 420);
             this.labelStayPeriod.Name = "labelStayPeriod";
-            this.labelStayPeriod.Size = new System.Drawing.Size(135, 19);
+            this.labelStayPeriod.Size = new System.Drawing.Size(130, 19);
             this.labelStayPeriod.TabIndex = 26;
             this.labelStayPeriod.Text = "Период: 1 день(ей)";
             // 
@@ -137,7 +137,7 @@
             this.labelCheckOutDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCheckOutDate.Location = new System.Drawing.Point(250, 390);
             this.labelCheckOutDate.Name = "labelCheckOutDate";
-            this.labelCheckOutDate.Size = new System.Drawing.Size(150, 19);
+            this.labelCheckOutDate.Size = new System.Drawing.Size(165, 19);
             this.labelCheckOutDate.TabIndex = 25;
             this.labelCheckOutDate.Text = "Дата выезда: 02.01.2024";
             // 
@@ -148,7 +148,7 @@
             this.labelCheckInDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCheckInDate.Location = new System.Drawing.Point(40, 390);
             this.labelCheckInDate.Name = "labelCheckInDate";
-            this.labelCheckInDate.Size = new System.Drawing.Size(150, 19);
+            this.labelCheckInDate.Size = new System.Drawing.Size(161, 19);
             this.labelCheckInDate.TabIndex = 24;
             this.labelCheckInDate.Text = "Дата заезда: 01.01.2024";
             // 
@@ -162,6 +162,7 @@
             this.labelQRInfo.TabIndex = 23;
             this.labelQRInfo.Text = "Заказ #00000 от 01.01.2024\r\nСумма: 15 000,00 ₽\r\nКлиент: ФИО\r\n\r\n(QR-код здесь)";
             this.labelQRInfo.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.labelQRInfo.Click += new System.EventHandler(this.labelQRInfo_Click);
             // 
             // labelReceiptDate
             // 
