@@ -15,9 +15,6 @@
         private System.Windows.Forms.Label labelWelcome;
         private System.Windows.Forms.Label labelUserInfo;
         private System.Windows.Forms.Panel panelSeparator;
-
-        // Кнопки
-        private System.Windows.Forms.Button buttonAddUser;
         private System.Windows.Forms.Button buttonEditUser;
         private System.Windows.Forms.Button buttonDirectories;
         private System.Windows.Forms.Button buttonReport;
@@ -39,15 +36,14 @@
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelGreenLine = new System.Windows.Forms.Panel();
             this.panelContent = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.buttonExit = new System.Windows.Forms.Button();
             this.buttonReport = new System.Windows.Forms.Button();
             this.buttonDirectories = new System.Windows.Forms.Button();
             this.buttonEditUser = new System.Windows.Forms.Button();
-            this.buttonAddUser = new System.Windows.Forms.Button();
             this.panelSeparator = new System.Windows.Forms.Panel();
             this.labelUserInfo = new System.Windows.Forms.Label();
             this.labelWelcome = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panelContent.SuspendLayout();
@@ -101,7 +97,6 @@
             this.panelContent.Controls.Add(this.buttonReport);
             this.panelContent.Controls.Add(this.buttonDirectories);
             this.panelContent.Controls.Add(this.buttonEditUser);
-            this.panelContent.Controls.Add(this.buttonAddUser);
             this.panelContent.Controls.Add(this.panelSeparator);
             this.panelContent.Controls.Add(this.labelUserInfo);
             this.panelContent.Controls.Add(this.labelWelcome);
@@ -111,6 +106,22 @@
             this.panelContent.Padding = new System.Windows.Forms.Padding(30);
             this.panelContent.Size = new System.Drawing.Size(900, 530);
             this.panelContent.TabIndex = 2;
+            this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(30, 366);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(840, 70);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "📊 ИМПОРТ И ЭКСПОРТ";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // buttonExit
             // 
@@ -123,7 +134,7 @@
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(840, 70);
             this.buttonExit.TabIndex = 7;
-            this.buttonExit.Text = "🚪 ВЫХОД В ГЛАВНОЕ МЕНЮ";
+            this.buttonExit.Text = "🚪 ВЫХОД";
             this.buttonExit.UseVisualStyleBackColor = false;
             // 
             // buttonReport
@@ -162,26 +173,12 @@
             this.buttonEditUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEditUser.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.buttonEditUser.ForeColor = System.Drawing.Color.White;
-            this.buttonEditUser.Location = new System.Drawing.Point(470, 100);
+            this.buttonEditUser.Location = new System.Drawing.Point(30, 100);
             this.buttonEditUser.Name = "buttonEditUser";
-            this.buttonEditUser.Size = new System.Drawing.Size(400, 70);
+            this.buttonEditUser.Size = new System.Drawing.Size(840, 70);
             this.buttonEditUser.TabIndex = 4;
             this.buttonEditUser.Text = "📋 СПИСОК ПОЛЬЗОВАТЕЛЕЙ";
             this.buttonEditUser.UseVisualStyleBackColor = false;
-            // 
-            // buttonAddUser
-            // 
-            this.buttonAddUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
-            this.buttonAddUser.FlatAppearance.BorderSize = 0;
-            this.buttonAddUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAddUser.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.buttonAddUser.ForeColor = System.Drawing.Color.White;
-            this.buttonAddUser.Location = new System.Drawing.Point(30, 100);
-            this.buttonAddUser.Name = "buttonAddUser";
-            this.buttonAddUser.Size = new System.Drawing.Size(400, 70);
-            this.buttonAddUser.TabIndex = 3;
-            this.buttonAddUser.Text = "➕ ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ";
-            this.buttonAddUser.UseVisualStyleBackColor = false;
             // 
             // panelSeparator
             // 
@@ -212,21 +209,6 @@
             this.labelWelcome.Size = new System.Drawing.Size(183, 25);
             this.labelWelcome.TabIndex = 0;
             this.labelWelcome.Text = "Добро пожаловать,";
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(30, 366);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(840, 70);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "📊 ИМПОРТ И ЭКСПОРТ";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // AdminForm
             // 

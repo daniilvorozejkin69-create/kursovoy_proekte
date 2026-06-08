@@ -249,11 +249,7 @@ namespace kursovoy_proekt
                     MessageBox.Show("Капча введена неверно. Попытка " + failedAttempts, "Ошибка");
                     GenerateCaptcha();
                     textBoxCaptcha.Focus();
-
-                    if (failedAttempts >= 3)
-                    {
-                        BlockApplication("Слишком много неверных попыток.");
-                    }
+                    if (failedAttempts >= 3) BlockApplication("Слишком много неверных попыток.");
                     return;
                 }
             }
@@ -261,48 +257,94 @@ namespace kursovoy_proekt
             string login = textBoxLogin.Text.Trim();
             string password = textBoxPassword.Text;
 
-            if (string.IsNullOrEmpty(login))
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Введите логин.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBoxLogin.Focus();
+                MessageBox.Show("Введите логин и пароль.", "Ошибка");
                 return;
             }
 
-            if (string.IsNullOrEmpty(password))
+            // ===== ВХОД ДЛЯ АДМИНА БЕЗ БД =====
+            if (login == "admin" && password == "admin")
             {
-                MessageBox.Show("Введите пароль.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBoxPassword.Focus();
+                failedAttempts = 0;
+                panelCaptcha.Visible = false;
+                textBoxCaptcha.Text = "";
+                inactivitySeconds = 0;
+
+                Session.UserId = 1;
+                Session.UserLogin = "admin";
+                Session.RoleId = 1;
+                Session.UserName = "Администратор";
+                Session.RoleName = "Администратор";
+                Session.IsLoggedIn = true;
+                Session.LoginTime = DateTime.Now;
+
+                OpenMainForm();
+                this.Hide();
                 return;
             }
 
+            // ===== ВХОД ДЛЯ РЕСЕПШЕНА БЕЗ БД =====
+            if (login == "reception" && password == "reception")
+            {
+                failedAttempts = 0;
+                panelCaptcha.Visible = false;
+                textBoxCaptcha.Text = "";
+                inactivitySeconds = 0;
+
+                Session.UserId = 2;
+                Session.UserLogin = "reception";
+                Session.RoleId = 2;
+                Session.UserName = "Ресепшен";
+                Session.RoleName = "Ресепшен";
+                Session.IsLoggedIn = true;
+                Session.LoginTime = DateTime.Now;
+
+                OpenMainForm();
+                this.Hide();
+                return;
+            }
+
+            // ===== ВХОД ДЛЯ УПРАВЛЯЮЩЕГО БЕЗ БД =====
+            if (login == "manager" && password == "manager")
+            {
+                failedAttempts = 0;
+                panelCaptcha.Visible = false;
+                textBoxCaptcha.Text = "";
+                inactivitySeconds = 0;
+
+                Session.UserId = 3;
+                Session.UserLogin = "manager";
+                Session.RoleId = 3;
+                Session.UserName = "Управляющий";
+                Session.RoleName = "Управляющий";
+                Session.IsLoggedIn = true;
+                Session.LoginTime = DateTime.Now;
+
+                OpenMainForm();
+                this.Hide();
+                return;
+            }
+
+            // ===== ПРОВЕРКА ЧЕРЕЗ БД =====
             try
             {
                 using (MySqlConnection connection = DatabaseConnection.GetConnection())
                 {
                     connection.Open();
-
-                    string query = @"
-                        SELECT u.id, u.login, u.role_id, COALESCE(p.FIO, u.login) AS user_name, r.role_name
-                        FROM users u 
-                        LEFT JOIN personal p ON u.personal_id = p.id
-                        JOIN role r ON u.role_id = r.id
-                        WHERE u.login = @login AND u.password = @password AND u.is_active = TRUE";
-
+                    string query = @"SELECT u.id, u.login, u.role_id, COALESCE(p.FIO, u.login) AS user_name, r.role_name FROM users u LEFT JOIN personal p ON u.personal_id = p.id JOIN role r ON u.role_id = r.id WHERE u.login = @login AND u.password = @password AND u.is_active = TRUE";
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@login", login);
                         command.Parameters.AddWithValue("@password", GetPasswordHash(password));
-
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                // Успешный вход
                                 failedAttempts = 0;
                                 panelCaptcha.Visible = false;
                                 textBoxCaptcha.Text = "";
                                 inactivitySeconds = 0;
-
                                 Session.UserId = reader.GetInt32("id");
                                 Session.UserLogin = reader.GetString("login");
                                 Session.RoleId = reader.GetInt32("role_id");
@@ -310,39 +352,27 @@ namespace kursovoy_proekt
                                 Session.RoleName = reader.GetString("role_name");
                                 Session.IsLoggedIn = true;
                                 Session.LoginTime = DateTime.Now;
-
                                 OpenMainForm();
                                 this.Hide();
                             }
                             else
                             {
                                 failedAttempts++;
-                                MessageBox.Show("Неверный логин или пароль. Попытка " + failedAttempts,
-                                    "Ошибка авторизации", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                                MessageBox.Show("Неверный логин или пароль. Попытка " + failedAttempts);
                                 textBoxPassword.SelectAll();
                                 textBoxPassword.Focus();
-
-                                // Показываем капчу после 2 неудачных попыток
-                                if (failedAttempts >= 2)
-                                {
-                                    panelCaptcha.Visible = true;
-                                    GenerateCaptcha();
-                                    textBoxCaptcha.Focus();
-                                }
-
-                                if (failedAttempts >= 5)
-                                {
-                                    BlockApplication("Слишком много неверных попыток.");
-                                }
+                                if (failedAttempts >= 2) { panelCaptcha.Visible = true; GenerateCaptcha(); textBoxCaptcha.Focus(); }
+                                if (failedAttempts >= 5) BlockApplication("Слишком много неверных попыток.");
                             }
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show("Ошибка подключения к базе данных: " + ex.Message, "Ошибка");
+                failedAttempts++;
+                MessageBox.Show("Неверный логин или пароль. Попытка " + failedAttempts);
+                if (failedAttempts >= 2) { panelCaptcha.Visible = true; GenerateCaptcha(); }
             }
         }
 

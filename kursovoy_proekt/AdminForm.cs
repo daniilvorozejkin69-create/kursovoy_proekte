@@ -26,15 +26,12 @@ namespace kursovoy_proekt
             labelUserInfo.Text = $"{currentUser} ({currentUserRole})";
 
             // Подписка на события кнопок
-            buttonAddUser.Click += ButtonAddUser_Click;
             buttonEditUser.Click += ButtonEditUser_Click;
             buttonDirectories.Click += ButtonDirectories_Click;
             buttonReport.Click += ButtonReport_Click;
             buttonExit.Click += ButtonExit_Click;
 
             // Подписка на события MouseEnter/MouseLeave
-            buttonAddUser.MouseEnter += ButtonAddUser_MouseEnter;
-            buttonAddUser.MouseLeave += ButtonAddUser_MouseLeave;
             buttonEditUser.MouseEnter += ButtonEditUser_MouseEnter;
             buttonEditUser.MouseLeave += ButtonEditUser_MouseLeave;
             buttonDirectories.MouseEnter += ButtonDirectories_MouseEnter;
@@ -55,12 +52,12 @@ namespace kursovoy_proekt
         // Эффекты наведения
         private void ButtonAddUser_MouseEnter(object sender, EventArgs e)
         {
-            buttonAddUser.BackColor = System.Drawing.Color.FromArgb(90, 160, 210);
+
         }
 
         private void ButtonAddUser_MouseLeave(object sender, EventArgs e)
         {
-            buttonAddUser.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
+
         }
 
         private void ButtonEditUser_MouseEnter(object sender, EventArgs e)
@@ -199,6 +196,11 @@ namespace kursovoy_proekt
         {
             ImportExportForm importExportForm = new ImportExportForm();
             importExportForm.ShowDialog();
+        }
+
+        private void panelContent_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
         // Убираем OnFormClosing - он не нужен

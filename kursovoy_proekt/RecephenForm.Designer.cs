@@ -149,7 +149,7 @@
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(300, 60);
             this.buttonExit.TabIndex = 7;
-            this.buttonExit.Text = "🚪 ВЫХОД ИЗ СИСТЕМЫ";
+            this.buttonExit.Text = "🚪 ВЫХОД ";
             this.buttonExit.UseVisualStyleBackColor = false;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             this.buttonExit.MouseEnter += new System.EventHandler(this.ButtonExit_MouseEnter);
