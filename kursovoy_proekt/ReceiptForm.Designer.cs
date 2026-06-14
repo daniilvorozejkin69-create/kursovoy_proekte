@@ -162,7 +162,6 @@
             this.labelQRInfo.TabIndex = 23;
             this.labelQRInfo.Text = "Заказ #00000 от 01.01.2024\r\nСумма: 15 000,00 ₽\r\nКлиент: ФИО\r\n\r\n(QR-код здесь)";
             this.labelQRInfo.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.labelQRInfo.Click += new System.EventHandler(this.labelQRInfo_Click);
             // 
             // labelReceiptDate
             // 

@@ -323,7 +323,7 @@
             this.checkBoxFilterByDate.AutoSize = true;
             this.checkBoxFilterByDate.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.checkBoxFilterByDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.checkBoxFilterByDate.Location = new System.Drawing.Point(20, 85);
+            this.checkBoxFilterByDate.Location = new System.Drawing.Point(25, 61);
             this.checkBoxFilterByDate.Name = "checkBoxFilterByDate";
             this.checkBoxFilterByDate.Size = new System.Drawing.Size(131, 21);
             this.checkBoxFilterByDate.TabIndex = 6;
