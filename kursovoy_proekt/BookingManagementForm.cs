@@ -838,7 +838,9 @@ namespace kursovoy_proekt
                             if (reader.Read())
                             {
                                 // Создаем форму для редактирования
-                                using (EditBookingForm editForm = new EditBookingForm(reader))
+                                int editBookingId = Convert.ToInt32(reader["id"]);
+                                reader.Close();
+                                using (EditBookingForm editForm = new EditBookingForm(bookingId))
                                 {
                                     if (editForm.ShowDialog() == DialogResult.OK)
                                     {

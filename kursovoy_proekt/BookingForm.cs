@@ -76,7 +76,6 @@ namespace kursovoy_proekt
                 {
                     comboBoxClients.Items.Clear();
                     comboBoxClients.DisplayMember = "FIO";
-
                     while (reader.Read())
                     {
                         comboBoxClients.Items.Add(new ClientData
@@ -86,9 +85,7 @@ namespace kursovoy_proekt
                             Passport = reader.GetString("passport_series_number")
                         });
                     }
-
-                    if (comboBoxClients.Items.Count > 0)
-                        comboBoxClients.SelectedIndex = 0;
+                    if (comboBoxClients.Items.Count > 0) comboBoxClients.SelectedIndex = 0;
                 }
             }
         }
@@ -99,10 +96,7 @@ namespace kursovoy_proekt
             DateTime checkOut = dateTimePickerCheckOut?.Value ?? DateTime.Today.AddDays(1);
 
             string query = @"
-                SELECT h.id, 
-                       h.name,
-                       hc.class,
-                       h.capacity,
+                SELECT h.id, h.name, hc.class, h.capacity,
                        CASE 
                            WHEN hc.class = 'Эконом' THEN 2000
                            WHEN hc.class = 'Комфорт' THEN 3500
@@ -113,15 +107,14 @@ namespace kursovoy_proekt
                        END as price_per_day
                 FROM house h 
                 JOIN home_class hc ON h.home_class_id = hc.id 
-                WHERE h.id NOT IN (
+                WHERE h.status = 'available'
+                  AND h.id NOT IN (
                     SELECT DISTINCT b.house_id 
                     FROM booking b 
                     WHERE b.status IN ('pending', 'confirmed')
                       AND b.check_in_date < @check_out 
                       AND b.check_out_date > @check_in
-                    
                     UNION
-                    
                     SELECT DISTINCT ci.house_id 
                     FROM check_in ci 
                     WHERE ci.check_in_date < @check_out 
@@ -140,7 +133,6 @@ namespace kursovoy_proekt
                     {
                         comboBoxHouses.Items.Clear();
                         comboBoxHouses.DisplayMember = "Name";
-
                         while (reader.Read())
                         {
                             comboBoxHouses.Items.Add(new HouseData
@@ -152,9 +144,7 @@ namespace kursovoy_proekt
                                 PricePerDay = reader.GetDecimal("price_per_day")
                             });
                         }
-
-                        if (comboBoxHouses.Items.Count > 0)
-                            comboBoxHouses.SelectedIndex = 0;
+                        if (comboBoxHouses.Items.Count > 0) comboBoxHouses.SelectedIndex = 0;
                     }
                 }
             }
@@ -165,13 +155,9 @@ namespace kursovoy_proekt
             try
             {
                 totalPrice = houseDailyPrice * stayDays;
-                if (labelTotalCost != null)
-                    labelTotalCost.Text = $"{totalPrice:N2} ₽";
+                if (labelTotalCost != null) labelTotalCost.Text = $"{totalPrice:N2} ₽";
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Ошибка расчета: {ex.Message}");
-            }
+            catch (Exception ex) { Console.WriteLine($"Ошибка расчета: {ex.Message}"); }
         }
 
         public void dateTimePickerCheckIn_ValueChanged(object sender, EventArgs e)
@@ -179,34 +165,22 @@ namespace kursovoy_proekt
             try
             {
                 DateTime newCheckIn = dateTimePickerCheckIn.Value.Date;
-                DateTime currentCheckOut = dateTimePickerCheckOut.Value.Date;
-
                 if (dateTimePickerCheckOut != null)
                 {
                     dateTimePickerCheckOut.MinDate = newCheckIn.AddDays(1);
-
-                    if (currentCheckOut < dateTimePickerCheckOut.MinDate)
-                    {
+                    if (dateTimePickerCheckOut.Value.Date < dateTimePickerCheckOut.MinDate)
                         dateTimePickerCheckOut.Value = dateTimePickerCheckOut.MinDate;
-                    }
-
                     if ((dateTimePickerCheckOut.Value.Date - newCheckIn).TotalDays > MAX_STAY_DAYS)
                     {
                         dateTimePickerCheckOut.Value = newCheckIn.AddDays(MAX_STAY_DAYS);
-                        MessageBox.Show($"Максимальная продолжительность бронирования - {MAX_STAY_DAYS} дней.",
-                            "Ограничение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"Максимальная продолжительность - {MAX_STAY_DAYS} дней.", "Ограничение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-
                 CalculateStayDays();
                 ReloadAvailableHouses();
                 UpdateTotalPrice();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при изменении даты заезда: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception ex) { MessageBox.Show($"Ошибка: {ex.Message}"); }
         }
 
         public void dateTimePickerCheckOut_ValueChanged(object sender, EventArgs e)
@@ -215,25 +189,18 @@ namespace kursovoy_proekt
             {
                 DateTime checkIn = dateTimePickerCheckIn.Value.Date;
                 DateTime checkOut = dateTimePickerCheckOut.Value.Date;
-
                 int daysDifference = (int)(checkOut - checkIn).TotalDays;
                 if (daysDifference > MAX_STAY_DAYS)
                 {
                     dateTimePickerCheckOut.Value = checkIn.AddDays(MAX_STAY_DAYS);
-                    MessageBox.Show($"Максимальная продолжительность бронирования - {MAX_STAY_DAYS} дней.",
-                        "Ограничение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Максимальная продолжительность - {MAX_STAY_DAYS} дней.", "Ограничение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-
                 CalculateStayDays();
                 ReloadAvailableHouses();
                 UpdateTotalPrice();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при изменении даты выезда: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception ex) { MessageBox.Show($"Ошибка: {ex.Message}"); }
         }
 
         private void ReloadAvailableHouses()
@@ -246,52 +213,25 @@ namespace kursovoy_proekt
                     LoadAvailableHouses(connection);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка обновления списка домов: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception ex) { MessageBox.Show($"Ошибка обновления: {ex.Message}"); }
         }
 
         private void CalculateStayDays()
         {
             if (dateTimePickerCheckIn == null || dateTimePickerCheckOut == null) return;
-
             DateTime checkIn = dateTimePickerCheckIn.Value.Date;
             DateTime checkOut = dateTimePickerCheckOut.Value.Date;
-
             if (checkOut > checkIn)
             {
                 stayDays = (int)(checkOut - checkIn).TotalDays;
-
-                if (stayDays > MAX_STAY_DAYS)
-                {
-                    stayDays = MAX_STAY_DAYS;
-                    dateTimePickerCheckOut.Value = checkIn.AddDays(MAX_STAY_DAYS);
-                }
-
-                if (labelStayDays != null)
-                    labelStayDays.Text = GetDaysText(stayDays);
-
-                if (stayDays > 30 && labelStayDays != null)
-                {
-                    labelStayDays.ForeColor = Color.OrangeRed;
-                    labelStayDays.Font = new Font(labelStayDays.Font, FontStyle.Bold);
-                }
-                else if (labelStayDays != null)
-                {
-                    labelStayDays.ForeColor = Color.FromArgb(106, 153, 85);
-                    labelStayDays.Font = new Font(labelStayDays.Font, FontStyle.Regular);
-                }
+                if (stayDays > MAX_STAY_DAYS) { stayDays = MAX_STAY_DAYS; dateTimePickerCheckOut.Value = checkIn.AddDays(MAX_STAY_DAYS); }
+                if (labelStayDays != null) labelStayDays.Text = GetDaysText(stayDays);
             }
             else
             {
                 stayDays = 1;
-                if (labelStayDays != null)
-                    labelStayDays.Text = "1 день";
+                if (labelStayDays != null) labelStayDays.Text = "1 день";
                 dateTimePickerCheckOut.Value = checkIn.AddDays(1);
-                MessageBox.Show("Дата выезда должна быть позже даты заезда.", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -307,8 +247,7 @@ namespace kursovoy_proekt
             if (comboBoxHouses != null && comboBoxHouses.SelectedItem is HouseData house)
             {
                 houseDailyPrice = house.PricePerDay;
-                if (labelHouseInfo != null)
-                    labelHouseInfo.Text = $"Вместимость: {house.Capacity} чел. | Цена за день: {house.PricePerDay:N2}₽";
+                if (labelHouseInfo != null) labelHouseInfo.Text = $"Вместимость: {house.Capacity} чел. | Цена: {house.PricePerDay:N2}₽/сут.";
                 UpdateTotalPrice();
             }
         }
@@ -317,133 +256,89 @@ namespace kursovoy_proekt
         {
             try
             {
-                if (comboBoxClients == null || comboBoxClients.SelectedItem == null)
-                {
-                    MessageBox.Show("Выберите клиента.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (comboBoxHouses == null || comboBoxHouses.SelectedItem == null)
-                {
-                    MessageBox.Show("Выберите дом.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (stayDays > MAX_STAY_DAYS || stayDays < 1)
-                {
-                    MessageBox.Show($"Продолжительность бронирования должна быть от 1 до {MAX_STAY_DAYS} дней.",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                if (comboBoxClients == null || comboBoxClients.SelectedItem == null) { MessageBox.Show("Выберите клиента."); return; }
+                if (comboBoxHouses == null || comboBoxHouses.SelectedItem == null) { MessageBox.Show("Выберите дом."); return; }
+                if (stayDays > MAX_STAY_DAYS || stayDays < 1) { MessageBox.Show($"От 1 до {MAX_STAY_DAYS} дней."); return; }
 
                 int userId = GetCurrentUserId();
                 if (userId == 0) return;
 
-                DialogResult confirm = MessageBox.Show(
-                    $"Создать бронирование на сумму {totalPrice:N2}₽?\n" +
-                    $"Дата заезда: {dateTimePickerCheckIn.Value:dd.MM.yyyy}\n" +
-                    $"Дата выезда: {dateTimePickerCheckOut.Value:dd.MM.yyyy}\n" +
-                    $"Продолжительность: {GetDaysText(stayDays)}",
-                    "Подтверждение",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (confirm != DialogResult.Yes) return;
-
                 int clientId = ((ClientData)comboBoxClients.SelectedItem).Id;
                 int houseId = ((HouseData)comboBoxHouses.SelectedItem).Id;
-                int bookingId = 0;
+                DateTime checkIn = dateTimePickerCheckIn.Value.Date;
+                DateTime checkOut = dateTimePickerCheckOut.Value.Date;
 
-                using (var connection = DatabaseConnection.GetConnection())
+                using (var conn = DatabaseConnection.GetConnection())
                 {
-                    connection.Open();
-                    using (var transaction = connection.BeginTransaction())
+                    conn.Open();
+
+                    // Проверка: дом занят?
+                    string qHouse = @"SELECT COUNT(*) FROM (
+                        SELECT house_id FROM booking WHERE house_id=@h AND status IN ('pending','confirmed') AND check_in_date<@d2 AND check_out_date>@d1
+                        UNION ALL SELECT house_id FROM check_in WHERE house_id=@h AND check_in_date<@d2 AND check_out_date>@d1) AS t";
+                    using (var cmd = new MySqlCommand(qHouse, conn))
                     {
-                        try
-                        {
-                            string insertBooking = @"
-                                INSERT INTO booking 
-                                (client_id, house_id, user_id, check_in_date, check_out_date, 
-                                 days_count, total_price, status, notes) 
-                                VALUES (@client_id, @house_id, @user_id, @check_in, @check_out, 
-                                        @days_count, @total_price, 'pending', @notes);
-                                SELECT LAST_INSERT_ID();";
+                        cmd.Parameters.AddWithValue("@h", houseId); cmd.Parameters.AddWithValue("@d1", checkIn); cmd.Parameters.AddWithValue("@d2", checkOut);
+                        if (Convert.ToInt32(cmd.ExecuteScalar()) > 0) { MessageBox.Show("Дом занят на эти даты!"); ReloadAvailableHouses(); return; }
+                    }
 
-                            using (var cmd = new MySqlCommand(insertBooking, connection, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@client_id", clientId);
-                                cmd.Parameters.AddWithValue("@house_id", houseId);
-                                cmd.Parameters.AddWithValue("@user_id", userId);
-                                cmd.Parameters.AddWithValue("@check_in", dateTimePickerCheckIn.Value.Date);
-                                cmd.Parameters.AddWithValue("@check_out", dateTimePickerCheckOut.Value.Date);
-                                cmd.Parameters.AddWithValue("@days_count", stayDays);
-                                cmd.Parameters.AddWithValue("@total_price", totalPrice);
-                                cmd.Parameters.AddWithValue("@notes", "");
+                    // Проверка: клиент уже бронировал другой дом?
+                    string qClient = @"SELECT COUNT(*) FROM (
+                        SELECT client_id FROM booking WHERE client_id=@c AND status IN ('pending','confirmed') AND check_in_date<@d2 AND check_out_date>@d1
+                        UNION ALL SELECT client_id FROM check_in WHERE client_id=@c AND check_in_date<@d2 AND check_out_date>@d1) AS t";
+                    using (var cmd = new MySqlCommand(qClient, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@c", clientId); cmd.Parameters.AddWithValue("@d1", checkIn); cmd.Parameters.AddWithValue("@d2", checkOut);
+                        if (Convert.ToInt32(cmd.ExecuteScalar()) > 0) { MessageBox.Show("Клиент уже бронировал другой дом на эти даты!"); return; }
+                    }
 
-                                bookingId = Convert.ToInt32(cmd.ExecuteScalar());
-                            }
-
-                            transaction.Commit();
-                        }
-                        catch
-                        {
-                            transaction.Rollback();
-                            throw;
-                        }
+                    // Проверка: клиент уже бронировал этот же дом?
+                    string qSame = "SELECT COUNT(*) FROM booking WHERE client_id=@c AND house_id=@h AND status IN ('pending','confirmed') AND check_in_date<@d2 AND check_out_date>@d1";
+                    using (var cmd = new MySqlCommand(qSame, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@c", clientId); cmd.Parameters.AddWithValue("@h", houseId); cmd.Parameters.AddWithValue("@d1", checkIn); cmd.Parameters.AddWithValue("@d2", checkOut);
+                        if (Convert.ToInt32(cmd.ExecuteScalar()) > 0) { MessageBox.Show("Вы уже бронировали этот дом на эти даты!"); return; }
                     }
                 }
 
+                if (MessageBox.Show($"Создать бронирование на {totalPrice:N2}₽?\n{checkIn:dd.MM.yyyy} — {checkOut:dd.MM.yyyy}\n{GetDaysText(stayDays)}", "Подтверждение", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+
+                using (var conn = DatabaseConnection.GetConnection())
+                {
+                    conn.Open();
+                    string insert = @"INSERT INTO booking (client_id, house_id, user_id, check_in_date, check_out_date, days_count, total_price, status) 
+                                     VALUES (@c, @h, @u, @d1, @d2, @d, @p, 'pending')";
+                    using (var cmd = new MySqlCommand(insert, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@c", clientId); cmd.Parameters.AddWithValue("@h", houseId); cmd.Parameters.AddWithValue("@u", userId);
+                        cmd.Parameters.AddWithValue("@d1", checkIn); cmd.Parameters.AddWithValue("@d2", checkOut);
+                        cmd.Parameters.AddWithValue("@d", stayDays); cmd.Parameters.AddWithValue("@p", totalPrice);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
                 ClearForm();
-
-                MessageBox.Show($"Бронирование №{bookingId} успешно создано!\nСтатус: Ожидание подтверждения",
-                    "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Бронирование создано!", "Успех");
             }
-            catch (MySqlException ex) when (ex.Number == 1644)
-            {
-                MessageBox.Show("Дом уже забронирован или занят на выбранные даты.\nПожалуйста, выберите другие даты или другой дом.",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ReloadAvailableHouses();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при создании бронирования: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
         }
 
-        private int GetCurrentUserId()
-        {
-            if (Session.IsLoggedIn)
-            {
-                return Session.UserId;
-            }
-            return 0;
-        }
+        private int GetCurrentUserId() => Session.IsLoggedIn ? Session.UserId : 0;
 
         private void ClearForm()
         {
             comboBoxClients.SelectedIndex = comboBoxClients.Items.Count > 0 ? 0 : -1;
             comboBoxHouses.SelectedIndex = comboBoxHouses.Items.Count > 0 ? 0 : -1;
-
-            if (labelHouseInfo != null)
-                labelHouseInfo.Text = "";
-
+            if (labelHouseInfo != null) labelHouseInfo.Text = "";
             ReloadAvailableHouses();
             UpdateTotalPrice();
         }
 
         public void buttonBackToMenu_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show(
-                "Вернуться в меню? Несохраненные данные будут потеряны.",
-                "Подтверждение",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                this.Close();
-            }
+            if (MessageBox.Show("Вернуться в меню?", "", MessageBoxButtons.YesNo) == DialogResult.Yes) Close();
         }
+
+        private class ClientData { public int Id; public string FIO; public string Passport; public override string ToString() => FIO; }
+        private class HouseData { public int Id; public string Name; public string Class; public int Capacity; public decimal PricePerDay; public override string ToString() => Name; }
     }
 }

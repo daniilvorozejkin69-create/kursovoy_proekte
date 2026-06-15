@@ -32,6 +32,7 @@ namespace kursovoy_proekt
                 labelUserInfo.Text = Session.UserName;
             }
 
+            buttonEdit.BackColor = Color.FromArgb(106, 153, 85);
             // Настройка DataGridView
             dataGridViewStaff.AutoGenerateColumns = false;
             dataGridViewStaff.ReadOnly = true;
@@ -451,7 +452,7 @@ namespace kursovoy_proekt
             buttonNext.BackColor = buttonNext.Enabled ? Color.FromArgb(106, 153, 85) : Color.FromArgb(200, 200, 200);
 
             buttonEdit.Enabled = dataGridViewStaff.SelectedRows.Count > 0;
-            buttonEdit.BackColor = buttonEdit.Enabled ? Color.FromArgb(46, 204, 113) : Color.FromArgb(200, 200, 200);
+            buttonEdit.BackColor = buttonEdit.Enabled ? Color.FromArgb(106, 153, 85) : Color.FromArgb(200, 200, 200);
         }
 
         // ============================================
@@ -589,7 +590,7 @@ namespace kursovoy_proekt
         {
             if (buttonEdit.Enabled)
             {
-                buttonEdit.BackColor = Color.FromArgb(39, 174, 96);
+                buttonEdit.BackColor = Color.FromArgb(106, 153, 85);
                 buttonEdit.Font = new Font(buttonEdit.Font, FontStyle.Bold);
             }
         }
