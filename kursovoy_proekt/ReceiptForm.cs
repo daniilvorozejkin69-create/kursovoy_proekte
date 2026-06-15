@@ -127,6 +127,10 @@ namespace kursovoy_proekt
             }
             catch { staffFIO = "Ошибка"; staffLogin = "-"; }
         }
+        public void PrintPageHandlerPublic(object sender, PrintPageEventArgs e)
+        {
+            PrintPageHandler(sender, e);
+        }
 
         private void LoadServicesToGrid()
         {

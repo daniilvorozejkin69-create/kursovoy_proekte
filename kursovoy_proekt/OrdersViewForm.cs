@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace kursovoy_proekt
 {
@@ -145,7 +147,91 @@ namespace kursovoy_proekt
 
         private void CompleteOrder(int id) { if (MessageBox.Show("Завершить?", "", MessageBoxButtons.YesNo) != DialogResult.Yes) return; Exec("UPDATE check_in SET tag=CONCAT(IFNULL(tag,''),' | Выселен ',CURDATE()),check_out_date=CURDATE(),residence_time=DATEDIFF(CURDATE(),check_in_date) WHERE order_number=@id", id); LoadData(); }
         private void CancelOrder(int id) { if (MessageBox.Show("Отменить?", "", MessageBoxButtons.YesNo) != DialogResult.Yes) return; Exec("UPDATE check_in SET tag=CONCAT(IFNULL(tag,''),' | Отменён ',CURDATE()) WHERE order_number=@id", id); LoadData(); }
-        private void PrintOrder(int id) { MessageBox.Show("Печать заказа №" + id); }
+        private void PrintOrder(int orderNumber)
+        {
+            try
+            {
+                using (var conn = DatabaseConnection.GetConnection())
+                {
+                    conn.Open();
+                    string query = @"
+                SELECT ci.order_number, ci.client_id, ci.house_id, ci.user_id,
+                       ci.house_total_price, ci.check_in_date, ci.check_out_date,
+                       ci.residence_time
+                FROM check_in ci
+                WHERE ci.order_number = @id";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", orderNumber);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                int orderId = reader.GetInt32("order_number");
+                                int clientId = reader.GetInt32("client_id");
+                                int houseId = reader.GetInt32("house_id");
+                                int userId = reader.GetInt32("user_id");
+                                decimal houseTotal = reader.GetDecimal("house_total_price");
+                                DateTime checkIn = reader.GetDateTime("check_in_date");
+                                DateTime checkOut = reader.GetDateTime("check_out_date");
+                                int days = reader.GetInt32("residence_time");
+
+                                // Загружаем услуги
+                                List<ServiceItem> services = new List<ServiceItem>();
+                                reader.Close();
+
+                                string svcQuery = @"SELECT s.name_services, cis.quantity, cis.service_total_price
+                                           FROM check_in_services cis
+                                           JOIN services s ON cis.service_id = s.id
+                                           WHERE cis.order_number = @oid";
+                                using (var cmd2 = new MySqlCommand(svcQuery, conn))
+                                {
+                                    cmd2.Parameters.AddWithValue("@oid", orderId);
+                                    using (var r2 = cmd2.ExecuteReader())
+                                    {
+                                        while (r2.Read())
+                                        {
+                                            services.Add(new ServiceItem
+                                            {
+                                                Name = r2["name_services"].ToString(),
+                                                Quantity = Convert.ToInt32(r2["quantity"]),
+                                                Price = Convert.ToDecimal(r2["service_total_price"]) / Convert.ToInt32(r2["quantity"])
+                                            });
+                                        }
+                                    }
+                                }
+
+                                // Открываем форму договора с печатью
+                                ReceiptForm receiptForm = new ReceiptForm(
+                                    orderId, clientId, houseId, houseTotal,
+                                    services, userId, checkIn, checkOut, days);
+
+                                // Сразу печатаем без показа формы
+                                PrintDocument pd = new PrintDocument();
+                                pd.PrintPage += receiptForm.PrintPageHandlerPublic;
+                                pd.DefaultPageSettings.Margins = new Margins(40, 40, 40, 40);
+
+                                foreach (PaperSize ps in pd.PrinterSettings.PaperSizes)
+                                    if (ps.Kind == PaperKind.A4) { pd.DefaultPageSettings.PaperSize = ps; break; }
+
+                                PrintDialog dlg = new PrintDialog { Document = pd };
+                                if (dlg.ShowDialog() == DialogResult.OK)
+                                {
+                                    pd.Print();
+                                }
+
+                                receiptForm.Dispose();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка печати договора: " + ex.Message, "Ошибка");
+            }
+        }
         private void ShowDetails(int rowIndex)
         {
             var r = dataGridViewOrders.Rows[rowIndex];

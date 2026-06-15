@@ -250,9 +250,9 @@
             this.buttonEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEdit.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonEdit.ForeColor = System.Drawing.Color.White;
-            this.buttonEdit.Location = new System.Drawing.Point(914, 90);
+            this.buttonEdit.Location = new System.Drawing.Point(894, 90);
             this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(163, 35);
+            this.buttonEdit.Size = new System.Drawing.Size(183, 35);
             this.buttonEdit.TabIndex = 6;
             this.buttonEdit.Text = "✏️ РЕДАКТИРОВАТЬ";
             this.buttonEdit.UseVisualStyleBackColor = false;
@@ -268,7 +268,7 @@
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdd.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonAdd.ForeColor = System.Drawing.Color.White;
-            this.buttonAdd.Location = new System.Drawing.Point(745, 90);
+            this.buttonAdd.Location = new System.Drawing.Point(725, 90);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(163, 35);
             this.buttonAdd.TabIndex = 5;

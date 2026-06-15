@@ -115,7 +115,7 @@ namespace kursovoy_proekt
             // Кнопка РЕДАКТИРОВАТЬ
             buttonEdit.FlatStyle = FlatStyle.Flat;
             buttonEdit.FlatAppearance.BorderSize = 0;
-            buttonEdit.BackColor = Color.FromArgb(46, 204, 113); // Ярко-зеленый
+            buttonEdit.BackColor = Color.FromArgb(106, 153, 85); // Ярко-зеленый
             buttonEdit.ForeColor = Color.White;
             buttonEdit.Font = new Font("Segoe UI Semibold", 11, FontStyle.Bold);
             buttonEdit.Text = "✏️  РЕДАКТИРОВАТЬ";

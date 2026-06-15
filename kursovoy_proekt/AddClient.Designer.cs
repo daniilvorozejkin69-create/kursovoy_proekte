@@ -33,8 +33,6 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -63,7 +61,7 @@
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(76, 145, 195);
             this.panelHeader.Controls.Add(this.labelHeader);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
@@ -84,7 +82,7 @@
             // 
             // panelGreenLine
             // 
-            this.panelGreenLine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.panelGreenLine.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
             this.panelGreenLine.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelGreenLine.Location = new System.Drawing.Point(0, 80);
             this.panelGreenLine.Name = "panelGreenLine";
@@ -94,7 +92,7 @@
             // panelContent
             // 
             this.panelContent.AutoScroll = true;
-            this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
+            this.panelContent.BackColor = System.Drawing.Color.FromArgb(240, 245, 235);
             this.panelContent.Controls.Add(this.buttonMenu);
             this.panelContent.Controls.Add(this.buttonSave);
             this.panelContent.Controls.Add(this.comboBoxGender);
@@ -120,28 +118,25 @@
             // 
             this.buttonMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonMenu.BackColor = System.Drawing.Color.Transparent;
-            this.buttonMenu.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonMenu.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(106, 153, 85);
             this.buttonMenu.FlatAppearance.BorderSize = 2;
-            this.buttonMenu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
-            this.buttonMenu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.buttonMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            this.buttonMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonMenu.ForeColor = System.Drawing.Color.FromArgb(106, 153, 85);
             this.buttonMenu.Location = new System.Drawing.Point(180, 506);
             this.buttonMenu.Name = "buttonMenu";
             this.buttonMenu.Size = new System.Drawing.Size(230, 50);
             this.buttonMenu.TabIndex = 8;
             this.buttonMenu.Text = "🏠 ВЕРНУТЬСЯ В МЕНЮ";
             this.buttonMenu.UseVisualStyleBackColor = false;
+            this.buttonMenu.Click += new System.EventHandler(this.buttonMenu_Click);
             // 
             // buttonSave
             // 
-            this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonSave.BackColor = System.Drawing.Color.FromArgb(106, 153, 85);
             this.buttonSave.FlatAppearance.BorderSize = 0;
-            this.buttonSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(130)))), ((int)(((byte)(65)))));
-            this.buttonSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(170)))), ((int)(((byte)(100)))));
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.buttonSave.ForeColor = System.Drawing.Color.White;
@@ -151,16 +146,17 @@
             this.buttonSave.TabIndex = 6;
             this.buttonSave.Text = "➕ ДОБАВИТЬ КЛИЕНТА";
             this.buttonSave.UseVisualStyleBackColor = false;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // comboBoxGender
             // 
-            this.comboBoxGender.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxGender.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxGender.BackColor = System.Drawing.Color.White;
             this.comboBoxGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxGender.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxGender.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.comboBoxGender.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.comboBoxGender.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.comboBoxGender.FormattingEnabled = true;
             this.comboBoxGender.Items.AddRange(new object[] {
             "Мужской",
@@ -174,7 +170,7 @@
             // 
             this.labelGender.AutoSize = true;
             this.labelGender.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.labelGender.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelGender.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.labelGender.Location = new System.Drawing.Point(50, 360);
             this.labelGender.Name = "labelGender";
             this.labelGender.Size = new System.Drawing.Size(38, 19);
@@ -183,23 +179,22 @@
             // 
             // textBoxEmail
             // 
-            this.textBoxEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxEmail.BackColor = System.Drawing.Color.White;
             this.textBoxEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxEmail.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.textBoxEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.textBoxEmail.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.textBoxEmail.Location = new System.Drawing.Point(50, 320);
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(500, 27);
             this.textBoxEmail.TabIndex = 4;
-            this.toolTip.SetToolTip(this.textBoxEmail, "Пример: example@mail.ru");
             // 
             // labelEmail
             // 
             this.labelEmail.AutoSize = true;
             this.labelEmail.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.labelEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelEmail.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.labelEmail.Location = new System.Drawing.Point(50, 295);
             this.labelEmail.Name = "labelEmail";
             this.labelEmail.Size = new System.Drawing.Size(107, 19);
@@ -208,25 +203,24 @@
             // 
             // maskedTextBoxPhone
             // 
-            this.maskedTextBoxPhone.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.maskedTextBoxPhone.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.maskedTextBoxPhone.BackColor = System.Drawing.Color.White;
             this.maskedTextBoxPhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.maskedTextBoxPhone.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.maskedTextBoxPhone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.maskedTextBoxPhone.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.maskedTextBoxPhone.Location = new System.Drawing.Point(50, 255);
             this.maskedTextBoxPhone.Mask = "+7 (000) 000-00-00";
             this.maskedTextBoxPhone.Name = "maskedTextBoxPhone";
             this.maskedTextBoxPhone.PromptChar = ' ';
             this.maskedTextBoxPhone.Size = new System.Drawing.Size(250, 27);
             this.maskedTextBoxPhone.TabIndex = 3;
-            this.toolTip.SetToolTip(this.maskedTextBoxPhone, "Формат: +7 (900) 123-45-67");
             // 
             // labelPhone
             // 
             this.labelPhone.AutoSize = true;
             this.labelPhone.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.labelPhone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelPhone.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.labelPhone.Location = new System.Drawing.Point(50, 230);
             this.labelPhone.Name = "labelPhone";
             this.labelPhone.Size = new System.Drawing.Size(67, 19);
@@ -241,13 +235,12 @@
             this.dateTimePickerBirthDate.Name = "dateTimePickerBirthDate";
             this.dateTimePickerBirthDate.Size = new System.Drawing.Size(200, 27);
             this.dateTimePickerBirthDate.TabIndex = 2;
-            this.toolTip.SetToolTip(this.dateTimePickerBirthDate, "Клиент должен быть старше 18 лет");
             // 
             // labelBirthDate
             // 
             this.labelBirthDate.AutoSize = true;
             this.labelBirthDate.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.labelBirthDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelBirthDate.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.labelBirthDate.Location = new System.Drawing.Point(50, 165);
             this.labelBirthDate.Name = "labelBirthDate";
             this.labelBirthDate.Size = new System.Drawing.Size(111, 19);
@@ -256,25 +249,24 @@
             // 
             // maskedTextBoxPassport
             // 
-            this.maskedTextBoxPassport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.maskedTextBoxPassport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.maskedTextBoxPassport.BackColor = System.Drawing.Color.White;
             this.maskedTextBoxPassport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.maskedTextBoxPassport.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.maskedTextBoxPassport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.maskedTextBoxPassport.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.maskedTextBoxPassport.Location = new System.Drawing.Point(50, 125);
             this.maskedTextBoxPassport.Mask = "00 00 000000";
             this.maskedTextBoxPassport.Name = "maskedTextBoxPassport";
             this.maskedTextBoxPassport.PromptChar = ' ';
             this.maskedTextBoxPassport.Size = new System.Drawing.Size(250, 27);
             this.maskedTextBoxPassport.TabIndex = 1;
-            this.toolTip.SetToolTip(this.maskedTextBoxPassport, "Формат: 45 10 123456");
             // 
             // labelPassport
             // 
             this.labelPassport.AutoSize = true;
             this.labelPassport.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.labelPassport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelPassport.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.labelPassport.Location = new System.Drawing.Point(50, 100);
             this.labelPassport.Name = "labelPassport";
             this.labelPassport.Size = new System.Drawing.Size(137, 19);
@@ -283,23 +275,22 @@
             // 
             // textBoxFIO
             // 
-            this.textBoxFIO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxFIO.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxFIO.BackColor = System.Drawing.Color.White;
             this.textBoxFIO.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxFIO.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.textBoxFIO.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.textBoxFIO.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.textBoxFIO.Location = new System.Drawing.Point(50, 60);
             this.textBoxFIO.Name = "textBoxFIO";
             this.textBoxFIO.Size = new System.Drawing.Size(500, 27);
             this.textBoxFIO.TabIndex = 0;
-            this.toolTip.SetToolTip(this.textBoxFIO, "Введите ФИО полностью");
             // 
             // labelFIO
             // 
             this.labelFIO.AutoSize = true;
             this.labelFIO.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.labelFIO.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.labelFIO.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
             this.labelFIO.Location = new System.Drawing.Point(50, 35);
             this.labelFIO.Name = "labelFIO";
             this.labelFIO.Size = new System.Drawing.Size(45, 19);
@@ -323,9 +314,6 @@
             this.panelContent.ResumeLayout(false);
             this.panelContent.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
-        #endregion
     }
 }

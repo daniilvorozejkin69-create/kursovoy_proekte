@@ -422,7 +422,7 @@
             this.MinimizeBox = false;
             this.Name = "StaffList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Управление персоналом";
+            this.Text = "Пол";
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
