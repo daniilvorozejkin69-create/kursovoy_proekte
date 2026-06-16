@@ -111,7 +111,7 @@ namespace kursovoy_proekt
             }
             catch { }
 
-            dateTimePickerFrom.Value = DateTime.Today.AddMonths(-1);
+            dateTimePickerFrom.Value = DateTime.Today.AddMonths(-36);
             dateTimePickerTo.Value = DateTime.Today;
         }
 

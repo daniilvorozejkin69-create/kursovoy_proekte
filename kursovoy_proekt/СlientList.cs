@@ -478,21 +478,6 @@ namespace kursovoy_proekt
 
         private void buttonBackToMenu_Click(object sender, EventArgs e)
         {
-            switch (Session.RoleId)
-            {
-                case 1:
-                    AdminForm adminForm = new AdminForm();
-                    adminForm.Show();
-                    break;
-                case 2:
-                    RecephenForm recepForm = new RecephenForm();
-                    recepForm.Show();
-                    break;
-                case 3:
-                    ManagerForm managerForm = new ManagerForm();
-                    managerForm.Show();
-                    break;
-            }
             this.Close();
         }
 

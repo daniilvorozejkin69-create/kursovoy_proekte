@@ -355,7 +355,7 @@
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelGreenLine);
             this.Controls.Add(this.panelHeader);
-            this.MinimumSize = new System.Drawing.Size(900, 600);
+            this.MinimumSize = new System.Drawing.Size(1216, 839);
             this.Name = "OrdersViewForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Управление заказами - База отдыха";

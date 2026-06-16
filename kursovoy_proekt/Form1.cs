@@ -405,7 +405,7 @@ namespace kursovoy_proekt
                 }
             };
 
-            mainForm.Show();
+            mainForm.ShowDialog();
         }
 
         private void ButtonExit_Click(object sender, EventArgs e) => Application.Exit();

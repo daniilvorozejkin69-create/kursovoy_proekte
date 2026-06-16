@@ -51,62 +51,57 @@ namespace kursovoy_proekt
         private void buttonAddClient_Click(object sender, EventArgs e)
         {
             OrdersViewForm addClient = new OrdersViewForm();
-            addClient.Show();
-            this.Hide();
+            addClient.ShowDialog();
         }
 
         private void buttonEditClient_Click(object sender, EventArgs e)
         {
             ClientList clientList = new ClientList();
-            clientList.Show();
-            this.Hide();
+            clientList.ShowDialog();
         }
 
         private void buttonCheck_Click(object sender, EventArgs e)
         {
             Check checkForm = new Check();
-            checkForm.Show();
+            checkForm.ShowDialog();
         }
 
         private void buttonHouses_Click(object sender, EventArgs e)
         {
             HousList housList = new HousList();
-            housList.Show();
-            this.Hide();
+            housList.ShowDialog();
         }
 
         private void buttonBooking_Click(object sender, EventArgs e)
         {
             BookingForm bookingForm = new BookingForm();
-            bookingForm.Show();
-            this.Hide();
+            bookingForm.ShowDialog();
         }
 
         private void buttonServices_Click(object sender, EventArgs e)
         {
             ServiceList serviceList = new ServiceList();
-            serviceList.Show();
-            this.Hide();
+            serviceList.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             BookingManagementForm bookingManagementForm = new BookingManagementForm();
-            bookingManagementForm.Show();
-            this.Hide();
+            bookingManagementForm.ShowDialog();
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Вы уверены, что хотите выйти из системы?",
-                "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
+            try
             {
-                Session.Clear();
-                Form1 loginForm = new Form1();
-                loginForm.Show();
-                this.Close();
+                // Возвращаемся на главную форму
+                Form1 mainForm = new Form1();
+                mainForm.Show();
+                this.Hide(); // Используем Hide вместо Close
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
 

@@ -71,43 +71,43 @@ namespace kursovoy_proekt
         private void ButtonAddHouse_Click(object sender, EventArgs e)
         {
             AddHous addHous = new AddHous();
-            addHous.ShowDialog();
+            addHous.Show();
         }
 
         private void ButtonEditHouse_Click(object sender, EventArgs e)
         {
             HousList housList = new HousList();
-            housList.ShowDialog();
+            housList.Show();
         }
 
         private void ButtonAddService_Click(object sender, EventArgs e)
         {
             AddService addService = new AddService();
-            addService.ShowDialog();
+            addService.Show();
         }
 
         private void ButtonEditService_Click(object sender, EventArgs e)
         {
             ServiceList serviceList = new ServiceList();
-            serviceList.ShowDialog();
+            serviceList.Show();
         }
 
         private void ButtonManageStaff_Click(object sender, EventArgs e)
         {
             StaffList staffList = new StaffList();
-            staffList.ShowDialog();
+            staffList.Show();
         }
 
         private void ButtonReportHouse_Click(object sender, EventArgs e)
         {
             HouseAnalyticsForm revenueReport = new HouseAnalyticsForm();
-            revenueReport.ShowDialog();
+            revenueReport.Show();
         }
 
         private void ButtonDiscounts_Click(object sender, EventArgs e)
         {
             DiscountsForm discountsForm = new DiscountsForm();
-            discountsForm.ShowDialog();
+            discountsForm.Show();
         }
         protected override void OnLoad(EventArgs e)
         {
@@ -122,15 +122,16 @@ namespace kursovoy_proekt
         }
         private void ButtonExit_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Вы уверены, что хотите выйти из системы?",
-                "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
+            try
             {
-                Session.Clear();
-                Form1 loginForm = new Form1();
-                loginForm.Show();
-                this.Close();
+                // Возвращаемся на главную форму
+                Form1 mainForm = new Form1();
+                mainForm.Show();
+                this.Hide(); // Используем Hide вместо Close
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
     }

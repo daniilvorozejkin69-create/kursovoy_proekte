@@ -278,25 +278,7 @@ namespace kursovoy_proekt
 
         private void buttonBackToMenu_Click(object sender, EventArgs e)
         {
-            // Возвращаем в соответствующую форму по роли
-            if (Session.RoleId == 1)
-            {
-                AdminForm mainForm = new AdminForm();
-                mainForm.Show();
-                this.Close();
-            }
-            else if (Session.RoleId == 2)
-            {
-                RecephenForm recepForm = new RecephenForm();
-                recepForm.Show();
-                this.Close();
-            }
-            else if (Session.RoleId == 3)
-            {
-                ManagerForm managerForm = new ManagerForm();
-                managerForm.Show();
-                this.Close();
-            }
+            this.Close();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
