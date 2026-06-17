@@ -71,11 +71,11 @@
             // labelHeader
             // 
             this.labelHeader.AutoSize = true;
-            this.labelHeader.Font = new System.Drawing.Font("Segoe UI Light", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelHeader.Font = new System.Drawing.Font("Segoe UI Light", 20F);
             this.labelHeader.ForeColor = System.Drawing.Color.White;
             this.labelHeader.Location = new System.Drawing.Point(30, 20);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(398, 37);
+            this.labelHeader.Size = new System.Drawing.Size(505, 37);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "ДОБАВЛЕНИЕ НОВОГО ПОЛЬЗОВАТЕЛЯ";
             // 
@@ -118,14 +118,14 @@
             this.buttonGeneratePassword.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(125)))), ((int)(((byte)(175)))));
             this.buttonGeneratePassword.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(165)))), ((int)(((byte)(215)))));
             this.buttonGeneratePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonGeneratePassword.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonGeneratePassword.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.buttonGeneratePassword.ForeColor = System.Drawing.Color.White;
             this.buttonGeneratePassword.Location = new System.Drawing.Point(380, 210);
             this.buttonGeneratePassword.Name = "buttonGeneratePassword";
             this.buttonGeneratePassword.Size = new System.Drawing.Size(170, 27);
             this.buttonGeneratePassword.TabIndex = 3;
-            this.toolTip.SetToolTip(this.buttonGeneratePassword, "Сгенерировать безопасный пароль (Ctrl+G)");
             this.buttonGeneratePassword.Text = "🔑 Сгенерировать пароль";
+            this.toolTip.SetToolTip(this.buttonGeneratePassword, "Сгенерировать безопасный пароль (Ctrl+G)");
             this.buttonGeneratePassword.UseVisualStyleBackColor = false;
             this.buttonGeneratePassword.Click += new System.EventHandler(this.buttonGeneratePassword_Click);
             // 
@@ -138,14 +138,14 @@
             this.buttonMenu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.buttonMenu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(245)))), ((int)(((byte)(235)))));
             this.buttonMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonMenu.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.buttonMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.buttonMenu.Location = new System.Drawing.Point(320, 460);
             this.buttonMenu.Name = "buttonMenu";
             this.buttonMenu.Size = new System.Drawing.Size(230, 50);
             this.buttonMenu.TabIndex = 6;
-            this.toolTip.SetToolTip(this.buttonMenu, "Вернуться в главное меню без сохранения");
             this.buttonMenu.Text = "🏠 ВЕРНУТЬСЯ В МЕНЮ";
+            this.toolTip.SetToolTip(this.buttonMenu, "Вернуться в главное меню без сохранения");
             this.buttonMenu.UseVisualStyleBackColor = false;
             this.buttonMenu.Click += new System.EventHandler(this.buttonMenu_Click);
             // 
@@ -157,35 +157,35 @@
             this.buttonDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
             this.buttonDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(70)))), ((int)(((byte)(85)))));
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonDelete.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.buttonDelete.ForeColor = System.Drawing.Color.White;
             this.buttonDelete.Location = new System.Drawing.Point(50, 460);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(230, 50);
             this.buttonDelete.TabIndex = 5;
-            this.toolTip.SetToolTip(this.buttonDelete, "Удалить пользователя (в режиме редактирования)");
             this.buttonDelete.Text = "🗑️ УДАЛИТЬ ПОЛЬЗОВАТЕЛЯ";
+            this.toolTip.SetToolTip(this.buttonDelete, "Удалить пользователя (в режиме редактирования)");
             this.buttonDelete.UseVisualStyleBackColor = false;
             this.buttonDelete.Visible = false;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonSave
             // 
-            this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.buttonSave.FlatAppearance.BorderSize = 0;
             this.buttonSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(130)))), ((int)(((byte)(65)))));
             this.buttonSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(170)))), ((int)(((byte)(100)))));
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSave.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonSave.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.buttonSave.ForeColor = System.Drawing.Color.White;
             this.buttonSave.Location = new System.Drawing.Point(50, 400);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(500, 50);
             this.buttonSave.TabIndex = 4;
-            this.toolTip.SetToolTip(this.buttonSave, "Сохранить пользователя");
             this.buttonSave.Text = "➕ ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ";
+            this.toolTip.SetToolTip(this.buttonSave, "Сохранить пользователя");
             this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
@@ -194,7 +194,7 @@
             this.comboBoxRole.BackColor = System.Drawing.Color.White;
             this.comboBoxRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRole.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxRole.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.comboBoxRole.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.comboBoxRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comboBoxRole.FormattingEnabled = true;
             this.comboBoxRole.Location = new System.Drawing.Point(50, 280);
@@ -208,11 +208,11 @@
             // labelRole
             // 
             this.labelRole.AutoSize = true;
-            this.labelRole.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelRole.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.labelRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelRole.Location = new System.Drawing.Point(50, 255);
             this.labelRole.Name = "labelRole";
-            this.labelRole.Size = new System.Drawing.Size(41, 19);
+            this.labelRole.Size = new System.Drawing.Size(43, 19);
             this.labelRole.TabIndex = 0;
             this.labelRole.Text = "Роль:";
             // 
@@ -220,7 +220,7 @@
             // 
             this.textBoxPassword.BackColor = System.Drawing.Color.White;
             this.textBoxPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxPassword.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxPassword.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.textBoxPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.textBoxPassword.Location = new System.Drawing.Point(50, 210);
             this.textBoxPassword.MaxLength = 100;
@@ -238,11 +238,11 @@
             // labelPassword
             // 
             this.labelPassword.AutoSize = true;
-            this.labelPassword.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelPassword.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.labelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelPassword.Location = new System.Drawing.Point(50, 185);
             this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(61, 19);
+            this.labelPassword.Size = new System.Drawing.Size(60, 19);
             this.labelPassword.TabIndex = 0;
             this.labelPassword.Text = "Пароль:";
             // 
@@ -250,7 +250,7 @@
             // 
             this.textBoxLogin.BackColor = System.Drawing.Color.White;
             this.textBoxLogin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxLogin.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxLogin.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.textBoxLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.textBoxLogin.Location = new System.Drawing.Point(50, 140);
             this.textBoxLogin.MaxLength = 50;
@@ -258,19 +258,19 @@
             this.textBoxLogin.Size = new System.Drawing.Size(500, 27);
             this.textBoxLogin.TabIndex = 0;
             this.toolTip.SetToolTip(this.textBoxLogin, "Логин (3-50 символов, только латинские буквы, цифры и подчеркивание)");
+            this.textBoxLogin.TextChanged += new System.EventHandler(this.textBoxLogin_TextChanged);
             this.textBoxLogin.Enter += new System.EventHandler(this.Control_Enter);
             this.textBoxLogin.Leave += new System.EventHandler(this.Control_Leave);
-            this.textBoxLogin.TextChanged += new System.EventHandler(this.textBoxLogin_TextChanged);
             this.textBoxLogin.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxLogin_Validating);
             // 
             // labelLogin
             // 
             this.labelLogin.AutoSize = true;
-            this.labelLogin.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelLogin.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.labelLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelLogin.Location = new System.Drawing.Point(50, 115);
             this.labelLogin.Name = "labelLogin";
-            this.labelLogin.Size = new System.Drawing.Size(53, 19);
+            this.labelLogin.Size = new System.Drawing.Size(52, 19);
             this.labelLogin.TabIndex = 0;
             this.labelLogin.Text = "Логин:";
             // 
@@ -279,7 +279,7 @@
             this.comboBoxPersonal.BackColor = System.Drawing.Color.White;
             this.comboBoxPersonal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPersonal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxPersonal.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.comboBoxPersonal.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.comboBoxPersonal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comboBoxPersonal.FormattingEnabled = true;
             this.comboBoxPersonal.Location = new System.Drawing.Point(50, 70);
@@ -293,11 +293,11 @@
             // labelPersonal
             // 
             this.labelPersonal.AutoSize = true;
-            this.labelPersonal.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelPersonal.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.labelPersonal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelPersonal.Location = new System.Drawing.Point(50, 45);
             this.labelPersonal.Name = "labelPersonal";
-            this.labelPersonal.Size = new System.Drawing.Size(82, 19);
+            this.labelPersonal.Size = new System.Drawing.Size(81, 19);
             this.labelPersonal.TabIndex = 0;
             this.labelPersonal.Text = "Сотрудник:";
             // 
@@ -320,6 +320,7 @@
             this.panelContent.ResumeLayout(false);
             this.panelContent.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion

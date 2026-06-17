@@ -65,6 +65,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookingDetailsForm));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
@@ -542,6 +543,7 @@
             this.ClientSize = new System.Drawing.Size(800, 903);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelHeader);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(816, 839);
             this.Name = "BookingDetailsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

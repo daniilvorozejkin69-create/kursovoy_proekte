@@ -16,6 +16,7 @@ namespace kursovoy_proekt
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         protected override void OnLoad(EventArgs e)

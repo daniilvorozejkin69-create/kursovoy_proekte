@@ -39,6 +39,7 @@ namespace kursovoy_proekt
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddHous));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelGreenLine = new System.Windows.Forms.Panel();
@@ -328,6 +329,7 @@ namespace kursovoy_proekt
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelGreenLine);
             this.Controls.Add(this.panelHeader);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(616, 689);
             this.Name = "AddHous";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

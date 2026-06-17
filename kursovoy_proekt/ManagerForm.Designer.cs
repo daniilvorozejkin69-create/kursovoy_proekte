@@ -30,6 +30,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagerForm));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.labelHeader = new System.Windows.Forms.Label();
@@ -40,12 +41,12 @@
             this.buttonDiscounts = new System.Windows.Forms.Button();
             this.buttonManageStaff = new System.Windows.Forms.Button();
             this.buttonEditService = new System.Windows.Forms.Button();
+            this.buttonAddService = new System.Windows.Forms.Button();
             this.buttonEditHouse = new System.Windows.Forms.Button();
+            this.buttonAddHouse = new System.Windows.Forms.Button();
             this.panelSeparator = new System.Windows.Forms.Panel();
             this.labelUserInfo = new System.Windows.Forms.Label();
             this.labelWelcome = new System.Windows.Forms.Label();
-            this.buttonAddService = new System.Windows.Forms.Button();
-            this.buttonAddHouse = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panelContent.SuspendLayout();
@@ -183,6 +184,20 @@
             this.buttonEditService.Text = "📋 СПИСОК УСЛУГ";
             this.buttonEditService.UseVisualStyleBackColor = false;
             // 
+            // buttonAddService
+            // 
+            this.buttonAddService.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
+            this.buttonAddService.FlatAppearance.BorderSize = 0;
+            this.buttonAddService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddService.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.buttonAddService.ForeColor = System.Drawing.Color.White;
+            this.buttonAddService.Location = new System.Drawing.Point(30, 190);
+            this.buttonAddService.Name = "buttonAddService";
+            this.buttonAddService.Size = new System.Drawing.Size(400, 70);
+            this.buttonAddService.TabIndex = 2;
+            this.buttonAddService.Text = "✨ ДОБАВИТЬ УСЛУГУ";
+            this.buttonAddService.UseVisualStyleBackColor = false;
+            // 
             // buttonEditHouse
             // 
             this.buttonEditHouse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
@@ -196,6 +211,20 @@
             this.buttonEditHouse.TabIndex = 1;
             this.buttonEditHouse.Text = "📋 СПИСОК ДОМОВ";
             this.buttonEditHouse.UseVisualStyleBackColor = false;
+            // 
+            // buttonAddHouse
+            // 
+            this.buttonAddHouse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
+            this.buttonAddHouse.FlatAppearance.BorderSize = 0;
+            this.buttonAddHouse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddHouse.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.buttonAddHouse.ForeColor = System.Drawing.Color.White;
+            this.buttonAddHouse.Location = new System.Drawing.Point(30, 100);
+            this.buttonAddHouse.Name = "buttonAddHouse";
+            this.buttonAddHouse.Size = new System.Drawing.Size(400, 70);
+            this.buttonAddHouse.TabIndex = 0;
+            this.buttonAddHouse.Text = "🏠 ДОБАВИТЬ ДОМ";
+            this.buttonAddHouse.UseVisualStyleBackColor = false;
             // 
             // panelSeparator
             // 
@@ -227,34 +256,6 @@
             this.labelWelcome.TabIndex = 0;
             this.labelWelcome.Text = "Добро пожаловать,";
             // 
-            // buttonAddService
-            // 
-            this.buttonAddService.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
-            this.buttonAddService.FlatAppearance.BorderSize = 0;
-            this.buttonAddService.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAddService.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.buttonAddService.ForeColor = System.Drawing.Color.White;
-            this.buttonAddService.Location = new System.Drawing.Point(30, 190);
-            this.buttonAddService.Name = "buttonAddService";
-            this.buttonAddService.Size = new System.Drawing.Size(400, 70);
-            this.buttonAddService.TabIndex = 2;
-            this.buttonAddService.Text = "✨ ДОБАВИТЬ УСЛУГУ";
-            this.buttonAddService.UseVisualStyleBackColor = false;
-            // 
-            // buttonAddHouse
-            // 
-            this.buttonAddHouse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
-            this.buttonAddHouse.FlatAppearance.BorderSize = 0;
-            this.buttonAddHouse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAddHouse.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.buttonAddHouse.ForeColor = System.Drawing.Color.White;
-            this.buttonAddHouse.Location = new System.Drawing.Point(30, 100);
-            this.buttonAddHouse.Name = "buttonAddHouse";
-            this.buttonAddHouse.Size = new System.Drawing.Size(400, 70);
-            this.buttonAddHouse.TabIndex = 0;
-            this.buttonAddHouse.Text = "🏠 ДОБАВИТЬ ДОМ";
-            this.buttonAddHouse.UseVisualStyleBackColor = false;
-            // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -264,6 +265,7 @@
             this.Controls.Add(this.panelGreenLine);
             this.Controls.Add(this.panelHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ManagerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

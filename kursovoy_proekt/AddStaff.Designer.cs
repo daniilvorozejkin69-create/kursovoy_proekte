@@ -54,6 +54,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddStaff));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.labelHeader = new System.Windows.Forms.Label();
@@ -82,11 +83,11 @@
             this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.labelHireDate = new System.Windows.Forms.Label();
             this.dateTimePickerHireDate = new System.Windows.Forms.DateTimePicker();
+            this.labelSalary = new System.Windows.Forms.Label();
+            this.textBoxSalary = new System.Windows.Forms.TextBox();
             this.labelStatus = new System.Windows.Forms.Label();
             this.comboBoxStatus = new System.Windows.Forms.ComboBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.labelSalary = new System.Windows.Forms.Label();
-            this.textBoxSalary = new System.Windows.Forms.TextBox();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panelContent.SuspendLayout();
@@ -415,6 +416,26 @@
             this.dateTimePickerHireDate.Size = new System.Drawing.Size(200, 25);
             this.dateTimePickerHireDate.TabIndex = 13;
             // 
+            // labelSalary
+            // 
+            this.labelSalary.AutoSize = true;
+            this.labelSalary.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.labelSalary.Location = new System.Drawing.Point(630, 230);
+            this.labelSalary.Name = "labelSalary";
+            this.labelSalary.Size = new System.Drawing.Size(71, 19);
+            this.labelSalary.TabIndex = 14;
+            this.labelSalary.Text = "Зарплата:";
+            // 
+            // textBoxSalary
+            // 
+            this.textBoxSalary.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.textBoxSalary.Location = new System.Drawing.Point(630, 255);
+            this.textBoxSalary.Name = "textBoxSalary";
+            this.textBoxSalary.Size = new System.Drawing.Size(150, 25);
+            this.textBoxSalary.TabIndex = 15;
+            this.textBoxSalary.Text = "0.00";
+            this.textBoxSalary.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
@@ -443,26 +464,6 @@
             this.openFileDialog.Filter = "Изображения|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
             this.openFileDialog.Title = "Выберите фото сотрудника";
             // 
-            // labelSalary
-            // 
-            this.labelSalary.AutoSize = true;
-            this.labelSalary.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.labelSalary.Location = new System.Drawing.Point(630, 230);
-            this.labelSalary.Name = "labelSalary";
-            this.labelSalary.Size = new System.Drawing.Size(71, 19);
-            this.labelSalary.TabIndex = 14;
-            this.labelSalary.Text = "Зарплата:";
-            // 
-            // textBoxSalary
-            // 
-            this.textBoxSalary.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.textBoxSalary.Location = new System.Drawing.Point(630, 255);
-            this.textBoxSalary.Name = "textBoxSalary";
-            this.textBoxSalary.Size = new System.Drawing.Size(150, 25);
-            this.textBoxSalary.TabIndex = 15;
-            this.textBoxSalary.Text = "0.00";
-            this.textBoxSalary.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // AddStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -472,6 +473,7 @@
             this.Controls.Add(this.panelGreenLine);
             this.Controls.Add(this.panelHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "AddStaff";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

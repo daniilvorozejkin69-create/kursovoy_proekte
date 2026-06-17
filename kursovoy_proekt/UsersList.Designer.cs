@@ -357,6 +357,7 @@ namespace kursovoy_proekt
             this.Controls.Add(this.buttonPrev);
             this.Controls.Add(this.panelHeader);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(942, 679);
             this.Name = "UsersList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

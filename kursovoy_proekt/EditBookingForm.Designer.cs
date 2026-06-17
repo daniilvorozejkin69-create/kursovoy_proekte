@@ -41,6 +41,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditBookingForm));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
@@ -88,7 +89,7 @@
             this.labelHeader.ForeColor = System.Drawing.Color.White;
             this.labelHeader.Location = new System.Drawing.Point(20, 15);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(242, 37);
+            this.labelHeader.Size = new System.Drawing.Size(292, 37);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "Редактирование брони";
             // 
@@ -168,7 +169,7 @@
             this.labelNotes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelNotes.Location = new System.Drawing.Point(30, 320);
             this.labelNotes.Name = "labelNotes";
-            this.labelNotes.Size = new System.Drawing.Size(84, 17);
+            this.labelNotes.Size = new System.Drawing.Size(92, 17);
             this.labelNotes.TabIndex = 16;
             this.labelNotes.Text = "Примечания:";
             // 
@@ -184,7 +185,7 @@
             "Истекло"});
             this.comboBoxStatus.Location = new System.Drawing.Point(30, 285);
             this.comboBoxStatus.Name = "comboBoxStatus";
-            this.comboBoxStatus.Size = new System.Drawing.Size(200, 25);
+            this.comboBoxStatus.Size = new System.Drawing.Size(200, 21);
             this.comboBoxStatus.TabIndex = 15;
             // 
             // labelStatus
@@ -194,7 +195,7 @@
             this.labelStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelStatus.Location = new System.Drawing.Point(30, 265);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(48, 17);
+            this.labelStatus.Size = new System.Drawing.Size(51, 17);
             this.labelStatus.TabIndex = 14;
             this.labelStatus.Text = "Статус:";
             // 
@@ -208,7 +209,7 @@
             0,
             0});
             this.numericUpDownDeposit.Name = "numericUpDownDeposit";
-            this.numericUpDownDeposit.Size = new System.Drawing.Size(200, 25);
+            this.numericUpDownDeposit.Size = new System.Drawing.Size(200, 20);
             this.numericUpDownDeposit.TabIndex = 13;
             this.numericUpDownDeposit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDownDeposit.ThousandsSeparator = true;
@@ -220,7 +221,7 @@
             this.labelDeposit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelDeposit.Location = new System.Drawing.Point(270, 210);
             this.labelDeposit.Name = "labelDeposit";
-            this.labelDeposit.Size = new System.Drawing.Size(64, 17);
+            this.labelDeposit.Size = new System.Drawing.Size(63, 17);
             this.labelDeposit.TabIndex = 12;
             this.labelDeposit.Text = "Депозит:";
             // 
@@ -234,7 +235,7 @@
             0,
             0});
             this.numericUpDownTotalPrice.Name = "numericUpDownTotalPrice";
-            this.numericUpDownTotalPrice.Size = new System.Drawing.Size(200, 25);
+            this.numericUpDownTotalPrice.Size = new System.Drawing.Size(200, 20);
             this.numericUpDownTotalPrice.TabIndex = 11;
             this.numericUpDownTotalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDownTotalPrice.ThousandsSeparator = true;
@@ -246,7 +247,7 @@
             this.labelTotalPrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelTotalPrice.Location = new System.Drawing.Point(30, 210);
             this.labelTotalPrice.Name = "labelTotalPrice";
-            this.labelTotalPrice.Size = new System.Drawing.Size(136, 17);
+            this.labelTotalPrice.Size = new System.Drawing.Size(123, 17);
             this.labelTotalPrice.TabIndex = 10;
             this.labelTotalPrice.Text = "Общая стоимость:";
             // 
@@ -264,7 +265,7 @@
             0,
             0});
             this.numericUpDownDays.Name = "numericUpDownDays";
-            this.numericUpDownDays.Size = new System.Drawing.Size(200, 25);
+            this.numericUpDownDays.Size = new System.Drawing.Size(200, 20);
             this.numericUpDownDays.TabIndex = 9;
             this.numericUpDownDays.Value = new decimal(new int[] {
             1,
@@ -279,7 +280,7 @@
             this.labelDays.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelDays.Location = new System.Drawing.Point(270, 155);
             this.labelDays.Name = "labelDays";
-            this.labelDays.Size = new System.Drawing.Size(108, 17);
+            this.labelDays.Size = new System.Drawing.Size(119, 17);
             this.labelDays.TabIndex = 8;
             this.labelDays.Text = "Количество дней:";
             // 
@@ -287,7 +288,7 @@
             // 
             this.dateTimePickerCheckOut.Location = new System.Drawing.Point(30, 175);
             this.dateTimePickerCheckOut.Name = "dateTimePickerCheckOut";
-            this.dateTimePickerCheckOut.Size = new System.Drawing.Size(200, 25);
+            this.dateTimePickerCheckOut.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerCheckOut.TabIndex = 7;
             this.dateTimePickerCheckOut.ValueChanged += new System.EventHandler(this.dateTimePickerCheckOut_ValueChanged);
             // 
@@ -298,7 +299,7 @@
             this.labelCheckOut.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCheckOut.Location = new System.Drawing.Point(30, 155);
             this.labelCheckOut.Name = "labelCheckOut";
-            this.labelCheckOut.Size = new System.Drawing.Size(84, 17);
+            this.labelCheckOut.Size = new System.Drawing.Size(89, 17);
             this.labelCheckOut.TabIndex = 6;
             this.labelCheckOut.Text = "Дата выезда:";
             // 
@@ -306,7 +307,7 @@
             // 
             this.dateTimePickerCheckIn.Location = new System.Drawing.Point(270, 120);
             this.dateTimePickerCheckIn.Name = "dateTimePickerCheckIn";
-            this.dateTimePickerCheckIn.Size = new System.Drawing.Size(200, 25);
+            this.dateTimePickerCheckIn.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerCheckIn.TabIndex = 5;
             this.dateTimePickerCheckIn.ValueChanged += new System.EventHandler(this.dateTimePickerCheckIn_ValueChanged);
             // 
@@ -317,7 +318,7 @@
             this.labelCheckIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCheckIn.Location = new System.Drawing.Point(270, 100);
             this.labelCheckIn.Name = "labelCheckIn";
-            this.labelCheckIn.Size = new System.Drawing.Size(82, 17);
+            this.labelCheckIn.Size = new System.Drawing.Size(85, 17);
             this.labelCheckIn.TabIndex = 4;
             this.labelCheckIn.Text = "Дата заезда:";
             // 
@@ -326,7 +327,7 @@
             this.textBoxHouseName.Location = new System.Drawing.Point(30, 120);
             this.textBoxHouseName.Name = "textBoxHouseName";
             this.textBoxHouseName.ReadOnly = true;
-            this.textBoxHouseName.Size = new System.Drawing.Size(200, 25);
+            this.textBoxHouseName.Size = new System.Drawing.Size(200, 20);
             this.textBoxHouseName.TabIndex = 3;
             // 
             // labelHouseName
@@ -336,7 +337,7 @@
             this.labelHouseName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelHouseName.Location = new System.Drawing.Point(30, 100);
             this.labelHouseName.Name = "labelHouseName";
-            this.labelHouseName.Size = new System.Drawing.Size(37, 17);
+            this.labelHouseName.Size = new System.Drawing.Size(38, 17);
             this.labelHouseName.TabIndex = 2;
             this.labelHouseName.Text = "Дом:";
             // 
@@ -345,7 +346,7 @@
             this.textBoxClientName.Location = new System.Drawing.Point(30, 65);
             this.textBoxClientName.Name = "textBoxClientName";
             this.textBoxClientName.ReadOnly = true;
-            this.textBoxClientName.Size = new System.Drawing.Size(440, 25);
+            this.textBoxClientName.Size = new System.Drawing.Size(440, 20);
             this.textBoxClientName.TabIndex = 1;
             // 
             // labelClientName
@@ -355,7 +356,7 @@
             this.labelClientName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelClientName.Location = new System.Drawing.Point(30, 45);
             this.labelClientName.Name = "labelClientName";
-            this.labelClientName.Size = new System.Drawing.Size(55, 17);
+            this.labelClientName.Size = new System.Drawing.Size(56, 17);
             this.labelClientName.TabIndex = 0;
             this.labelClientName.Text = "Клиент:";
             // 
@@ -364,6 +365,7 @@
             this.ClientSize = new System.Drawing.Size(500, 550);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelHeader);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EditBookingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Редактирование бронирования";
@@ -375,6 +377,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTotalPrice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDays)).EndInit();
             this.ResumeLayout(false);
+
         }
     }
 }

@@ -62,6 +62,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DepositForm));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelHeader = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
@@ -124,7 +125,7 @@
             this.labelHeader.ForeColor = System.Drawing.Color.White;
             this.labelHeader.Location = new System.Drawing.Point(20, 15);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(241, 37);
+            this.labelHeader.Size = new System.Drawing.Size(246, 37);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "Внесение депозита";
             // 
@@ -198,7 +199,7 @@
             // 
             // groupBoxNewDeposit
             // 
-            this.groupBoxNewDeposit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBoxNewDeposit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxNewDeposit.Controls.Add(this.labelNewRemaining);
             this.groupBoxNewDeposit.Controls.Add(this.labelNewRemainingText);
@@ -222,7 +223,7 @@
             this.labelNewRemaining.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.labelNewRemaining.Location = new System.Drawing.Point(200, 95);
             this.labelNewRemaining.Name = "labelNewRemaining";
-            this.labelNewRemaining.Size = new System.Drawing.Size(68, 20);
+            this.labelNewRemaining.Size = new System.Drawing.Size(53, 20);
             this.labelNewRemaining.TabIndex = 5;
             this.labelNewRemaining.Text = "0,00 ₽";
             // 
@@ -233,7 +234,7 @@
             this.labelNewRemainingText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelNewRemainingText.Location = new System.Drawing.Point(15, 95);
             this.labelNewRemainingText.Name = "labelNewRemainingText";
-            this.labelNewRemainingText.Size = new System.Drawing.Size(146, 20);
+            this.labelNewRemainingText.Size = new System.Drawing.Size(116, 20);
             this.labelNewRemainingText.TabIndex = 4;
             this.labelNewRemainingText.Text = "Новый остаток:";
             // 
@@ -244,7 +245,7 @@
             this.labelNewDepositAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
             this.labelNewDepositAmount.Location = new System.Drawing.Point(200, 70);
             this.labelNewDepositAmount.Name = "labelNewDepositAmount";
-            this.labelNewDepositAmount.Size = new System.Drawing.Size(68, 20);
+            this.labelNewDepositAmount.Size = new System.Drawing.Size(53, 20);
             this.labelNewDepositAmount.TabIndex = 3;
             this.labelNewDepositAmount.Text = "0,00 ₽";
             // 
@@ -255,13 +256,13 @@
             this.labelNewDepositAmountText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelNewDepositAmountText.Location = new System.Drawing.Point(15, 70);
             this.labelNewDepositAmountText.Name = "labelNewDepositAmountText";
-            this.labelNewDepositAmountText.Size = new System.Drawing.Size(177, 20);
+            this.labelNewDepositAmountText.Size = new System.Drawing.Size(164, 20);
             this.labelNewDepositAmountText.TabIndex = 2;
             this.labelNewDepositAmountText.Text = "Общий депозит будет:";
             // 
             // numericUpDownDeposit
             // 
-            this.numericUpDownDeposit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.numericUpDownDeposit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.numericUpDownDeposit.DecimalPlaces = 2;
             this.numericUpDownDeposit.Font = new System.Drawing.Font("Segoe UI", 14F);
@@ -285,13 +286,13 @@
             this.labelNewDeposit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelNewDeposit.Location = new System.Drawing.Point(15, 15);
             this.labelNewDeposit.Name = "labelNewDeposit";
-            this.labelNewDeposit.Size = new System.Drawing.Size(143, 19);
+            this.labelNewDeposit.Size = new System.Drawing.Size(132, 19);
             this.labelNewDeposit.TabIndex = 0;
             this.labelNewDeposit.Text = "Сумма к внесению:";
             // 
             // groupBoxQuickButtons
             // 
-            this.groupBoxQuickButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBoxQuickButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxQuickButtons.Controls.Add(this.buttonCustom);
             this.groupBoxQuickButtons.Controls.Add(this.buttonHalfDeposit);
@@ -309,7 +310,6 @@
             // 
             this.buttonCustom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.buttonCustom.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.buttonCustom.FlatAppearance.BorderSize = 1;
             this.buttonCustom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCustom.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.buttonCustom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -324,7 +324,6 @@
             // 
             this.buttonHalfDeposit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.buttonHalfDeposit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.buttonHalfDeposit.FlatAppearance.BorderSize = 1;
             this.buttonHalfDeposit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonHalfDeposit.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.buttonHalfDeposit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -340,7 +339,6 @@
             // 
             this.buttonFullDeposit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.buttonFullDeposit.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.buttonFullDeposit.FlatAppearance.BorderSize = 1;
             this.buttonFullDeposit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonFullDeposit.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.buttonFullDeposit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -354,7 +352,7 @@
             // 
             // groupBoxCurrentAmounts
             // 
-            this.groupBoxCurrentAmounts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBoxCurrentAmounts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxCurrentAmounts.Controls.Add(this.labelDepositPercentage);
             this.groupBoxCurrentAmounts.Controls.Add(this.labelProgress);
@@ -381,7 +379,7 @@
             this.labelDepositPercentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(145)))), ((int)(((byte)(195)))));
             this.labelDepositPercentage.Location = new System.Drawing.Point(15, 115);
             this.labelDepositPercentage.Name = "labelDepositPercentage";
-            this.labelDepositPercentage.Size = new System.Drawing.Size(34, 17);
+            this.labelDepositPercentage.Size = new System.Drawing.Size(37, 17);
             this.labelDepositPercentage.TabIndex = 8;
             this.labelDepositPercentage.Text = "0,0%";
             // 
@@ -392,13 +390,13 @@
             this.labelProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelProgress.Location = new System.Drawing.Point(15, 95);
             this.labelProgress.Name = "labelProgress";
-            this.labelProgress.Size = new System.Drawing.Size(59, 15);
+            this.labelProgress.Size = new System.Drawing.Size(56, 15);
             this.labelProgress.TabIndex = 7;
             this.labelProgress.Text = "Внесено:";
             // 
             // progressBarDeposit
             // 
-            this.progressBarDeposit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.progressBarDeposit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarDeposit.Location = new System.Drawing.Point(15, 70);
             this.progressBarDeposit.Name = "progressBarDeposit";
@@ -412,7 +410,7 @@
             this.labelRemaining.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(153)))), ((int)(((byte)(85)))));
             this.labelRemaining.Location = new System.Drawing.Point(200, 45);
             this.labelRemaining.Name = "labelRemaining";
-            this.labelRemaining.Size = new System.Drawing.Size(68, 20);
+            this.labelRemaining.Size = new System.Drawing.Size(53, 20);
             this.labelRemaining.TabIndex = 5;
             this.labelRemaining.Text = "0,00 ₽";
             // 
@@ -423,7 +421,7 @@
             this.labelRemainingText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelRemainingText.Location = new System.Drawing.Point(15, 45);
             this.labelRemainingText.Name = "labelRemainingText";
-            this.labelRemainingText.Size = new System.Drawing.Size(146, 20);
+            this.labelRemainingText.Size = new System.Drawing.Size(136, 20);
             this.labelRemainingText.TabIndex = 4;
             this.labelRemainingText.Text = "Остаток к оплате:";
             // 
@@ -434,7 +432,7 @@
             this.labelBookingTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelBookingTotal.Location = new System.Drawing.Point(200, 25);
             this.labelBookingTotal.Name = "labelBookingTotal";
-            this.labelBookingTotal.Size = new System.Drawing.Size(68, 20);
+            this.labelBookingTotal.Size = new System.Drawing.Size(48, 20);
             this.labelBookingTotal.TabIndex = 3;
             this.labelBookingTotal.Text = "0,00 ₽";
             // 
@@ -445,7 +443,7 @@
             this.labelBookingTotalText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelBookingTotalText.Location = new System.Drawing.Point(15, 25);
             this.labelBookingTotalText.Name = "labelBookingTotalText";
-            this.labelBookingTotalText.Size = new System.Drawing.Size(153, 20);
+            this.labelBookingTotalText.Size = new System.Drawing.Size(136, 20);
             this.labelBookingTotalText.TabIndex = 2;
             this.labelBookingTotalText.Text = "Общая стоимость:";
             // 
@@ -456,7 +454,7 @@
             this.labelCurrentDeposit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCurrentDeposit.Location = new System.Drawing.Point(200, 5);
             this.labelCurrentDeposit.Name = "labelCurrentDeposit";
-            this.labelCurrentDeposit.Size = new System.Drawing.Size(68, 20);
+            this.labelCurrentDeposit.Size = new System.Drawing.Size(48, 20);
             this.labelCurrentDeposit.TabIndex = 1;
             this.labelCurrentDeposit.Text = "0,00 ₽";
             // 
@@ -467,13 +465,13 @@
             this.labelCurrentDepositText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCurrentDepositText.Location = new System.Drawing.Point(15, 5);
             this.labelCurrentDepositText.Name = "labelCurrentDepositText";
-            this.labelCurrentDepositText.Size = new System.Drawing.Size(148, 20);
+            this.labelCurrentDepositText.Size = new System.Drawing.Size(132, 20);
             this.labelCurrentDepositText.TabIndex = 0;
             this.labelCurrentDepositText.Text = "Текущий депозит:";
             // 
             // groupBoxBookingInfo
             // 
-            this.groupBoxBookingInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBoxBookingInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxBookingInfo.Controls.Add(this.labelCheckInInfo);
             this.groupBoxBookingInfo.Controls.Add(this.labelHouseInfo);
@@ -499,7 +497,7 @@
             this.labelCheckInInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCheckInInfo.Location = new System.Drawing.Point(120, 85);
             this.labelCheckInInfo.Name = "labelCheckInInfo";
-            this.labelCheckInInfo.Size = new System.Drawing.Size(42, 15);
+            this.labelCheckInInfo.Size = new System.Drawing.Size(39, 15);
             this.labelCheckInInfo.TabIndex = 7;
             this.labelCheckInInfo.Text = "дата...";
             // 
@@ -510,7 +508,7 @@
             this.labelHouseInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelHouseInfo.Location = new System.Drawing.Point(120, 65);
             this.labelHouseInfo.Name = "labelHouseInfo";
-            this.labelHouseInfo.Size = new System.Drawing.Size(54, 15);
+            this.labelHouseInfo.Size = new System.Drawing.Size(51, 15);
             this.labelHouseInfo.TabIndex = 6;
             this.labelHouseInfo.Text = "домов...";
             // 
@@ -543,7 +541,7 @@
             this.labelCheckIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelCheckIn.Location = new System.Drawing.Point(15, 85);
             this.labelCheckIn.Name = "labelCheckIn";
-            this.labelCheckIn.Size = new System.Drawing.Size(72, 15);
+            this.labelCheckIn.Size = new System.Drawing.Size(77, 15);
             this.labelCheckIn.TabIndex = 3;
             this.labelCheckIn.Text = "Дата заезда:";
             // 
@@ -554,7 +552,7 @@
             this.labelHouse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelHouse.Location = new System.Drawing.Point(15, 65);
             this.labelHouse.Name = "labelHouse";
-            this.labelHouse.Size = new System.Drawing.Size(37, 15);
+            this.labelHouse.Size = new System.Drawing.Size(35, 15);
             this.labelHouse.TabIndex = 2;
             this.labelHouse.Text = "Дом:";
             // 
@@ -565,7 +563,7 @@
             this.labelPhone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.labelPhone.Location = new System.Drawing.Point(15, 45);
             this.labelPhone.Name = "labelPhone";
-            this.labelPhone.Size = new System.Drawing.Size(62, 15);
+            this.labelPhone.Size = new System.Drawing.Size(60, 15);
             this.labelPhone.TabIndex = 1;
             this.labelPhone.Text = "Телефон:";
             // 
@@ -585,6 +583,7 @@
             this.ClientSize = new System.Drawing.Size(500, 700);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelHeader);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(516, 739);
             this.Name = "DepositForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -601,6 +600,7 @@
             this.groupBoxBookingInfo.ResumeLayout(false);
             this.groupBoxBookingInfo.PerformLayout();
             this.ResumeLayout(false);
+
         }
     }
 }
